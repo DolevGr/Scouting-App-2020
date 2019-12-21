@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User.matches = new ArrayList<>();
 
         //**********************************************
-        for(int i = 1; i < User.NUMBER_OF_TEAMS; i++) {
+        for(int i = 1; i < User.NUMBER_OF_MATCHES; i++) {
             User.matches.add(new Match("R F "+i, "R C "+i, "R B "+i, "B F "+i, "B C "+i, "B B "+i, i));
             //User.teamsT[i] = new Team("R1 "+i, "R2 "+i, "R3 "+i, "B1 "+i, "B2 "+i, "B3 "+i, i);
         }

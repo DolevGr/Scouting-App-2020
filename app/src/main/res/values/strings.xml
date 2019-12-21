@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Primo 2020 V1</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="teams">
+        <item>R Front</item>
+        <item>R Center</item>
+        <item>R Back</item>
+        <item>B Front</item>
+        <item>B Center</item>
+        <item>B Back</item>
+    </string-array>
+</resources>

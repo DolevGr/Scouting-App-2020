@@ -87,7 +87,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        optionSelected = (String) teamSpinner.getItemAtPosition(0);
+        optionSelected = (String) teamSpinner.getItemAtPosition(optionSelectedIndex);
     }
 
     public void updateTeamSpinner(int i){

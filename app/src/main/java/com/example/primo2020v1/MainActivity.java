@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnEditForm:
                 next = new Intent(MainActivity.this, EditFormActivity.class);
+                break;
             default:
                 next = null;
                 break;

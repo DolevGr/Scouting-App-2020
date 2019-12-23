@@ -18,7 +18,7 @@ import com.example.primo2020v1.libs.User;
 public class GameFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     Spinner teamSpinner;
     ArrayAdapter<CharSequence> teamAdapter;
-    Button btnNext, btnTest;
+    Button btnNext, btnTest, btnBack;
     EditText edGameNumber, edTeamNumber;
 
     String optionSelected, gameNumber, teamNumber;
@@ -33,6 +33,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         edTeamNumber = (EditText) findViewById(R.id.edTeamNumber);
 
         btnNext = (Button) findViewById(R.id.btnNext);
+        btnBack = (Button) findViewById(R.id.btnBack);
 
         teamSpinner = (Spinner) findViewById(R.id.spnTeam);
         teamAdapter = ArrayAdapter.createFromResource(this, R.array.teams, R.layout.support_simple_spinner_dropdown_item);
@@ -50,6 +51,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         btnTest.setOnClickListener(this);
 
         btnNext.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
         teamSpinner.setOnItemSelectedListener(this);
     }
 
@@ -69,6 +71,15 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(this,"Current Game: " + User.currentGame, Toast.LENGTH_SHORT).show();
                 GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
                 break;
+            case R.id.btnBack:
+                optionSelected = "";
+                optionSelectedIndex = 0;
+                teamNumber = "";
+                gameNumber = "";
+                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
+
+                finish();
+                break;
             default:
                 break;
 
@@ -79,6 +90,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         optionSelectedIndex = i;
         optionSelected = (String) teamSpinner.getSelectedItem();
+
         Log.d("Spinner Option ", "onClick: " + optionSelected);
         Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
 
@@ -89,6 +101,4 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
     public void onNothingSelected(AdapterView<?> adapterView) {
         optionSelected = (String) teamSpinner.getItemAtPosition(optionSelectedIndex);
     }
-
-
 }

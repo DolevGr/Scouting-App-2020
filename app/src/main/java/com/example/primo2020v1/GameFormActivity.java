@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.User;
 
 public class GameFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -28,8 +29,6 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_form);
 
-        optionSelected = "";
-
         edGameNumber = (EditText) findViewById(R.id.edGameNumber);
         edTeamNumber = (EditText) findViewById(R.id.edTeamNumber);
 
@@ -40,6 +39,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         teamAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         teamSpinner.setAdapter(teamAdapter);
 
+        optionSelected = "";
         optionSelectedIndex = 0;
         teamNumber = "";
         gameNumber = "";
@@ -67,7 +67,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btnTest:
                 User.currentGame++;
                 Toast.makeText(this,"Current Game: " + User.currentGame, Toast.LENGTH_SHORT).show();
-                updateTeamSpinner(optionSelectedIndex);
+                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
                 break;
             default:
                 break;
@@ -82,7 +82,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         Log.d("Spinner Option ", "onClick: " + optionSelected);
         Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
 
-        updateTeamSpinner(optionSelectedIndex);
+        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
     }
 
     @Override
@@ -90,33 +90,5 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         optionSelected = (String) teamSpinner.getItemAtPosition(optionSelectedIndex);
     }
 
-    public void updateTeamSpinner(int i){
-        edGameNumber.setText(Integer.toString(User.currentGame));
 
-        if(User.currentGame < User.NUMBER_OF_MATCHES-1){
-            switch (i) {
-                case 0:
-                    edTeamNumber.setText(User.matches.get(User.currentGame).getRedTeam().getFirstRobot());
-                    break;
-                case 1:
-                    edTeamNumber.setText(User.matches.get(User.currentGame).getRedTeam().getSecondRobot());
-                    break;
-                case 2:
-                    edTeamNumber.setText(User.matches.get(User.currentGame).getRedTeam().getThirdRobot());
-                    break;
-                case 3:
-                    edTeamNumber.setText(User.matches.get(User.currentGame).getBlueTeam().getFirstRobot());
-                    break;
-                case 4:
-                    edTeamNumber.setText(User.matches.get(User.currentGame).getBlueTeam().getSecondRobot());
-                    break;
-                case 5:
-                    edTeamNumber.setText(User.matches.get(User.currentGame).getBlueTeam().getThirdRobot());
-                    break;
-                default:
-                    edTeamNumber.setText("ERROR game:" + User.currentGame);
-                    break;
-            }
-        }
-    }
 }

@@ -66,7 +66,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 optionSelectedIndex = 0;
                 teamNumber = "";
                 gameNumber = "";
-                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
+                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit, false);
 
                 finish();
                 break;
@@ -83,7 +83,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         Log.d("Spinner Option ", "onClick: " + optionSelected);
         Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
 
-        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
+        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit, false);
     }
 
     @Override

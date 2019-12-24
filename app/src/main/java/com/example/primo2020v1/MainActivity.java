@@ -9,10 +9,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.primo2020v1.libs.Match;
 import com.example.primo2020v1.libs.User;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ListView lvGames;
@@ -32,24 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lvGames = (ListView) findViewById(R.id.lvGames);
         btnNewForm = (Button) findViewById(R.id.btnNewForm);
         btnEditForm = (Button) findViewById(R.id.btnEditForm);
-
-//        User.teamsHM.put(4586, "Primo");
-//        User.teamsHM.put(1574, "Miscar");
-//        User.teamsHM.put(1580, "The Blue Monkeys");
-//        User.teamsHM.put(1576, "Voltrix");
-//        User.teamsHM.put(1657, "Hamosad");
-//        User.teamsHM.put(1937, "Elysium");
-//        User.teamsHM.put(1942, "Cinderella");
-//        User.teamsHM.put(1943, "Neat Team");
-
-        User.matches = new ArrayList<>();
-
-        //**********************************************
-        for(int i = 1; i < User.NUMBER_OF_MATCHES; i++) {
-            User.matches.add(new Match("R F "+i, "R C "+i, "R B "+i, "B F "+i, "B C "+i, "B B "+i, i));
-            //User.teamsT[i] = new Team("R1 "+i, "R2 "+i, "R3 "+i, "B1 "+i, "B2 "+i, "B3 "+i, i);
-        }
-        //***************************************** BAD CODE NEEDS FIXING
 
         GamesAdapter gamesAdapter = new GamesAdapter(context, R.layout.costum_games_layout, User.matches);
         lvGames.setAdapter(gamesAdapter);

@@ -12,10 +12,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+
     EditText edName, edPass;
     Button btnLogin;
     Intent i;
     Context context;
+
+    String name, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +30,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = (Button) findViewById(R.id.btnLogin);
         context = getApplicationContext();
 
-        btnLogin.setOnClickListener( this);
-        //Toast.makeText(context.getApplicationContext(), "Creating...", Toast.LENGTH_LONG).show();
+        name = edName.getText().toString().trim();
+        password = edPass.getText().toString().trim();
+
         Log.d("ONCREATE LoginActivity", "onCereate: Entered onCreate ****************************************************");
+
+        btnLogin.setOnClickListener(this);
     }
 
     @Override

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "338364861050",
-    "firebase_url": "https://primov1-b5b75.firebaseio.com",
-    "project_id": "primov1-b5b75",
-    "storage_bucket": "primov1-b5b75.appspot.com"
+    "project_number": "894440610146",
+    "firebase_url": "https://primo-2020-cfdec.firebaseio.com",
+    "project_id": "primo-2020-cfdec",
+    "storage_bucket": "primo-2020-cfdec.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:338364861050:android:65b1ecf32617e5c27c09c3",
+        "mobilesdk_app_id": "1:894440610146:android:a89bb0167db4f3d06a743b",
         "android_client_info": {
           "package_name": "com.example.primo2020v1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "338364861050-adr4dfnpor0bln741q1ociuv4n0bkhgg.apps.googleusercontent.com",
+          "client_id": "894440610146-ai4mfsblpt6cu4etkdplq16nuegq48v2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.primo2020v1",
@@ -23,57 +23,20 @@
           }
         },
         {
-          "client_id": "338364861050-n9bna6efkeg7fo2otnj0rfa7fuad94em.apps.googleusercontent.com",
+          "client_id": "894440610146-c5apfc32kk8i61ppn9n4eudsm4uhh43l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZKCvimynnf8QrM6niYKdMpVmzoYd1dOI"
+          "current_key": "AIzaSyD7HXN7j9xg1nEjHFNQQHIbs3KVZt6aa8M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "338364861050-n9bna6efkeg7fo2otnj0rfa7fuad94em.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:338364861050:android:add4e6da5de960677c09c3",
-        "android_client_info": {
-          "package_name": "com.example.primov1"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "338364861050-n7tmamupf3qd28jt778s5ofi8ppsi1t5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.primov1",
-            "certificate_hash": "5e0d1582ea1d5c08402348c846b5007091f62b8c"
-          }
-        },
-        {
-          "client_id": "338364861050-n9bna6efkeg7fo2otnj0rfa7fuad94em.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBZKCvimynnf8QrM6niYKdMpVmzoYd1dOI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "338364861050-n9bna6efkeg7fo2otnj0rfa7fuad94em.apps.googleusercontent.com",
+              "client_id": "894440610146-c5apfc32kk8i61ppn9n4eudsm4uhh43l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

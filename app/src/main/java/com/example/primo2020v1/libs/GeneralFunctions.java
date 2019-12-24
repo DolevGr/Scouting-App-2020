@@ -4,8 +4,10 @@ import android.widget.EditText;
 
 public class GeneralFunctions {
 
-    public static void updateTeamSpinner(int i, EditText gameNumber, EditText teamNumber){
-        gameNumber.setText(Integer.toString(User.currentGame));
+    public static void updateTeamSpinner(int i, EditText gameNumber, EditText teamNumber, boolean changeGameNumber){
+
+        if(changeGameNumber)
+            gameNumber.setText(Integer.toString(User.currentGame));
 
         int x = User.currentGame < User.NUMBER_OF_MATCHES-1 ? User.currentGame : User.NUMBER_OF_MATCHES - 1;
 

@@ -56,7 +56,7 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         tvB2.setText(team.getRedTeam().getSecondRobot());
         tvB3.setText(team.getRedTeam().getThirdRobot());
 
-        tvGame.setText(team.getRedTeam().getGameNum()+""); //team.getRedTeam().getGameNum();
+        tvGame.setText(team.getGameNum());
 
         img.setImageResource(R.drawable.red_blue);
 

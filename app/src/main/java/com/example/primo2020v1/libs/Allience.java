@@ -1,14 +1,14 @@
 package com.example.primo2020v1.libs;
 
+import androidx.annotation.NonNull;
+
 public class Allience {
     private String robot1, robot2, robot3;
-    private int gameNum;
 
-    public Allience(String i1, String i2, String i3, int game){
+    public Allience(String i1, String i2, String i3){
         robot1 = i1;
         robot2 = i2;
         robot3 = i3;
-        gameNum = game;
     }
 
     public String getFirstRobot(){
@@ -23,7 +23,9 @@ public class Allience {
         return robot3;
     }
 
-    public int getGameNum() {
-        return gameNum;
+    @NonNull
+    @Override
+    public String toString() {
+        return robot1 + " " + robot2 + " " + robot3;
     }
 }

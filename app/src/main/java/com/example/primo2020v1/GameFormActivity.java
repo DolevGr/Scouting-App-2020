@@ -69,14 +69,14 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btnTest:
                 User.currentGame++;
                 Toast.makeText(this,"Current Game: " + User.currentGame, Toast.LENGTH_SHORT).show();
-                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber, true);
+                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
                 break;
             case R.id.btnBack:
                 optionSelected = "";
                 optionSelectedIndex = 0;
                 teamNumber = "";
                 gameNumber = "";
-                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber, true);
+                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
 
                 finish();
                 break;
@@ -94,7 +94,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         Log.d("Spinner Option ", "onClick: " + optionSelected);
         Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
 
-        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber, true);
+        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
     }
 
     @Override

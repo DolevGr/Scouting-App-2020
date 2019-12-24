@@ -11,7 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+import com.google.firebase.database.ValueEventListener;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    ValueEventListener postListener;
 
     EditText edName, edPass;
     Button btnLogin;
@@ -44,6 +47,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (view.getId()){
             case R.id.btnLogin:
+//                postListener = new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                };
                 i = new Intent(LoginActivity.this, MainActivity.class);
                 break;
             default:

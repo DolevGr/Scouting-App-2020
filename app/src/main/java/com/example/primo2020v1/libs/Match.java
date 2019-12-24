@@ -3,21 +3,21 @@ package com.example.primo2020v1.libs;
 import androidx.annotation.NonNull;
 
 public class Match{
-    private Allience Red, Blue;
+    public Alliance Red, Blue;
     private int gameNum;
 
     public Match(String r1, String r2, String r3, String b1, String b2, String b3, int game){
-        Red = new Allience(r1, r2, r3);
-        Blue = new Allience(b1, b2, b3);
+        Red = new Alliance(r1, r2, r3);
+        Blue = new Alliance(b1, b2, b3);
 
         this.gameNum = game;
     }
 
-    public Allience getRedTeam(){
+    public Alliance getRedTeam(){
         return this.Red;
     }
 
-    public Allience getBlueTeam(){
+    public Alliance getBlueTeam(){
         return this.Blue;
     }
 

@@ -46,17 +46,17 @@ public class GamesAdapter extends ArrayAdapter<Match> {
 
         ImageView img = (ImageView) view.findViewById(R.id.imgRedBlue);
 
-        Match team = this.getItem(position);
+        Match match = this.getItem(position);
 
 
-        tvR1.setText(team.getRedTeam().getFirstRobot());
-        tvR2.setText(team.getRedTeam().getSecondRobot());
-        tvR3.setText(team.getRedTeam().getThirdRobot());
-        tvB1.setText(team.getRedTeam().getFirstRobot());
-        tvB2.setText(team.getRedTeam().getSecondRobot());
-        tvB3.setText(team.getRedTeam().getThirdRobot());
+        tvR1.setText(match.getRedTeam().getFirstRobot());
+        tvR2.setText(match.getRedTeam().getSecondRobot());
+        tvB1.setText(match.getRedTeam().getFirstRobot());
+        tvR3.setText(match.getRedTeam().getThirdRobot());
+        tvB2.setText(match.getRedTeam().getSecondRobot());
+        tvB3.setText(match.getRedTeam().getThirdRobot());
 
-        tvGame.setText(team.getGameNum());
+        tvGame.setText(Integer.toString(match.getGameNum()));
 
         img.setImageResource(R.drawable.red_blue);
 

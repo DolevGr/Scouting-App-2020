@@ -2,12 +2,31 @@ package com.example.primo2020v1.libs;
 
 import android.widget.EditText;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 public class GeneralFunctions {
 
-    public static void updateTeamSpinner(int i, EditText gameNumber, EditText teamNumber, boolean changeGameNumber){
+    public static Map<String,Object> getMap(Object obj)
+    {
+        Map<String,Object> map=new HashMap<>();
+        try{
+            Field[] fields = obj.getClass().getFields();
 
-        if(changeGameNumber)
-            gameNumber.setText(Integer.toString(User.currentGame));
+            for(Field f :fields)
+            {
+                if (!java.lang.reflect.Modifier.isStatic(f.getModifiers()))
+                    map.put(f.getName(),f.get(obj));
+            }
+        }
+        catch (Exception e){}
+        return map;
+    }
+
+    public static void updateTeamSpinner(int i, EditText gameNumber, EditText teamNumber){
+
+        gameNumber.setText(Integer.toString(User.currentGame));
 
         int x = User.currentGame < User.NUMBER_OF_MATCHES-1 ? User.currentGame : User.NUMBER_OF_MATCHES - 1;
 

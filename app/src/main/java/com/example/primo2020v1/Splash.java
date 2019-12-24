@@ -6,18 +6,19 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Match;
 import com.example.primo2020v1.libs.User;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 public class Splash extends AppCompatActivity {
-    DatabaseReference databaseReference;
 
     Intent in;
+
+    boolean addToFirebase = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,21 +83,23 @@ public class Splash extends AppCompatActivity {
         Collections.sort(User.Members);
 
         for(int i = 1; i < User.NUMBER_OF_MATCHES+1; i++) {
-            User.matches.add(new Match("R Front "+i, "R Center "+i, "R Back "+i,
-                                    "B Front "+i, "B Center "+i, "B Back "+i, i));
+            User.matches.add(new Match("R Close "+i, "R Middle "+i, "R Far "+i,
+                                    "B Close "+i, "B Middle "+i, "B Far "+i, i));
         }
 
         //Adding data to Firebase database
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if(false){
-            for(int i = 1; i < User.NUMBER_OF_MATCHES+1; i++){
-                if (i < User.Members.size()+1) {
-                    databaseReference.child("Users").child(Integer.toString(i)).setValue(User.Members.get(i - 1));
+
+        if(addToFirebase){
+            for(int i = 0; i < User.NUMBER_OF_MATCHES; i++){
+                if (i < User.Members.size()) {
+                    Log.d("Test", "onCreate: *****************************************************************");
+                    User u = new User(User.Members.get(i), "Test");
+                    User.databaseReference.child("Users").child(Integer.toString(i+1)).setValue(u);
                 }
 
-                String str = User.matches.get(i-1).toString();
-                databaseReference.child("Match").child(Integer.toString(i)).setValue(str);
+                Map<String, Object> m = GeneralFunctions.getMap(User.matches.get(i));
+                User.databaseReference.child("Match").child(Integer.toString(i+1)).setValue(m);
             }
         }
 
@@ -117,4 +120,6 @@ public class Splash extends AppCompatActivity {
         };
         th.start();
     }
+
+
 }

@@ -78,7 +78,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
                 gameNumber = "";
                 GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
 
-                finish();
+                finishAndRemoveTask();
                 break;
             default:
                 break;

@@ -13,7 +13,7 @@ public class User {
     public static HashMap<Integer, String> teamsHM = new HashMap<Integer, String>(NUMBER_OF_MATCHES);
     public static ArrayList<Match> matches;
     public static int currentGame = 1;
-    public static ArrayList<String> Members = new ArrayList<>();
+    public static ArrayList<String> members = new ArrayList<>();
 
 
     public String name, password;

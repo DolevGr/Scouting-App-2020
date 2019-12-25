@@ -36,73 +36,57 @@ public class Splash extends AppCompatActivity {
 //        User.teamsHM.put(1942, "Cinderella");
 //        User.teamsHM.put(1943, "Neat Team");
 
-        User.Members.add("Dolev");
-        User.Members.add("Tal");
-        User.Members.add("Itay");
-        User.Members.add("Tohar");
-        User.Members.add("Adi");
-        User.Members.add("Samuel");
-        User.Members.add("Chen A");
-        User.Members.add("Chen P");
-        User.Members.add("Yair");
-        User.Members.add("Yoav");
-        User.Members.add("Yuval");
-        User.Members.add("Yonatan");
-        User.Members.add("Yael");
-        User.Members.add("Yarin");
-        User.Members.add("Lior");
-        User.Members.add("Liora");
-        User.Members.add("Maor");
-        User.Members.add("Sivan");
-        User.Members.add("Idan");
-        User.Members.add("Keren");
-        User.Members.add("Shoshana");
-        User.Members.add("Shahar V");
-        User.Members.add("Tamar");
-        User.Members.add("Tom");
-        User.Members.add("Inbar");
-        User.Members.add("Omer");
-        User.Members.add("Amit");
-        User.Members.add("Yoni");
-        User.Members.add("Rotem");
-        User.Members.add("Shira");
-        User.Members.add("Sagi");
-        User.Members.add("Aryeh");
-        User.Members.add("Racheli");
-        User.Members.add("Rony");
-        User.Members.add("Yaniv");
-        User.Members.add("Gilad");
-        User.Members.add("Shahar O");
-        User.Members.add("Hila");
-        User.Members.add("Amir D");
-        User.Members.add("Amir G");
-        User.Members.add("Liad");
-        User.Members.add("Niv");
-        User.Members.add("Noam");
-        User.Members.add("Peleg");
-        Collections.sort(User.Members);
+        User.members.add("Dolev");
+        User.members.add("Tal");
+        User.members.add("Itay");
+        User.members.add("Tohar");
+        User.members.add("Adi");
+        User.members.add("Samuel");
+        User.members.add("Chen A");
+        User.members.add("Chen P");
+        User.members.add("Iair");
+        User.members.add("Yoav");
+        User.members.add("Yuval");
+        User.members.add("Yonatan");
+        User.members.add("Yael");
+        User.members.add("Yarin");
+        User.members.add("Lior");
+        User.members.add("Liora");
+        User.members.add("Maor");
+        User.members.add("Sivan");
+        User.members.add("Idan");
+        User.members.add("Keren");
+        User.members.add("Shoshana");
+        User.members.add("Shahar V");
+        User.members.add("Tamar");
+        User.members.add("Tom");
+        User.members.add("Inbar");
+        User.members.add("Omer");
+        User.members.add("Amit");
+        User.members.add("Yoni");
+        User.members.add("Rotem");
+        User.members.add("Shira");
+        User.members.add("Sagi");
+        User.members.add("Aryeh");
+        User.members.add("Racheli");
+        User.members.add("Rony");
+        User.members.add("Yaniv");
+        User.members.add("Gilad");
+        User.members.add("Shahar O");
+        User.members.add("Hila");
+        User.members.add("Amir D");
+        User.members.add("Amir G");
+        User.members.add("Liad");
+        User.members.add("Niv");
+        User.members.add("Noam");
+        User.members.add("Peleg");
+        Collections.sort(User.members);
 
         for(int i = 1; i < User.NUMBER_OF_MATCHES+1; i++) {
             User.matches.add(new Match("R Close "+i, "R Middle "+i, "R Far "+i,
                                     "B Close "+i, "B Middle "+i, "B Far "+i, i));
         }
-
-        //Adding data to Firebase database
-
-
-        if(addToFirebase){
-            for(int i = 0; i < User.NUMBER_OF_MATCHES; i++){
-                if (i < User.Members.size()) {
-                    Log.d("Test", "onCreate: *****************************************************************");
-                    User u = new User(User.Members.get(i), "Test");
-                    User.databaseReference.child("Users").child(Integer.toString(i+1)).setValue(u);
-                }
-
-                Map<String, Object> m = GeneralFunctions.getMap(User.matches.get(i));
-                User.databaseReference.child("Match").child(Integer.toString(i+1)).setValue(m);
-            }
-        }
-
+        addToDatabase();
 
 
         Thread th = new Thread() {
@@ -121,5 +105,17 @@ public class Splash extends AppCompatActivity {
         th.start();
     }
 
+    public void addToDatabase(){
+        if(addToFirebase){
+            for(int i = 0; i < User.NUMBER_OF_MATCHES; i++){
+                if (i < User.members.size()) {
+                    User u = new User(User.members.get(i), "Test");
+                    User.databaseReference.child("Users").child(Integer.toString(i+1)).setValue(u);
+                }
 
+                Map<String, Object> m = GeneralFunctions.getMap(User.matches.get(i));
+                User.databaseReference.child("Match").child(Integer.toString(i+1)).setValue(m);
+            }
+        }
+    }
 }

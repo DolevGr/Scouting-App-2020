@@ -48,50 +48,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         name = edName.getText().toString().trim();
         password = edPass.getText().toString().trim();
 
-        switch (view.getId()){
-            case R.id.btnLogin:
-                if(User.members.contains(name)){
-                    Log.d("Debugging Database 1", "*********************************************************onDataChange: ");
-                    DatabaseReference dbreff = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name)+1));
-                    dbreff.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if (view.getId() == R.id.btnLogin) {
+            if (User.members.contains(name)) {
+                Log.d("Debugging Database 1", "*********************************************************onDataChange: ");
+                DatabaseReference dbreff = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name) + 1));
+                dbreff.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try{
                             nameFromDB = dataSnapshot.child("name").getValue().toString();
                             passFromDB = dataSnapshot.child("password").getValue().toString();
-                            Log.d("From databse: ", "onDataChange: " + nameFromDB + " : " + passFromDB);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                            Log.d("Exception", "onDataChange: Data went missing :-(");
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    Thread th = new Thread(){
-                        @Override
-                        public void run() {
-                            try{
-                                sleep(2000);
-                            } catch (Exception e){
-                                e.printStackTrace();
+                        if(isValidName() && isValidPassword()){
+                            i = new Intent(LoginActivity.this, MainActivity.class);
+                            //Toast.makeText(context, "Loging Button", Toast.LENGTH_LONG).show();
+                            Log.d("LOGINGIN", "onClick: Entered onClick **********************************************************");
+                            if (i != null){
+                                i.putExtra("Username", edName.getText().toString());
+                                startActivity(i);
                             }
                         }
-                    };
-                    th.start();
-                }
-                break;
-            default:
-                break;
+                        Log.d("From databse: ", "onDataChange: " + nameFromDB + " : " + passFromDB);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+
+            checkPassAndUsername();
         }
 
-        if(isValidName() && isValidPassword()){
-            i = new Intent(LoginActivity.this, MainActivity.class);
-            //Toast.makeText(context, "Loging Button", Toast.LENGTH_LONG).show();
-            Log.d("LOGINGIN", "onClick: Entered onClick **********************************************************");
-            if (i != null){
-                i.putExtra("Username", edName.getText().toString());
-                startActivity(i);
-            }
-        } else if(edName.getText().toString().equals("") || edPass.getText().toString().equals("")){
+    }
+
+    private void checkPassAndUsername() {
+        if(edName.getText().toString().equals("") || edPass.getText().toString().equals("")){
             Toast.makeText(context.getApplicationContext(), "Enter Username or Password", Toast.LENGTH_LONG).show();
         } else if(!isValidName() || !isValidPassword()) {
             Toast.makeText(context.getApplicationContext(), "Username or Password is incorrect", Toast.LENGTH_LONG).show();
@@ -105,4 +100,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public boolean isValidPassword(){
         return edPass.getText().toString().equals(passFromDB);
     }
+
 }

@@ -10,31 +10,25 @@ import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Match;
 import com.example.primo2020v1.libs.User;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
 public class Splash extends AppCompatActivity {
 
     Intent in;
-
-    boolean addToFirebase = true;
+    boolean addToFirebase = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        User.matches = new ArrayList<>();
-
-//        User.teamsHM.put(4586, "Primo");
-//        User.teamsHM.put(1574, "Miscar");
-//        User.teamsHM.put(1580, "The Blue Monkeys");
-//        User.teamsHM.put(1576, "Voltrix");
-//        User.teamsHM.put(1657, "Hamosad");
-//        User.teamsHM.put(1937, "Elysium");
-//        User.teamsHM.put(1942, "Cinderella");
-//        User.teamsHM.put(1943, "Neat Team");
+        User.teams.add("4586 1");
+        User.teams.add("4586 2");
+        User.teams.add("4586 3");
+        User.teams.add("4586 4");
+        User.teams.add("4586 5");
+        User.teams.add("4586 6");
 
         User.members.add("Dolev");
         User.members.add("Tal");
@@ -48,7 +42,6 @@ public class Splash extends AppCompatActivity {
         User.members.add("Yoav");
         User.members.add("Yuval");
         User.members.add("Yonatan");
-        User.members.add("Yael");
         User.members.add("Yarin");
         User.members.add("Lior");
         User.members.add("Liora");
@@ -83,8 +76,8 @@ public class Splash extends AppCompatActivity {
         Collections.sort(User.members);
 
         for(int i = 1; i < User.NUMBER_OF_MATCHES+1; i++) {
-            User.matches.add(new Match("R Close "+i, "R Middle "+i, "R Far "+i,
-                                    "B Close "+i, "B Middle "+i, "B Far "+i, i));
+            User.matches.add(new Match(User.teams.get(0), User.teams.get(1), User.teams.get(2),
+                    User.teams.get(3), User.teams.get(4), User.teams.get(5), i));
         }
         addToDatabase();
 
@@ -105,16 +98,25 @@ public class Splash extends AppCompatActivity {
         th.start();
     }
 
+    //This function is for debugging only
     public void addToDatabase(){
         if(addToFirebase){
+            //Adds matches to Firebase
             for(int i = 0; i < User.NUMBER_OF_MATCHES; i++){
-                if (i < User.members.size()) {
-                    User u = new User(User.members.get(i), "Test");
-                    User.databaseReference.child("Users").child(Integer.toString(i+1)).setValue(u);
-                }
+                Map<String, Object> match = GeneralFunctions.getMap(User.matches.get(i));
+                User.databaseReference.child("Match").child(Integer.toString(i+1)).setValue(match);
+            }
 
-                Map<String, Object> m = GeneralFunctions.getMap(User.matches.get(i));
-                User.databaseReference.child("Match").child(Integer.toString(i+1)).setValue(m);
+            //Adds users to Firebase
+            for(int i = 0; i < User.members.size(); i++){
+                Map<String, Object> user = GeneralFunctions.getMap( new User(User.members.get(i),"Test"));
+                User.databaseReference.child("Users").child(Integer.toString(i+1)).setValue(user);
+            }
+
+            //Adds teams to Firebase
+            for(int i = 0; i < User.teams.size(); i++){
+                Map<String, Object> team = GeneralFunctions.getMap(User.teams.get(i));
+                User.databaseReference.child("Teams");
             }
         }
     }

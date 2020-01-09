@@ -4,16 +4,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class User {
     public static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     public static int NUMBER_OF_MATCHES = 80;
-    public static HashMap<Integer, String> teamsHM = new HashMap<Integer, String>(NUMBER_OF_MATCHES);
-    public static ArrayList<Match> matches;
+    public static ArrayList<String> teams = new ArrayList<>();
+    public static ArrayList<Match> matches = new ArrayList<>();
     public static int currentGame = 1;
     public static ArrayList<String> members = new ArrayList<>();
+    public static int score = 0,
+            ppTeleBottom = 0, ppTeleOuter = 0, ppTeleInner = 0,
+            ppAutoBottom = 0, ppAutoOuter = 0, ppAutoInner = 0,
+            pcRotations = 0, numOfHangedRobots = 0, RP = 0;
+    public static boolean movedFromInitLine = false, didHang = false;
+    public static String textBox = "";
 
 
     public String name, password;

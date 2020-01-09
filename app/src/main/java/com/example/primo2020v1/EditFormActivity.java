@@ -13,8 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.libs.MatchInfo;
+import com.example.primo2020v1.libs.User;
+import com.google.firebase.database.DataSnapshot;
 
-public class EditFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+import java.util.Map;
+
+public class EditFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
+{
     Spinner teamSpinnerEdit;
     ArrayAdapter<CharSequence> teamAdapterEdit;
     EditText edGameNumberEdit, edTeamNumberEdit;
@@ -49,6 +55,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         btnSearch.setOnClickListener(this);
         btnBackEdit.setOnClickListener(this);
         teamSpinnerEdit.setOnItemSelectedListener(this);
+
     }
 
 
@@ -68,7 +75,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 gameNumber = "";
                 GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
 
-                finishAndRemoveTask();
+                finish();
                 break;
             default:
                 break;
@@ -89,5 +96,14 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         optionSelected = (String) teamSpinnerEdit.getItemAtPosition(optionSelectedIndex);
+    }
+
+    private Map<String, Object> showData(DataSnapshot dataSnapshot){
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            MatchInfo mi = new MatchInfo();
+            mi.setBlue(ds.child(Integer.toString(User.currentGame)).getValue(MatchInfo.class).getBlue());
+            mi.setRed(ds.child(Integer.toString(User.currentGame)).getValue(MatchInfo.class).getRed());
+        }
+        return null;
     }
 }

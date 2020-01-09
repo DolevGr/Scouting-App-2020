@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 next = new Intent(MainActivity.this, EditFormActivity.class);
                 break;
             case R.id.btnExit:
-                finish();
+                next = new Intent(MainActivity.this, LoginActivity.class);
                 break;
             default:
                 next = null;

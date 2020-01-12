@@ -1,25 +1,25 @@
 package com.example.primo2020v1.libs;
 
 public class MatchInfo {
-    Alliance blue, red;
+    String[] blue, red;
 
     public MatchInfo(){
 
     }
 
-    public Alliance getBlue() {
+    public String[] getBlue() {
         return blue;
     }
 
-    public Alliance getRed() {
+    public String[] getRed() {
         return red;
     }
 
-    public void setBlue(Alliance blue) {
+    public void setBlue(String[] blue) {
         this.blue = blue;
     }
 
-    public void setRed(Alliance red) {
+    public void setRed(String[] red) {
         this.red = red;
     }
 }

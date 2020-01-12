@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Scouting 2020 V1</string>
+    <string name="app_name">
+<!--        Scouting 2020 V1-->
+        Yango
+    </string>
     <string name="action_settings">Settings</string>
     <string-array name="teams">
         <item>R Close</item>
@@ -9,4 +12,7 @@
         <item>B Middle</item>
         <item>B Far</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

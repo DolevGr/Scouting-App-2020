@@ -10,11 +10,11 @@ public class GeneralFunctions {
 
     public static Map<String,Object> getMap(Object obj)
     {
-        Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         try{
             Field[] fields = obj.getClass().getFields();
 
-            for(Field f :fields)
+            for(Field f : fields)
             {
                 if (!java.lang.reflect.Modifier.isStatic(f.getModifiers()))
                     map.put(f.getName(),f.get(obj));
@@ -28,26 +28,26 @@ public class GeneralFunctions {
 
         gameNumber.setText(Integer.toString(User.currentGame));
 
-        int x = User.currentGame < User.NUMBER_OF_MATCHES-1 ? User.currentGame : User.NUMBER_OF_MATCHES - 1;
+        int x = User.currentGame < User.matches.size()-1 ? User.currentGame : User.matches.size() - 1;
 
         switch (i) {
             case 0:
-                teamNumber.setText(User.matches.get(x).getRedTeam().getFirstRobot());
+                teamNumber.setText(User.matches.get(x).getFirstRedRobot());
                 break;
             case 1:
-                teamNumber.setText(User.matches.get(x).getRedTeam().getSecondRobot());
+                teamNumber.setText(User.matches.get(x).getSecondRedRobot());
                 break;
             case 2:
-                teamNumber.setText(User.matches.get(x).getRedTeam().getThirdRobot());
+                teamNumber.setText(User.matches.get(x).getThirdRedRobot());
                 break;
             case 3:
-                teamNumber.setText(User.matches.get(x).getBlueTeam().getFirstRobot());
+                teamNumber.setText(User.matches.get(x).getFirstBlueRobot());
                 break;
             case 4:
-                teamNumber.setText(User.matches.get(x).getBlueTeam().getSecondRobot());
+                teamNumber.setText(User.matches.get(x).getSecondBlueRobot());
                 break;
             case 5:
-                teamNumber.setText(User.matches.get(x).getBlueTeam().getThirdRobot());
+                teamNumber.setText(User.matches.get(x).getThirdBlueRobot());
                 break;
             default:
                 teamNumber.setText("ERROR game:" + User.currentGame);

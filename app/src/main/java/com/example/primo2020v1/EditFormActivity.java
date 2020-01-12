@@ -1,5 +1,6 @@
 package com.example.primo2020v1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -74,7 +75,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 teamNumber = "";
                 gameNumber = "";
                 GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
-
+                startActivity(new Intent(EditFormActivity.this, MainActivity.class));
                 finish();
                 break;
             default:

@@ -1,33 +1,55 @@
 package com.example.primo2020v1.libs;
 
-import androidx.annotation.NonNull;
-
 public class Match{
-    public Alliance Red, Blue;
+    public String fRed, mRed, cRed,
+            fBlue, mBlue, cBlue;
     private int gameNum;
 
     public Match(String r1, String r2, String r3, String b1, String b2, String b3, int game){
-        Red = new Alliance(r1, r2, r3);
-        Blue = new Alliance(b1, b2, b3);
+        fRed = r1; mRed = r2; cRed = r3;
+        fBlue = b1; mBlue = b2; cBlue = b3;
 
         this.gameNum = game;
-    }
-
-    public Alliance getRedTeam(){
-        return this.Red;
-    }
-
-    public Alliance getBlueTeam(){
-        return this.Blue;
     }
 
     public int getGameNum() {
         return gameNum;
     }
 
-    @NonNull
+
+    public String getFirstRedRobot(){
+        return fRed;
+    }
+
+    public String getSecondRedRobot(){
+        return mRed;
+    }
+
+    public String getThirdRedRobot(){
+        return cRed;
+    }
+
+    public String getFirstBlueRobot(){
+        return fBlue;
+    }
+
+    public String getSecondBlueRobot(){
+        return mBlue;
+    }
+
+    public String getThirdBlueRobot(){
+        return cBlue;
+    }
+
     @Override
     public String toString() {
-        return Red.toString() + " " + Blue.toString();
+        return "Match{" +
+                "fRed='" + fRed + '\'' +
+                ", mRed='" + mRed + '\'' +
+                ", cRed='" + cRed + '\'' +
+                ", fBlue='" + fBlue + '\'' +
+                ", mBlue='" + mBlue + '\'' +
+                ", cBlue='" + cBlue + '\'' +
+                '}';
     }
 }

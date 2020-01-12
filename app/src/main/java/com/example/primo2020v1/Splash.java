@@ -46,6 +46,7 @@ public class Splash extends AppCompatActivity {
         User.members.add("Lior");
         User.members.add("Liora");
         User.members.add("Maor");
+        User.members.add("Mor");
         User.members.add("Sivan");
         User.members.add("Idan");
         User.members.add("Keren");
@@ -73,13 +74,22 @@ public class Splash extends AppCompatActivity {
         User.members.add("Niv");
         User.members.add("Noam");
         User.members.add("Peleg");
+
+        User.admins.add("Dolev");
+        User.admins.add("Iair");
+        User.admins.add("Shoshana");
+        User.admins.add("Tohar");
+        User.admins.add("Samuel");
+        User.admins.add("Mor");
         Collections.sort(User.members);
 
         for(int i = 1; i < User.NUMBER_OF_MATCHES+1; i++) {
-            User.matches.add(new Match(User.teams.get(0), User.teams.get(1), User.teams.get(2),
+            User.matches.add( new Match(User.teams.get(0), User.teams.get(1), User.teams.get(2),
                     User.teams.get(3), User.teams.get(4), User.teams.get(5), i));
         }
-        addToDatabase();
+        Log.d("Matches ", "onCreate: " + User.matches.get(0).toString());
+        if(addToFirebase)
+            addToDatabase();
 
 
         Thread th = new Thread() {
@@ -93,6 +103,7 @@ public class Splash extends AppCompatActivity {
                     in = new Intent(Splash.this, LoginActivity.class);
                     startActivity(in);
                 }
+                finish();
             }
         };
         th.start();
@@ -100,24 +111,27 @@ public class Splash extends AppCompatActivity {
 
     //This function is for debugging only
     public void addToDatabase(){
-        if(addToFirebase){
-            //Adds matches to Firebase
-            for(int i = 0; i < User.NUMBER_OF_MATCHES; i++){
-                Map<String, Object> match = GeneralFunctions.getMap(User.matches.get(i));
-                User.databaseReference.child("Match").child(Integer.toString(i+1)).setValue(match);
-            }
-
-            //Adds users to Firebase
-            for(int i = 0; i < User.members.size(); i++){
-                Map<String, Object> user = GeneralFunctions.getMap( new User(User.members.get(i),"Test"));
-                User.databaseReference.child("Users").child(Integer.toString(i+1)).setValue(user);
-            }
-
-            //Adds teams to Firebase
-            for(int i = 0; i < User.teams.size(); i++){
-                Map<String, Object> team = GeneralFunctions.getMap(User.teams.get(i));
-                User.databaseReference.child("Teams");
-            }
+        //Adds matches to Firebase
+        for(int i = 0; i < User.matches.size(); i++){
+            Map<String, Object> match = GeneralFunctions.getMap(User.matches.get(i));
+            User.databaseReference.child("Match").child(Integer.toString(i)).setValue(match);
         }
+
+        //Adds users to Firebase
+        for(int i = 0; i < User.members.size()-1; i++){
+            User u = new User(User.members.get(i),"Test");
+            if(User.admins.contains(User.members.get(i)))
+                u.setPrivillege();
+
+            Map<String, Object> user = GeneralFunctions.getMap(u);
+            User.databaseReference.child("Users").child(Integer.toString(i)).setValue(user);
+        }
+
+        //Adds teams to Firebase
+        for(int i = 0; i < User.teams.size(); i++) {
+            User.databaseReference.child("Teams").child(Integer.toString(i)).setValue(User.teams.get(i));
+        }
+
+        User.databaseReference.child("CurrentGame").setValue(User.currentGame);
     }
 }

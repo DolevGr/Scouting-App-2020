@@ -25,7 +25,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Intent i;
     Context context;
 
-    String name, password, nameFromDB, passFromDB;
+    String name, password, nameFromDB, passFromDB, privillegeFromDB = "", privillege = "false";
+    boolean priv = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view.getId() == R.id.btnLogin) {
             if (User.members.contains(name)) {
                 Log.d("Debugging Database 1", "*********************************************************onDataChange: ");
-                DatabaseReference dbreff = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name) + 1));
+                DatabaseReference dbreff = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name)));
                 dbreff.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try{
                             nameFromDB = dataSnapshot.child("name").getValue().toString();
                             passFromDB = dataSnapshot.child("password").getValue().toString();
+                            privillegeFromDB = dataSnapshot.child("privillege").getValue().toString();
+                            priv = privillege.equals(privillegeFromDB) ? false : true;
+
                         } catch (Exception e){
                             e.printStackTrace();
                             Log.d("Exception", "onDataChange: Data went missing :-(");
@@ -69,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d("LOGINGIN", "onClick: Entered onClick **********************************************************");
                             if (i != null){
                                 i.putExtra("Username", edName.getText().toString());
+                                i.putExtra("Privillege", priv);
                                 startActivity(i);
                             }
                         }

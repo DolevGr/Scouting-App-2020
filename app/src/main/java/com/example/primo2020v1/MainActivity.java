@@ -14,9 +14,12 @@ import com.example.primo2020v1.libs.User;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ListView lvGames;
     Intent intent, next;
-    String username;
     Context context;
     Button btnNewForm, btnEditForm, btnExit;
+    GamesAdapter gamesAdapter;
+
+    String username;
+    boolean priv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         context = getApplicationContext();
         intent = getIntent();
         username = intent.getStringExtra("Username");
+        priv = intent.getBooleanExtra("Privillege", false);
         //Toast.makeText(context.getApplicationContext(), username+"", Toast.LENGTH_SHORT).show();
 
         lvGames = (ListView) findViewById(R.id.lvGames);
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEditForm = (Button) findViewById(R.id.btnEditForm);
         btnExit = (Button) findViewById(R.id.btnExit);
 
-        GamesAdapter gamesAdapter = new GamesAdapter(context, R.layout.costum_games_layout, User.matches);
+        gamesAdapter = new GamesAdapter(context, R.layout.costum_games_layout, User.matches);
         lvGames.setAdapter(gamesAdapter);
 
         btnNewForm.setOnClickListener(this);
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnExit:
                 next = new Intent(MainActivity.this, LoginActivity.class);
+                finish();
                 break;
             default:
                 next = null;

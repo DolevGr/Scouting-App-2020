@@ -49,12 +49,12 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         Match match = this.getItem(position);
 
 
-        tvR1.setText(match.getRedTeam().getFirstRobot());
-        tvR2.setText(match.getRedTeam().getSecondRobot());
-        tvR3.setText(match.getRedTeam().getThirdRobot());
-        tvB1.setText(match.getBlueTeam().getFirstRobot());
-        tvB2.setText(match.getBlueTeam().getSecondRobot());
-        tvB3.setText(match.getBlueTeam().getThirdRobot());
+        tvR1.setText(match.getFirstRedRobot());
+        tvR2.setText(match.getSecondRedRobot());
+        tvR3.setText(match.getThirdRedRobot());
+        tvB1.setText(match.getFirstBlueRobot());
+        tvB2.setText(match.getSecondBlueRobot());
+        tvB3.setText(match.getThirdBlueRobot());
 
         tvGame.setText(Integer.toString(match.getGameNum()));
 

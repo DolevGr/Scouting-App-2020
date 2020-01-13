@@ -16,7 +16,7 @@ import java.util.Map;
 public class Splash extends AppCompatActivity {
 
     Intent in;
-    boolean addToFirebase = false;
+    boolean addToFirebase = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +112,8 @@ public class Splash extends AppCompatActivity {
     //This function is for debugging only
     public void addToDatabase(){
         //Adds matches to Firebase
-        for(int i = 0; i < User.matches.size(); i++){
-            Map<String, Object> match = GeneralFunctions.getMap(User.matches.get(i));
+        for(int i = 1; i < User.matches.size() + 1; i++){
+            Map<String, Object> match = GeneralFunctions.getMap(User.matches.get(i-1));
             User.databaseReference.child("Match").child(Integer.toString(i)).setValue(match);
         }
 
@@ -121,7 +121,7 @@ public class Splash extends AppCompatActivity {
         for(int i = 0; i < User.members.size()-1; i++){
             User u = new User(User.members.get(i),"Test");
             if(User.admins.contains(User.members.get(i)))
-                u.setPrivillege();
+                u.setPrivilege();
 
             Map<String, Object> user = GeneralFunctions.getMap(u);
             User.databaseReference.child("Users").child(Integer.toString(i)).setValue(user);

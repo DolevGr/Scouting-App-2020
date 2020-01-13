@@ -7,34 +7,47 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tvPowerCells"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Power Cells"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.20999998" />
+
+    <TextView
         android:id="@+id/tvPowerCells1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Cells Lower"
+        android:layout_marginEnd="4dp"
+        android:text="Lower"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsLower"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsLower"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsLower"
-        android:layout_width="196dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="164dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.321" />
 
     <TextView
         android:id="@+id/tvPowerCellsLower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsLower"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsLower"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
 
@@ -43,31 +56,30 @@
         android:id="@+id/tvPowerCells2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Cells Outer"
+        android:layout_marginEnd="4dp"
+        android:text="Outer"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsInner"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsInner" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsInner"
-        android:layout_width="196dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsLower"
+        app:layout_constraintStart_toEndOf="@+id/tvPowerCells1"
         app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsLower" />
 
     <TextView
         android:id="@+id/tvPowerCellsInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsInner"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsInner" />
 
@@ -76,32 +88,30 @@
         android:id="@+id/tvPowerCells3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Cells Inner"
+        android:layout_marginEnd="4dp"
+        android:text="Inner"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsOuter"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsOuter"
         app:layout_constraintVertical_bias="0.368" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsOuter"
-        android:layout_width="196dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsInner"
+        app:layout_constraintStart_toEndOf="@+id/tvPowerCells2"
         app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsInner" />
 
     <TextView
         android:id="@+id/tvPowerCellsOuter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsOuter"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsOuter"
         app:layout_constraintVertical_bias="1.0" />
@@ -111,32 +121,31 @@
         android:id="@+id/tvPowerCells4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Cells Missed"
+        android:layout_marginEnd="4dp"
+        android:text="Missed"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsMissed"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed"
         app:layout_constraintVertical_bias="0.368" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsMissed"
-        android:layout_width="196dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintEnd_toStartOf="@+id/tvPowerCells2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsOuter" />
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
 
     <TextView
         android:id="@+id/tvPowerCellsMissed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsMissed"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed"
         app:layout_constraintVertical_bias="1.0" />
@@ -149,5 +158,17 @@
         android:text="Cycle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnTeleAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auto"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCycle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnCycle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

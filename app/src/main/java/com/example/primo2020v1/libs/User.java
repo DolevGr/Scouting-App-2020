@@ -14,21 +14,15 @@ public class User {
     public static int currentGame = 1;
     public static ArrayList<String> members = new ArrayList<>();
     public static ArrayList<String> admins = new ArrayList<>();
-    public static int score = 0,
-            ppTeleBottom = 0, ppTeleOuter = 0, ppTeleInner = 0,
-            ppAutoBottom = 0, ppAutoOuter = 0, ppAutoInner = 0,
-            pcRotations = 0, numOfHangedRobots = 0, RP = 0;
-    public static boolean movedFromInitLine = false, didHang = false;
-    public static String textBox = "";
 
 
     public String name, password;
-    public boolean privillege;
+    public boolean privilege;
 
     public User(String name, String pass){
         this.name = name;
         this.password = pass;
-        this.privillege = false;
+        this.privilege = true;
     }
 
     public String getName() {
@@ -47,11 +41,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isPrivillege() {
-        return privillege;
+    public boolean isPrivilege() {
+        return privilege;
     }
 
-    public void setPrivillege() {
-        this.privillege = true;
+    public void setPrivilege() {
+        this.privilege = true;
     }
 }

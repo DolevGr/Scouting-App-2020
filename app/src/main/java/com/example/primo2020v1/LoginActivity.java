@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         try{
                             nameFromDB = dataSnapshot.child("name").getValue().toString();
                             passFromDB = dataSnapshot.child("password").getValue().toString();
-                            privillegeFromDB = dataSnapshot.child("privillege").getValue().toString();
+                            privillegeFromDB = dataSnapshot.child("privilege").getValue().toString();
                             priv = privillege.equals(privillegeFromDB) ? false : true;
 
                         } catch (Exception e){

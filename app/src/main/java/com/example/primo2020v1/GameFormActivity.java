@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.primo2020v1.libs.ButtonsFragment;
 import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.libs.MatchManager;
 import com.example.primo2020v1.libs.User;
 
 public class GameFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
@@ -28,13 +29,18 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
     FragmentTransaction fragmentTransaction;
     Spinner teamSpinner;
     ArrayAdapter<CharSequence> teamAdapter;
-    Button btnNext, btnTest, btnBack, btnCycle;
+    Button btnNext, btnTest, btnBack, btnCycle, btnTeleAuto;
     EditText edGameNumber, edTeamNumber;
-    TextView tvPowerCellsInner, tvPowerCellsOuter, tvPowerCellsLower, tvPowerCellsMissed;
-    SeekBar sbPowerCellsInner, sbPowerCellsOuter, sbPowerCellsLower, sbPowerCellsMissed;
+    public TextView tvPowerCellsInner, tvPowerCellsOuter, tvPowerCellsLower, tvPowerCellsMissed;
+    public SeekBar sbPowerCellsInner, sbPowerCellsOuter, sbPowerCellsLower, sbPowerCellsMissed;
 
     String optionSelected = "", gameNumber = "", teamNumber = "";
-    int optionSelectedIndex = 0, layoutIndex = 0;
+    int optionSelectedIndex = 0, layoutIndex = 0, cycles = 0;
+
+    //Tele: true; Auto: false
+    boolean phase = false;
+
+    MatchManager matchManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,8 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
 
         switch (view.getId()){
             case R.id.btnNext:
+                matchManager = new MatchManager(edTeamNumber.getText().toString().trim(),
+                        optionSelected, User.currentGame, GameFormActivity.this);
                 setContentView(R.layout.power_cells_form);
 
                 tvPowerCellsInner = (TextView) findViewById(R.id.tvPowerCellsInner);
@@ -77,6 +85,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
                 tvPowerCellsLower = (TextView) findViewById(R.id.tvPowerCellsLower);
                 tvPowerCellsMissed = (TextView) findViewById(R.id.tvPowerCellsMissed);
                 btnCycle = (Button) findViewById(R.id.btnCycle);
+                btnTeleAuto = (Button) findViewById(R.id.btnTeleAuto);
 
                 sbPowerCellsInner = (SeekBar) findViewById(R.id.sbPowerCellsInner);
                 sbPowerCellsOuter = (SeekBar) findViewById(R.id.sbPowerCellsOuter);
@@ -89,6 +98,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
                 sbPowerCellsOuter.setOnSeekBarChangeListener(this);
                 sbPowerCellsInner.setOnSeekBarChangeListener(this);
                 btnCycle.setOnClickListener(this);
+                btnTeleAuto.setOnClickListener(this);
 
                 Log.d("Next Button ", "onClick: Next Stage in GameForm");
                 Toast.makeText(this, "BtnNext ", Toast.LENGTH_SHORT).show();
@@ -116,18 +126,33 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(GameFormActivity.this, MainActivity.class));
                 finish();
                 break;
+
             case R.id.btnPowerCells:
                 layoutIndex = 0;
                 setContentView(R.layout.power_cells_form);
                 break;
+
             case R.id.btnControlPanel:
                 layoutIndex = 1;
                 break;
+
             case R.id.btnCycle:
-                sbPowerCellsMissed.setProgress(0);
-                sbPowerCellsLower.setProgress(0);
-                sbPowerCellsOuter.setProgress(0);
-                sbPowerCellsInner.setProgress(0);
+                cycles++;
+                matchManager.endOfCycle(phase);
+                matchManager.addCyclesToDB(cycles);
+                matchManager.resetSeekBars();
+                break;
+
+            case R.id.btnTeleAuto:
+                if(btnTeleAuto.getText().equals("Auto")) {
+                    btnTeleAuto.setText("Tele");
+                    phase = true;
+                } else {
+                    btnTeleAuto.setText("Auto");
+                    phase = false;
+                }
+                break;
+
             default:
                 break;
 
@@ -150,10 +175,10 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         optionSelected = (String) teamSpinner.getItemAtPosition(optionSelectedIndex);
     }
 
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if(fromUser) {
-            setMaxSeekBars();
             if(progress > getMax(seekBar))
                 seekBar.setProgress(getMax(seekBar));
         }
@@ -167,6 +192,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) { }
 
+
     private int getPowerCellsFromSeekBars(){
         return sbPowerCellsMissed.getProgress()
                 + sbPowerCellsLower.getProgress()
@@ -179,16 +205,9 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setMaxSeekBars(){
-        sbPowerCellsMissed.setMax(getMax(sbPowerCellsMissed));
         sbPowerCellsMissed.setMax(5);
-
-        sbPowerCellsLower.setMax(getMax(sbPowerCellsLower));
         sbPowerCellsLower.setMax(5);
-
-        sbPowerCellsOuter.setMax(getMax(sbPowerCellsOuter));
         sbPowerCellsOuter.setMax(5);
-
-        sbPowerCellsInner.setMax(getMax(sbPowerCellsInner));
         sbPowerCellsInner.setMax(5);
     }
 

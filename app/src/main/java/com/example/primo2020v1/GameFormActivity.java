@@ -49,6 +49,12 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         //setTitle("title");
 
 
+//        fragment = new ButtonsFragment();
+//        fragmentManager = getSupportFragmentManager();
+//        fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.add(R.id.frgButtons, fragment);
+//        fragmentTransaction.commit();
+
         edGameNumber = findViewById(R.id.edGameNumber);
         edTeamNumber = findViewById(R.id.edTeamNumber);
 
@@ -91,7 +97,7 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
                 sbPowerCellsOuter = (SeekBar) findViewById(R.id.sbPowerCellsOuter);
                 sbPowerCellsLower = (SeekBar) findViewById(R.id.sbPowerCellsLower);
                 sbPowerCellsMissed = (SeekBar) findViewById(R.id.sbPowerCellsMissed);
-                setMaxSeekBars();
+                matchManager.setMaxSeekBars();
 
                 sbPowerCellsMissed.setOnSeekBarChangeListener(this);
                 sbPowerCellsLower.setOnSeekBarChangeListener(this);
@@ -102,12 +108,6 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
 
                 Log.d("Next Button ", "onClick: Next Stage in GameForm");
                 Toast.makeText(this, "BtnNext ", Toast.LENGTH_SHORT).show();
-
-//                fragment = new ButtonsFragment();
-//                fragmentManager = getSupportFragmentManager();
-//                fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.add(R.id.frgButtons, fragment);
-//                fragmentTransaction.commit();
                 break;
 
             case R.id.spnTeam:
@@ -179,11 +179,11 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if(fromUser) {
-            if(progress > getMax(seekBar))
-                seekBar.setProgress(getMax(seekBar));
+            if(progress > matchManager.getMax(seekBar))
+                seekBar.setProgress(matchManager.getMax(seekBar));
         }
 
-        updateSeekBarsText();
+        matchManager.updateSeekBarsText();
     }
 
     @Override
@@ -191,30 +191,4 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) { }
-
-
-    private int getPowerCellsFromSeekBars(){
-        return sbPowerCellsMissed.getProgress()
-                + sbPowerCellsLower.getProgress()
-                + sbPowerCellsOuter.getProgress()
-                + sbPowerCellsInner.getProgress();
-    }
-
-    private int getMax(SeekBar sb){
-        return 5 - getPowerCellsFromSeekBars() + sb.getProgress();
-    }
-
-    private void setMaxSeekBars(){
-        sbPowerCellsMissed.setMax(5);
-        sbPowerCellsLower.setMax(5);
-        sbPowerCellsOuter.setMax(5);
-        sbPowerCellsInner.setMax(5);
-    }
-
-    public void updateSeekBarsText(){
-        tvPowerCellsMissed.setText(Integer.toString(sbPowerCellsMissed.getProgress()));
-        tvPowerCellsLower.setText(Integer.toString(sbPowerCellsLower.getProgress()));
-        tvPowerCellsOuter.setText(Integer.toString(sbPowerCellsOuter.getProgress()));
-        tvPowerCellsInner.setText(Integer.toString(sbPowerCellsInner.getProgress()));
-    }
 }

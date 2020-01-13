@@ -1,6 +1,7 @@
 package com.example.primo2020v1.libs;
 
 import android.util.Log;
+import android.widget.SeekBar;
 
 import com.example.primo2020v1.GameFormActivity;
 import com.google.firebase.database.DatabaseReference;
@@ -103,5 +104,32 @@ public class MatchManager {
         }
 
         Log.d(TAG, "renamePositionAsInDB: " + this.position);
+    }
+
+
+    //Power Cells SeekBars logic
+    private int getPowerCellsFromSeekBars(){
+        return gameFormActivity.sbPowerCellsMissed.getProgress()
+                + gameFormActivity.sbPowerCellsLower.getProgress()
+                + gameFormActivity.sbPowerCellsOuter.getProgress()
+                + gameFormActivity.sbPowerCellsInner.getProgress();
+    }
+
+    public int getMax(SeekBar sb){
+        return 5 - getPowerCellsFromSeekBars() + sb.getProgress();
+    }
+
+    public void setMaxSeekBars(){
+        gameFormActivity.sbPowerCellsMissed.setMax(5);
+        gameFormActivity.sbPowerCellsLower.setMax(5);
+        gameFormActivity.sbPowerCellsOuter.setMax(5);
+        gameFormActivity.sbPowerCellsInner.setMax(5);
+    }
+
+    public void updateSeekBarsText(){
+        gameFormActivity.tvPowerCellsMissed.setText(Integer.toString(gameFormActivity.sbPowerCellsMissed.getProgress()));
+        gameFormActivity.tvPowerCellsLower.setText(Integer.toString(gameFormActivity.sbPowerCellsLower.getProgress()));
+        gameFormActivity.tvPowerCellsOuter.setText(Integer.toString(gameFormActivity.sbPowerCellsOuter.getProgress()));
+        gameFormActivity.tvPowerCellsInner.setText(Integer.toString(gameFormActivity.sbPowerCellsInner.getProgress()));
     }
 }

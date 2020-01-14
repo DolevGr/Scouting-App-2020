@@ -6,6 +6,9 @@ import android.widget.SeekBar;
 import com.example.primo2020v1.GameFormActivity;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.content.ContentValues.TAG;
 
 public class MatchManager {
@@ -66,16 +69,22 @@ public class MatchManager {
     }
 
     public void addCyclesToDB(int cycle){
-        powerCellsReff.child("PowerCellsTele").child("Cycle" + cycle).setValue(pcTele[0]);
-        powerCellsReff.child("PowerCellsTele").child("Cycle" + cycle).setValue(pcTele[1]);
-        powerCellsReff.child("PowerCellsTele").child("Cycle" + cycle).setValue(pcTele[2]);
-        powerCellsReff.child("PowerCellsTele").child("Cycle" + cycle).setValue(pcTele[3]);
+        Map<String, Integer> tele = new HashMap<>(),
+                auto = new HashMap<>();
+        tele.put("TeleMissed", pcTele[0]);
+        tele.put("TeleLower", pcTele[1]);
+        tele.put("TeleOuter", pcTele[2]);
+        tele.put("TeleInner", pcTele[3]);
+
+        auto.put("AutoMissed", pcTele[0]);
+        auto.put("AutoLower", pcTele[1]);
+        auto.put("AutoOuter", pcTele[2]);
+        auto.put("AutoInner", pcTele[3]);
+
+        powerCellsReff.child("PowerCellsTele").child("Cycle" + cycle).setValue(tele);
         powerCellsReff.child("PowerCellsTele").child("Total Power Cells").setValue(totalTele);
 
-        powerCellsReff.child("PowerCellsAuto").child("Cycle" + cycle).setValue(pcAuto[0]);
-        powerCellsReff.child("PowerCellsAuto").child("Cycle" + cycle).setValue(pcAuto[1]);
-        powerCellsReff.child("PowerCellsAuto").child("Cycle" + cycle).setValue(pcAuto[2]);
-        powerCellsReff.child("PowerCellsAuto").child("Cycle" + cycle).setValue(pcAuto[3]);
+        powerCellsReff.child("PowerCellsAuto").child("Cycle" + cycle).setValue(auto);
         powerCellsReff.child("PowerCellsAuto").child("Total Power Cells").setValue(totalAuto);
 
         Log.d(TAG, "addCyclesToDB: beep bloop adding cycles");

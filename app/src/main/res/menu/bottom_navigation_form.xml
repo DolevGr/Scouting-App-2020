@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navMatchSettings"
+        android:icon="@drawable/ic_iconsett"
+        android:title="Match Settings" />
+
+    <item
+        android:id="@+id/navPowerCells"
+        android:icon="@drawable/ic_powercells"
+        android:title="Power Cells" />
+
+    <item
+        android:id="@+id/navControlPanel"
+        android:icon="@drawable/ic_controlpanel"
+        android:title="Control Panel" />
+
+    <item
+        android:id="@+id/navEndGame"
+        android:icon="@drawable/ic_endgame"
+        android:title="End Game" />
+
+    <item
+        android:id="@+id/navFinishForm"
+        android:icon="@drawable/ic_finish"
+        android:title="Finish" />
+</menu>

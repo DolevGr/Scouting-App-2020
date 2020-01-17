@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvPowerCells4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Inner"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
+        app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsInner"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsInner" />
+
+    <TextView
+        android:id="@+id/tvPowerCells3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Outer"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsOuter" />
+
+    <TextView
+        android:id="@+id/tvPowerCellsInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
+        app:layout_constraintStart_toEndOf="@+id/sbPowerCellsInner"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsInner" />
+
+    <SeekBar
+        android:id="@+id/sbPowerCellsMissed"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="5"
+        android:progress="1"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower"
+        app:layout_constraintVertical_bias="0.488" />
+
+    <TextView
+        android:id="@+id/tvPowerCells5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:text="Missed"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed" />
+
+    <TextView
+        android:id="@+id/tvPowerCellsMissed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintStart_toEndOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed" />
+
+    <SeekBar
+        android:id="@+id/sbPowerCellsLower"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="5"
+        android:progress="1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.321" />
+
+    <TextView
+        android:id="@+id/tvPowerCells"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Power Cells"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.20999998" />
+
+    <TextView
+        android:id="@+id/tvPowerCells1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Lower"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsLower"
+        app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsLower"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
+
+    <SeekBar
+        android:id="@+id/sbPowerCellsOuter"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="5"
+        android:progress="1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsLower"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvPowerCells1"
+        app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsLower" />
+
+    <TextView
+        android:id="@+id/tvPowerCellsLower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsLower"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/sbPowerCellsLower"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
+
+
+    <SeekBar
+        android:id="@+id/sbPowerCellsInner"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:max="5"
+        android:progress="1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintStart_toStartOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsOuter" />
+
+    <TextView
+        android:id="@+id/tvPowerCellsOuter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintStart_toEndOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsOuter" />
+
+    <Button
+        android:id="@+id/btnCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="Cycle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnTeleAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auto"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCycle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnCycle" />
+</androidx.constraintlayout.widget.ConstraintLayout>

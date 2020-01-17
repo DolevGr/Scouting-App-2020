@@ -6,8 +6,8 @@ public class Match{
     private int gameNum;
 
     public Match(String r1, String r2, String r3, String b1, String b2, String b3, int game){
-        fRed = r1; mRed = r2; cRed = r3;
-        fBlue = b1; mBlue = b2; cBlue = b3;
+        cRed = r1; mRed = r2; fRed = r3;
+        cBlue = b1; mBlue = b2; fBlue = b3;
 
         this.gameNum = game;
     }
@@ -18,7 +18,7 @@ public class Match{
 
 
     public String getFirstRedRobot(){
-        return fRed;
+        return cRed;
     }
 
     public String getSecondRedRobot(){
@@ -26,11 +26,11 @@ public class Match{
     }
 
     public String getThirdRedRobot(){
-        return cRed;
+        return fRed;
     }
 
     public String getFirstBlueRobot(){
-        return fBlue;
+        return cBlue;
     }
 
     public String getSecondBlueRobot(){
@@ -38,7 +38,7 @@ public class Match{
     }
 
     public String getThirdBlueRobot(){
-        return cBlue;
+        return fBlue;
     }
 
     @Override

@@ -52,8 +52,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view.getId() == R.id.btnLogin) {
             if (User.members.contains(name)) {
                 Log.d("Debugging Database 1", "*********************************************************onDataChange: ");
-                DatabaseReference dbreff = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name)));
-                dbreff.addValueEventListener(new ValueEventListener() {
+                DatabaseReference dbref = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name)));
+                dbref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try{

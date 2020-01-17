@@ -22,7 +22,7 @@ public class User {
     public User(String name, String pass){
         this.name = name;
         this.password = pass;
-        this.privilege = true;
+        this.privilege = false;
     }
 
     public String getName() {

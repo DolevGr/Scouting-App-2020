@@ -1,54 +1,42 @@
 package com.example.primo2020v1;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.primo2020v1.Fragments.ControlPanelFragment;
+import com.example.primo2020v1.Fragments.EndGameFragment;
+import com.example.primo2020v1.Fragments.FinishFragment;
 import com.example.primo2020v1.Fragments.MatchSettingsFragment;
 import com.example.primo2020v1.Fragments.PowerCellsFragment;
-import com.example.primo2020v1.libs.GeneralFunctions;
-import com.example.primo2020v1.libs.MatchManager;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.libs.Cycle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class GameFormActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener, BottomNavigationView.OnNavigationItemReselectedListener {
+import java.util.ArrayList;
 
-    private static final String TAG = "HHHHHHHHHHHHHHHn";
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
+public class GameFormActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+        ControlPanelFragment.ControlPanelListener, MatchSettingsFragment.MatchSettingsListener,
+        PowerCellsFragment.PowerCellsListener, EndGameFragment.EndGameListener, FinishFragment.FinishListener {
+    private static final String TAG = "GameFormActivity";
 
-    public Spinner teamSpinner;
-    public ArrayAdapter<CharSequence> teamAdapter;
-    public Button btnTest, btnCycle, btnTeleAuto;
-    public EditText edGameNumber, edTeamNumber;
-    public TextView tvPowerCellsInner, tvPowerCellsOuter, tvPowerCellsLower, tvPowerCellsMissed;
-    public SeekBar sbPowerCellsInner, sbPowerCellsOuter, sbPowerCellsLower, sbPowerCellsMissed;
+    private MatchSettingsFragment matchSettingsFragment;
+
+    public Button btnTest, btnToSubmission;
     BottomNavigationView bnvForm;
+    Fragment selectedFragment;
 
-    public String spnOptionSelected = "", gameNumber = "", teamNumber = "";
-    int optionSelectedIndex = 0, cycles = 0;
+    //index 0: Missed; 1: Lower; 2: Outer; 3: Inner
+    private ArrayList<Cycle> cycles;
+    public String spnOptionSelected = "", teamNumber = "";
+    int spnOptionSelectedIndex = 0, gameNumber = 0, numOfCycles,
+        teamState;
+    boolean controlPanel, controlPanelColor,
+        didPark, didClimb, didBalance;
 
-    //Tele: true; Auto: false
-    boolean phase = false;
-
-    MatchManager matchManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,105 +44,37 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_game_form);
         //setTitle("title");
 
+        matchSettingsFragment = new MatchSettingsFragment();
 
+        btnToSubmission = (Button) findViewById(R.id.btnToSubmission);
         bnvForm = (BottomNavigationView) findViewById(R.id.bottomNavFormBar);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentForm, new MatchSettingsFragment()).commit();
-        bnvForm.setOnNavigationItemReselectedListener(this);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentForm, matchSettingsFragment).commit();
+        bnvForm.setOnNavigationItemSelectedListener(this);
+
+        cycles = new ArrayList<>();
+        numOfCycles = 0;
     }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.spnTeam:
-                Log.d("Spinner Option ", "onClick: " + spnOptionSelected);
-                Toast.makeText(this, spnOptionSelected + "", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.btnTest:
-                /*User.currentGame++;
-                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);*/
-                Toast.makeText(this,"Current Game: " + User.currentGame, Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_before_match);
-                break;
-
-            case R.id.btnCycle:
-                cycles++;
-                matchManager.endOfCycle(phase);
-                matchManager.addCyclesToDB(cycles);
-                matchManager.resetSeekBars();
-                break;
-
-            case R.id.btnTeleAuto:
-                if(btnTeleAuto.getText().equals("Auto")) {
-                    btnTeleAuto.setText("Tele");
-                    btnTeleAuto.setBackgroundColor(getResources().getColor(R.color.TeleColor));
-                    phase = true;
-                } else {
-                    btnTeleAuto.setText("Auto");
-                    btnTeleAuto.setBackgroundColor(getResources().getColor(R.color.AutoColor));
-                    phase = false;
-                }
-                break;
-
-            default:
-                break;
-
-        }
-    }
-
-
-    //Spinner
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        optionSelectedIndex = i;
-        spnOptionSelected = (String) teamSpinner.getSelectedItem();
-
-        Log.d("Spinner Option ", "onClick: " + spnOptionSelected);
-        Toast.makeText(this, spnOptionSelected + "", Toast.LENGTH_SHORT).show();
-
-        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumber, edTeamNumber);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        spnOptionSelected = (String) teamSpinner.getItemAtPosition(optionSelectedIndex);
-    }
-
-
-    //SeekBars
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if(fromUser) {
-            if(progress > matchManager.getMax(seekBar))
-                seekBar.setProgress(matchManager.getMax(seekBar));
-        }
-
-        matchManager.updateSeekBarsText();
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) { }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) { }
 
 
     //Bottom Navigation View
     @Override
-    public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
-        Fragment selectedFragment = null;
-
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.navMatchSettings:
-                selectedFragment = new MatchSettingsFragment();
-                break;
-
             case R.id.navPowerCells:
                 selectedFragment = new PowerCellsFragment();
                 break;
 
             case R.id.navControlPanel:
                 selectedFragment = new ControlPanelFragment();
+                break;
+
+            case R.id.navEndGame:
+                selectedFragment = new EndGameFragment();
+                break;
+
+            case R.id.navFinishForm:
+                selectedFragment = new FinishFragment();
                 break;
 
             default:
@@ -165,61 +85,44 @@ public class GameFormActivity extends AppCompatActivity implements View.OnClickL
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentForm, selectedFragment).commit();
 
-
-        if(selectedFragment instanceof MatchSettingsFragment){
-            setupMatchSettings();
-            setupMatchSettingsListeners();
-
-            teamAdapter = ArrayAdapter.createFromResource(this, R.array.teams, R.layout.support_simple_spinner_dropdown_item);
-            teamAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-            teamSpinner.setAdapter(teamAdapter);
-
-            matchManager = new MatchManager(spnOptionSelected, Integer.toString(optionSelectedIndex),
-                    User.currentGame, GameFormActivity.this);
-        } else if(selectedFragment instanceof PowerCellsFragment){
-            setupPowerCells();
-            setupPowerCellsListeners();
-
-            matchManager.setMaxSeekBars();
-        }
+        return true;
     }
 
 
-    //Setup
-    private void setupMatchSettings(){
-
-        //btnTest = findViewById(R.id.btnTest);
+    @Override
+    public void getDataMatchSettings(String teamSelected, int position, int gameNumber) {
+        teamNumber = teamSelected;
+        this.gameNumber = gameNumber;
+        spnOptionSelectedIndex = position;
     }
 
-    private void setupMatchSettingsListeners(){
-        teamSpinner.setOnItemSelectedListener(this);
+    @Override
+    public void getDataPowerCells(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase) {
+        if (pcMissed + pcLower + pcOuter + pcOuter > 0)
+            cycles.add(new Cycle(pcMissed, pcLower, pcOuter, pcInner, phase));
+        numOfCycles++;
 
-        //btnTest.setOnClickListener(this);
+//        Toast.makeText(this, "Last Cycle: " + cycles.get(cycles.size()-1).toString(), Toast.LENGTH_LONG).show();
+//        Log.d(TAG, "getDataPowerCells: " + cycles.get(cycles.size()-1).toString());
     }
 
-    private void setupPowerCells(){
-        tvPowerCellsInner = (TextView) findViewById(R.id.tvPowerCellsInner);
-        tvPowerCellsOuter = (TextView) findViewById(R.id.tvPowerCellsOuter);
-        tvPowerCellsLower = (TextView) findViewById(R.id.tvPowerCellsLower);
-        tvPowerCellsMissed = (TextView) findViewById(R.id.tvPowerCellsMissed);
+    @Override
+    public void getDataControlPanel(boolean switchControlPanelState, boolean switchControlPanelColorState) {
+        controlPanel = switchControlPanelState;
+        controlPanelColor = switchControlPanelColorState;
 
-        sbPowerCellsInner = (SeekBar) findViewById(R.id.sbPowerCellsInner);
-        sbPowerCellsOuter = (SeekBar) findViewById(R.id.sbPowerCellsOuter);
-        sbPowerCellsLower = (SeekBar) findViewById(R.id.sbPowerCellsLower);
-        sbPowerCellsMissed = (SeekBar) findViewById(R.id.sbPowerCellsMissed);
-
-        btnCycle = (Button) findViewById(R.id.btnCycle);
-        btnTeleAuto = (Button) findViewById(R.id.btnTeleAuto);
+//        Toast.makeText(this, "Switched: normal: " + controlPanel + " By color: " + controlPanelColor ,Toast.LENGTH_LONG).show();
     }
 
-    public void setupPowerCellsListeners(){
-        sbPowerCellsMissed.setOnSeekBarChangeListener(this);
-        sbPowerCellsLower.setOnSeekBarChangeListener(this);
-        sbPowerCellsOuter.setOnSeekBarChangeListener(this);
-        sbPowerCellsInner.setOnSeekBarChangeListener(this);
+    @Override
+    public void getDataEndGame(boolean parked, boolean climbed, boolean balanced) {
+        didPark = parked;
+        didClimb = climbed;
+        didBalance = balanced;
+    }
 
-        btnCycle.setOnClickListener(this);
-        btnTeleAuto.setOnClickListener(this);
-
+    @Override
+    public void getDataFinish(int state) {
+        this.teamState = state;
     }
 }

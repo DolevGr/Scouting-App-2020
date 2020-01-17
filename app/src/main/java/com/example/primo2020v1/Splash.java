@@ -81,13 +81,17 @@ public class Splash extends AppCompatActivity {
         User.admins.add("Tohar");
         User.admins.add("Samuel");
         User.admins.add("Mor");
+
         Collections.sort(User.members);
+        Collections.sort(User.admins);
 
         for(int i = 1; i < User.NUMBER_OF_MATCHES+1; i++) {
             User.matches.add( new Match(User.teams.get(0), User.teams.get(1), User.teams.get(2),
                     User.teams.get(3), User.teams.get(4), User.teams.get(5), i));
         }
+
         Log.d("Matches ", "onCreate: " + User.matches.get(0).toString());
+
         if(addToFirebase)
             addToDatabase();
 
@@ -118,20 +122,25 @@ public class Splash extends AppCompatActivity {
         }
 
         //Adds users to Firebase
-        for(int i = 0; i < User.members.size()-1; i++){
+        int j = 0;
+        for(int i = 0; i < User.members.size(); i++){
             User u = new User(User.members.get(i),"Test");
-            if(User.admins.contains(User.members.get(i)))
+
+            if(j < User.admins.size() && User.members.get(i).equals(User.admins.get(j))) {
                 u.setPrivilege();
+                j++;
+            }
 
             Map<String, Object> user = GeneralFunctions.getMap(u);
             User.databaseReference.child("Users").child(Integer.toString(i)).setValue(user);
         }
 
         //Adds teams to Firebase
-        for(int i = 0; i < User.teams.size(); i++) {
-            User.databaseReference.child("Teams").child(Integer.toString(i)).setValue(User.teams.get(i));
-        }
-
-        User.databaseReference.child("CurrentGame").setValue(User.currentGame);
+        //No need to setValue()
+//        for(int i = 0; i < User.teams.size(); i++) {
+//            User.databaseReference.child("Teams").child(Integer.toString(i)).setValue(User.teams.get(i));
+//        }
+//
+//        User.databaseReference.child("CurrentGame").setValue(User.currentGame);
     }
 }

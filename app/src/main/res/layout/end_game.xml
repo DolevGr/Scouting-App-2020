@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tvEndGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Game"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.213" />
+
+
+    <Switch
+        android:id="@+id/switchParked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEndGame"
+        app:layout_constraintVertical_bias="0.141" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Parked"
+        android:textColor="@color/AutoColor"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/switchParked"
+        app:layout_constraintEnd_toStartOf="@+id/switchParked"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/switchParked" />
+
+    <Switch
+        android:id="@+id/switchClimbed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/switchParked"
+        app:layout_constraintStart_toStartOf="@+id/switchParked"
+        app:layout_constraintTop_toBottomOf="@+id/switchParked" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Climbed"
+        android:textColor="@color/AutoColor"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/switchClimbed"
+        app:layout_constraintEnd_toStartOf="@+id/switchClimbed"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/switchClimbed" />
+
+    <Switch
+        android:id="@+id/switchBalanced"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/switchClimbed"
+        app:layout_constraintStart_toStartOf="@+id/switchClimbed"
+        app:layout_constraintTop_toBottomOf="@+id/switchClimbed" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Balanced"
+        android:textColor="@color/AutoColor"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/switchBalanced"
+        app:layout_constraintEnd_toStartOf="@+id/switchBalanced"
+        app:layout_constraintTop_toTopOf="@+id/switchBalanced" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

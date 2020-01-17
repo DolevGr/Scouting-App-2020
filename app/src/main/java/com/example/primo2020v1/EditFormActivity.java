@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,14 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.primo2020v1.libs.GeneralFunctions;
-import com.example.primo2020v1.libs.MatchInfo;
-import com.example.primo2020v1.libs.User;
-import com.google.firebase.database.DataSnapshot;
-
-import java.util.Map;
-
-public class EditFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
+public class EditFormActivity extends AppCompatActivity implements View.OnClickListener/*, AdapterView.OnItemSelectedListener*/
 {
     Spinner teamSpinnerEdit;
     ArrayAdapter<CharSequence> teamAdapterEdit;
@@ -55,7 +47,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
         btnSearch.setOnClickListener(this);
         btnBackEdit.setOnClickListener(this);
-        teamSpinnerEdit.setOnItemSelectedListener(this);
+        //teamSpinnerEdit.setOnItemSelectedListener(this);
 
     }
 
@@ -65,16 +57,13 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()){
             case R.id.btnSearch:
                 break;
+
             case R.id.spnTeamEdit:
                 Log.d("Spinner Option ", "onClick: " + optionSelected);
                 Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
                 break;
+
             case R.id.btnBackEdit:
-                optionSelected = "";
-                optionSelectedIndex = 0;
-                teamNumber = "";
-                gameNumber = "";
-                GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
                 startActivity(new Intent(EditFormActivity.this, MainActivity.class));
                 finish();
                 break;
@@ -82,29 +71,20 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+//
+//    @Override
+//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//        optionSelectedIndex = i;
+//        optionSelected = (String) teamSpinnerEdit.getSelectedItem();
+//
+//        Log.d("Spinner Option ", "onClick: " + optionSelected);
+//        Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
+//
+//        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
+//    }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        optionSelectedIndex = i;
-        optionSelected = (String) teamSpinnerEdit.getSelectedItem();
-
-        Log.d("Spinner Option ", "onClick: " + optionSelected);
-        Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
-
-        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        optionSelected = (String) teamSpinnerEdit.getItemAtPosition(optionSelectedIndex);
-    }
-
-    private Map<String, Object> showData(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            MatchInfo mi = new MatchInfo();
-            mi.setBlue(ds.child(Integer.toString(User.currentGame)).getValue(MatchInfo.class).getBlue());
-            mi.setRed(ds.child(Integer.toString(User.currentGame)).getValue(MatchInfo.class).getRed());
-        }
-        return null;
-    }
+//    @Override
+//    public void onNothingSelected(AdapterView<?> adapterView) {
+//        optionSelected = (String) teamSpinnerEdit.getItemAtPosition(optionSelectedIndex);
+//    }
 }

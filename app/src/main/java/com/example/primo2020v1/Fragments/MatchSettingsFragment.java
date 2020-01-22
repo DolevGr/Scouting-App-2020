@@ -1,6 +1,7 @@
 package com.example.primo2020v1.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,23 +18,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 
 public class MatchSettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public interface MatchSettingsListener {
-        void getDataMatchSettings(String teamSelected, int position, int gameNumber);
+        void getDataMatchSettings(Intent msIntent);
     }
 
 
     private MatchSettingsListener listener;
+    private Intent msIntent;
     private EditText edGameNumber, edTeamNumber;
     private Spinner spnTeam;
     private String[] positions;
 
-    public static int gameNumber = User.currentGame, spnIndex;
+    public static int gameNumber = User.currentGame, spnIndex = 0;
     public static String teamNumber = "";
     private ArrayAdapter<CharSequence> teamAdapter;
 
@@ -60,6 +64,8 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
         edGameNumber.addTextChangedListener(textWatcherGameNumber);
         edTeamNumber.addTextChangedListener(textWatcherTeamNumber);
+
+        msIntent = new Intent(getContext(), GameFormActivity.class);
 
         return v;
     }
@@ -128,15 +134,17 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     public void onDetach() {
         super.onDetach();
 
-        teamNumber = edTeamNumber.getText().toString();
-        gameNumber = Integer.parseInt(edGameNumber.getText().toString());
-        listener.getDataMatchSettings(teamNumber, spnIndex, gameNumber);
+        placeInfo();
         listener = null;
     }
 
-    public void resetFragment(){
-        gameNumber = 0;
-        spnIndex = 0;
-        teamNumber = "";
+    public void placeInfo(){
+        teamNumber = edTeamNumber.getText().toString();
+        gameNumber = Integer.parseInt(edGameNumber.getText().toString());
+
+        msIntent.putExtra(Keys.MS_TEAM, teamNumber);
+        msIntent.putExtra(Keys.MS_NUMBER, gameNumber);
+        msIntent.putExtra(Keys.MS_TEAM_INDEX, spnIndex);
+        listener.getDataMatchSettings(msIntent);
     }
 }

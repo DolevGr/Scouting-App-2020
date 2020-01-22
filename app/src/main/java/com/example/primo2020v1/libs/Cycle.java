@@ -1,13 +1,16 @@
 package com.example.primo2020v1.libs;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
-public class Cycle {
+public class Cycle implements Parcelable {
     private final int OPTIONS = 4;
 
     //true: Tele; false: Auto
-    private int[] pc;
-    private boolean phase;
+    public int[] pc;
+    public boolean phase;
 
     public Cycle(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase){
         this.phase = phase;
@@ -32,6 +35,14 @@ public class Cycle {
         return phase;
     }
 
+    public int getTotalPC(){
+        int sum = 0;
+        for(int i = 0; i < pc.length; i++)
+            sum += pc[i];
+
+        return sum;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -48,4 +59,33 @@ public class Cycle {
                 ", Inner: " + pc[3] +
                 " ]";
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeIntArray(pc);
+        parcel.writeByte((byte) (phase ? 1 : 0));
+    }
+
+    protected Cycle(Parcel in) {
+        pc = in.createIntArray();
+        phase = in.readByte() != 0;
+    }
+
+    public static final Creator<Cycle> CREATOR = new Creator<Cycle>() {
+        @Override
+        public Cycle createFromParcel(Parcel in) {
+            return new Cycle(in);
+        }
+
+        @Override
+        public Cycle[] newArray(int size) {
+            return new Cycle[size];
+        }
+    };
 }

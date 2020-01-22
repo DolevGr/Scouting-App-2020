@@ -39,27 +39,24 @@
     <SeekBar
         android:id="@+id/sbPowerCellsMissed"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:max="5"
-        android:progress="1"
         android:layout_width="120dp"
         android:layout_height="40dp"
+        android:max="5"
+        android:progress="1"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower"
-        app:layout_constraintVertical_bias="0.488" />
+        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
 
     <TextView
         android:id="@+id/tvPowerCells5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="4dp"
         android:text="Missed"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsMissed"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed" />
 
     <TextView
@@ -76,13 +73,13 @@
     <SeekBar
         android:id="@+id/sbPowerCellsLower"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:max="5"
-        android:progress="1"
         android:layout_width="100dp"
         android:layout_height="40dp"
+        android:max="5"
+        android:progress="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.321" />
@@ -142,11 +139,11 @@
     <SeekBar
         android:id="@+id/sbPowerCellsInner"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:max="5"
-        android:progress="1"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
+        android:max="5"
+        android:progress="1"
         app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsOuter"
         app:layout_constraintStart_toStartOf="@+id/sbPowerCellsOuter"
         app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsOuter" />

@@ -1,6 +1,7 @@
 package com.example.primo2020v1.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +14,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
+import com.example.primo2020v1.libs.Cycle;
+import com.example.primo2020v1.libs.Keys;
+
+import java.util.ArrayList;
 
 public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
-
     public interface PowerCellsListener {
-        void getDataPowerCells(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase);
+        void getDataPowerCells(Intent pcIntent);
     }
 
     private PowerCellsListener listener;
+    private Intent pcIntent;
 
     public int pcInner = 0, pcOuter = 0, pcLower = 0, pcMissed = 0;
-    private static int[] positions = new int[4];
+    public static int[] positions = new int[4];
 
     //Tele: true; Auto: false
-    private boolean phase = false;
+    public static boolean phase = false;
+    private ArrayList<Cycle> cycles;
 
     private Button btnCycle, btnTeleAuto;
     private TextView tvPowerCellsInner, tvPowerCellsOuter, tvPowerCellsLower, tvPowerCellsMissed;
@@ -59,6 +66,14 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         btnTeleAuto.setOnClickListener(this);
         btnCycle.setOnClickListener(this);
 
+        if(phase)
+            btnTeleAuto.setText("Tele");
+        else
+            btnTeleAuto.setText("Auto");
+
+        pcIntent = new Intent(getContext(), GameFormActivity.class);
+        cycles = new ArrayList<>();
+
         return v;
     }
 
@@ -84,7 +99,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         switch (view.getId()){
             case R.id.btnCycle:
                 getPCValues();
-                listener.getDataPowerCells(pcMissed, pcLower, pcOuter, pcInner, phase);
+                placeInfo();
                 resetSeekBars();
                 break;
 
@@ -171,11 +186,13 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         positions[1] = sbPowerCellsLower.getProgress();
         positions[2] = sbPowerCellsOuter.getProgress();
         positions[3] = sbPowerCellsInner.getProgress();
+        pcIntent.putParcelableArrayListExtra(Keys.PC_CYCLE, cycles);
+        listener.getDataPowerCells(pcIntent);
         listener = null;
     }
 
-    public void resetFragment(){
-        for (int num : positions)
-            num = 0;
+    public void placeInfo(){
+        if ((pcMissed + pcLower + pcOuter + pcInner) > 0)
+            cycles.add(new Cycle(pcMissed, pcLower, pcOuter, pcInner, phase));
     }
 }

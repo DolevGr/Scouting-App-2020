@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.Adapters.GamesAdapter;
 import com.example.primo2020v1.libs.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         context = getApplicationContext();
         intent = getIntent();
         username = intent.getStringExtra("Username");
-        priv = intent.getBooleanExtra("Privillege", false);
+        priv = intent.getBooleanExtra("Privilege", false);
         //Toast.makeText(context.getApplicationContext(), username+"", Toast.LENGTH_SHORT).show();
 
         lvGames = (ListView) findViewById(R.id.lvGames);

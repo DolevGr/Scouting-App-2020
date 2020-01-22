@@ -20,13 +20,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "TAG";
     EditText edName, edPass;
     Button btnLogin;
     Intent i;
     Context context;
 
     String name, password, nameFromDB, passFromDB, privillegeFromDB = "", privillege = "false";
-    boolean priv = false;
+    boolean priv = false, debug = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +46,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Log.d("ONCLICK", "onClick: Entered onClick **********************************************************");
+        Log.d("ONCLICK", "onClick: Entered onClick ");
         name = edName.getText().toString().trim();
         password = edPass.getText().toString().trim();
 
         if (view.getId() == R.id.btnLogin) {
+            Log.d(TAG, "onClick: " + User.members.toString());
             if (User.members.contains(name)) {
-                Log.d("Debugging Database 1", "*********************************************************onDataChange: ");
+                Log.d("Debugging Database ", "onDataChange: ");
                 DatabaseReference dbref = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name)));
                 dbref.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -67,22 +69,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d("Exception", "onDataChange: Data went missing :-(");
                         }
 
-                        if(isValidName() && isValidPassword()){
+                        if (isValidName() && isValidPassword()) {
                             i = new Intent(LoginActivity.this, MainActivity.class);
                             //Toast.makeText(context, "Loging Button", Toast.LENGTH_LONG).show();
-                            Log.d("LOGINGIN", "onClick: Entered onClick **********************************************************");
+                            Log.d("Logging in", "onClick: Entered onClick ");
+
                             if (i != null){
                                 i.putExtra("Username", edName.getText().toString());
-                                i.putExtra("Privillege", priv);
+                                i.putExtra("Privilege", priv);
                                 startActivity(i);
                             }
                         }
-                        Log.d("From databse: ", "onDataChange: " + nameFromDB + " : " + passFromDB);
+
+                        Log.d("From database: ", "onDataChange: " + nameFromDB + "; " + passFromDB);
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+
+                if (debug) {
+                    i = new Intent(LoginActivity.this, MainActivity.class);
+
+                    if (i != null){
+                        i.putExtra("Username", edName.getText().toString());
+                        i.putExtra("Privilege", priv);
+                        startActivity(i);
+                    }
+                }
             }
 
             checkPassAndUsername();

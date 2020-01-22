@@ -1,4 +1,4 @@
-package com.example.primo2020v1;
+package com.example.primo2020v1.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.Match;
 
 import java.util.ArrayList;

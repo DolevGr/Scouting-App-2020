@@ -1,6 +1,7 @@
 package com.example.primo2020v1.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
+import com.example.primo2020v1.libs.Keys;
 
 public class ControlPanelFragment extends Fragment {
     private Switch switchControlPanelColor, switchControlPanel;
     private ControlPanelListener listener;
-    private static boolean state1, state2;
+    public static boolean state1 = false, state2 = false;
+    private Intent cpIntent;
 
 
     public interface ControlPanelListener {
-        void getDataControlPanel(boolean switchControlPanelState, boolean switchControlPanelColorState);
+        void getDataControlPanel(Intent cpIntent);
     }
 
     @Nullable
@@ -33,6 +37,8 @@ public class ControlPanelFragment extends Fragment {
 
         switchControlPanel.setChecked(state1);
         switchControlPanelColor.setChecked(state2);
+
+        cpIntent = new Intent(getContext(), GameFormActivity.class);
 
         return v;
     }
@@ -54,15 +60,17 @@ public class ControlPanelFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
 
-        state1 = switchControlPanel.isChecked();
-        state2 = switchControlPanelColor.isChecked();
-
-        listener.getDataControlPanel(state1, state2);
+        placeInfo();
         listener = null;
     }
 
-    public void resetFragment(){
-        state1 = false;
-        state2 = false;
+    public void placeInfo(){
+        state1 = switchControlPanel.isChecked();
+        state2 = switchControlPanelColor.isChecked();
+        cpIntent.putExtra(Keys.CP_NORMAL, state1);
+        cpIntent.putExtra(Keys.CP_COLOR, state2);
+
+        listener.getDataControlPanel(cpIntent);
+
     }
 }

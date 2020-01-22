@@ -1,8 +1,9 @@
 package com.example.primo2020v1;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import com.example.primo2020v1.Fragments.FinishFragment;
 import com.example.primo2020v1.Fragments.MatchSettingsFragment;
 import com.example.primo2020v1.Fragments.PowerCellsFragment;
 import com.example.primo2020v1.libs.Cycle;
+import com.example.primo2020v1.libs.FormInfo;
+import com.example.primo2020v1.libs.Keys;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -24,36 +27,56 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     private static final String TAG = "GameFormActivity";
 
     private MatchSettingsFragment matchSettingsFragment;
-
-    public Button btnTest, btnToSubmission;
+    private Intent intent;
     BottomNavigationView bnvForm;
     Fragment selectedFragment;
 
     //index 0: Missed; 1: Lower; 2: Outer; 3: Inner
     private ArrayList<Cycle> cycles;
-    public String spnOptionSelected = "", teamNumber = "";
-    int spnOptionSelectedIndex = 0, gameNumber = 0, numOfCycles,
-        teamState;
-    boolean controlPanel, controlPanelColor,
-        didPark, didClimb, didBalance;
+    private FormInfo formInfo;
+    public String teamNumber = "";
+    int spnOptionSelectedIndex = 0, gameNumber = 1, numOfCycles,
+            endGameImageId = R.drawable.ic_empty, finishImgId = 0 /*CHANGE to R.drawable.image*/;
+    boolean controlPanel, controlPanelColor;
+    CharSequence text;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_form);
-        //setTitle("title");
 
+        intent = getIntent();
         matchSettingsFragment = new MatchSettingsFragment();
 
-        btnToSubmission = (Button) findViewById(R.id.btnToSubmission);
         bnvForm = (BottomNavigationView) findViewById(R.id.bottomNavFormBar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentForm, matchSettingsFragment).commit();
         bnvForm.setOnNavigationItemSelectedListener(this);
 
-        cycles = new ArrayList<>();
-        numOfCycles = 0;
+        if (intent.hasExtra(Keys.FORM_INFO)) {
+            formInfo = intent.getParcelableExtra(Keys.FORM_INFO);
+            controlPanel = formInfo.isControlPanel();
+            controlPanelColor = formInfo.isControlPanelColor();
+            endGameImageId = formInfo.getEndGame();
+            finishImgId = formInfo.getFinish();
+            text = formInfo.getText();
+        }
+
+        if (intent.hasExtra(Keys.FINISH_PC)) {
+            cycles = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
+            Log.d(TAG, "onCreate: " + cycles.toString());
+
+            if (!cycles.isEmpty())
+                numOfCycles = cycles.size();
+            else
+                numOfCycles = 0;
+        } else {
+            cycles = new ArrayList<>();
+            cycles.add(new Cycle(0, 0, 0, 0, false));
+            numOfCycles = 0;
+        }
+
     }
 
 
@@ -79,7 +102,6 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
             default:
                 selectedFragment = new MatchSettingsFragment();
-                break;
         }
 
         getSupportFragmentManager().beginTransaction()
@@ -90,39 +112,48 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
 
     @Override
-    public void getDataMatchSettings(String teamSelected, int position, int gameNumber) {
-        teamNumber = teamSelected;
-        this.gameNumber = gameNumber;
-        spnOptionSelectedIndex = position;
+    public void getDataMatchSettings(Intent msIntent) {
+        teamNumber = msIntent.getStringExtra(Keys.MS_TEAM);
+        gameNumber = msIntent.getIntExtra(Keys.MS_NUMBER, 1);
+        spnOptionSelectedIndex = msIntent.getIntExtra(Keys.MS_TEAM_INDEX, 0);
     }
 
     @Override
-    public void getDataPowerCells(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase) {
-        if (pcMissed + pcLower + pcOuter + pcOuter > 0)
-            cycles.add(new Cycle(pcMissed, pcLower, pcOuter, pcInner, phase));
-        numOfCycles++;
-
-//        Toast.makeText(this, "Last Cycle: " + cycles.get(cycles.size()-1).toString(), Toast.LENGTH_LONG).show();
-//        Log.d(TAG, "getDataPowerCells: " + cycles.get(cycles.size()-1).toString());
+    public ArrayList<Cycle> getCyclesFinish() {
+        return cycles;
     }
 
     @Override
-    public void getDataControlPanel(boolean switchControlPanelState, boolean switchControlPanelColorState) {
-        controlPanel = switchControlPanelState;
-        controlPanelColor = switchControlPanelColorState;
-
-//        Toast.makeText(this, "Switched: normal: " + controlPanel + " By color: " + controlPanelColor ,Toast.LENGTH_LONG).show();
+    public void getDataControlPanel(Intent cpIntent) {
+        controlPanel = cpIntent.getBooleanExtra(Keys.CP_NORMAL, false);
+        controlPanelColor = cpIntent.getBooleanExtra(Keys.CP_COLOR, false);
     }
 
     @Override
-    public void getDataEndGame(boolean parked, boolean climbed, boolean balanced) {
-        didPark = parked;
-        didClimb = climbed;
-        didBalance = balanced;
+    public void getDataPowerCells(Intent pcIntent) {
+        ArrayList<Cycle> c = pcIntent.getParcelableArrayListExtra(Keys.PC_CYCLE);
+
+        if(!c.isEmpty()){
+            cycles.addAll(c);
+        }
     }
 
     @Override
-    public void getDataFinish(int state) {
-        this.teamState = state;
+    public void getDataEndGame(Intent egIntent) {
+        endGameImageId = egIntent.getIntExtra(Keys.EG_IMG_ID, R.drawable.ic_empty);
+    }
+
+    @Override
+    public void getDataFinish(Intent finishIntent) {
+        finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, 0);
+        text = finishIntent.getCharSequenceExtra(Keys.FINISH_TEXT);
+    }
+
+    @Override
+    public FormInfo setFormInfo() {
+        formInfo = new FormInfo(teamNumber, gameNumber,
+                controlPanel, controlPanelColor,
+                endGameImageId, finishImgId, text);
+        return formInfo;
     }
 }

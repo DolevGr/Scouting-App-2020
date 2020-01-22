@@ -4,8 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="formButton">#B598DB</color>
-    <color name="TeleColor">#DB5C2D</color>
-    <color name="AutoColor">#2B2B2B</color>
-    <color name="SelectedIcon">#F38843</color>
+    <color name="mainOrange">#F38843</color>
     <color name="defaultColor">#000000</color>
+    <color name="mainBlue">#3A8BD8</color>
 </resources>

@@ -11,8 +11,8 @@ public class User {
     public static final int NUMBER_OF_MATCHES = 80;
     public static ArrayList<String> teams = new ArrayList<>();
     public static ArrayList<Match> matches = new ArrayList<>();
-    public static int currentGame = 1;
     public static ArrayList<String> members = new ArrayList<>();
+    public static int currentGame = 1;
     public static ArrayList<String> admins = new ArrayList<>();
 
 

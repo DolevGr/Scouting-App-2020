@@ -6,19 +6,18 @@ import java.util.Map;
 
 public class GeneralFunctions {
 
-    public static Map<String,Object> getMap(Object obj)
-    {
+    public static Map<String,Object> getMap(Object obj) {
         Map<String,Object> map = new HashMap<>();
-        try{
+
+        try {
             Field[] fields = obj.getClass().getFields();
 
-            for(Field f : fields)
-            {
+            for(Field f : fields) {
                 if (!java.lang.reflect.Modifier.isStatic(f.getModifiers()))
                     map.put(f.getName(),f.get(obj));
             }
-        }
-        catch (Exception e){}
+        } catch (Exception e){}
+
         return map;
     }
 

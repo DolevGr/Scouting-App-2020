@@ -63,7 +63,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             fi = (FormInfo) intent.getParcelableExtra(Keys.FORM_INFO);
             c = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
 
-            if(c.get(0).getTotalPC() == 0)
+            if (c.get(0).getTotalPC() == 0)
                 c.remove(0);
 
             if (!c.isEmpty()) {
@@ -90,10 +90,13 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnSubmit:
                 onSubmit();
                 resetForm();
+                if (!c.isEmpty())
+                    if (!adapter.getCycles().isEmpty())
+                        c = adapter.getCycles();
 
                 finishedForm = new Intent(SubmissionActivity.this, MainActivity.class);
                 finish();
@@ -120,23 +123,26 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void onSubmit(){
+    private void onSubmit() {
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
-        Map<String, Object> cycle = GeneralFunctions.getMap(c);
         Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
-        Log.d(TAG, "\nonSubmit: CyclesMap: "  + cycle + "\nFormInfoMap: " + formInfo);
 
-        dbRef.child("Cycles").setValue(cycle);
+        for (int i = 0; i < c.size(); i++){
+            Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
+            Log.d(TAG, "onSubmit: " + cycle.toString());
+            dbRef.child("Cycles " + i).setValue(cycle);
+        }
+
         dbRef.child("FormInfo").setValue(formInfo);
     }
 
-    private void resetForm(){
+    private void resetForm() {
         MatchSettingsFragment.teamNumber = "";
         MatchSettingsFragment.spnIndex = 0;
         MatchSettingsFragment.gameNumber = 0;
 
         PowerCellsFragment.phase = false;
-        for(int i = 0; i < PowerCellsFragment.positions.length; i++){
+        for (int i = 0; i < PowerCellsFragment.positions.length; i++) {
             PowerCellsFragment.positions[i] = 0;
         }
 

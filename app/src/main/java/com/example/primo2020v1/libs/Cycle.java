@@ -6,29 +6,20 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Cycle implements Parcelable {
-    private final int OPTIONS = 4;
-
-    //true: Tele; false: Auto
-    public int[] pc;
+    public int pcMissed, pcLower, pcOuter, pcInner;
     public boolean phase;
 
-    public Cycle(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase){
+    public Cycle(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase) {
         this.phase = phase;
-        pc = new int[OPTIONS];
 
-        pc[0] = pcMissed;
-        pc[1] = pcLower;
-        pc[2] = pcOuter;
-        pc[3] = pcInner;
-    }
-
-    public void setCycle(int[] newCycle){
-        for (int i = 0; i < newCycle.length; i++)
-            pc[i] = newCycle[i];
+        this.pcMissed = pcMissed;
+        this.pcLower = pcLower;
+        this.pcOuter = pcOuter;
+        this.pcOuter = pcInner;
     }
 
     public int[] getCycle(){
-        return pc;
+        return new int[]{pcMissed, pcLower, pcOuter, pcInner};
     }
 
     public boolean getPhase() {
@@ -36,11 +27,7 @@ public class Cycle implements Parcelable {
     }
 
     public int getTotalPC(){
-        int sum = 0;
-        for(int i = 0; i < pc.length; i++)
-            sum += pc[i];
-
-        return sum;
+        return pcMissed = pcLower + pcOuter + pcInner;
     }
 
     @NonNull
@@ -53,10 +40,10 @@ public class Cycle implements Parcelable {
             state = "Auto";
 
         return "Cycle[" + state +
-                ": Missed: " + pc[0] +
-                ", Lower: " + pc[1] +
-                ", Outer: " + pc[2] +
-                ", Inner: " + pc[3] +
+                ": Missed: " + pcMissed +
+                ", Lower: " + pcLower +
+                ", Outer: " + pcOuter +
+                ", Inner: " + pcInner +
                 " ]";
     }
 
@@ -68,12 +55,18 @@ public class Cycle implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeIntArray(pc);
+        parcel.writeInt(pcMissed);
+        parcel.writeInt(pcLower);
+        parcel.writeInt(pcInner);
+        parcel.writeInt(pcOuter);
         parcel.writeByte((byte) (phase ? 1 : 0));
     }
 
     protected Cycle(Parcel in) {
-        pc = in.createIntArray();
+        pcMissed = in.readInt();
+        pcLower = in.readInt();
+        pcOuter = in.readInt();
+        pcInner = in.readInt();
         phase = in.readByte() != 0;
     }
 

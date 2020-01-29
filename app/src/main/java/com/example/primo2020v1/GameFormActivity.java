@@ -31,12 +31,11 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     BottomNavigationView bnvForm;
     Fragment selectedFragment;
 
-    //index 0: Missed; 1: Lower; 2: Outer; 3: Inner
     private ArrayList<Cycle> cycles;
     private FormInfo formInfo;
     public String teamNumber = "";
     int spnOptionSelectedIndex = 0, gameNumber = 1, numOfCycles,
-            endGameImageId = R.drawable.ic_empty, finishImgId = 0 /*CHANGE to R.drawable.image*/;
+            endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won;
     boolean controlPanel, controlPanelColor;
     CharSequence text;
 
@@ -145,7 +144,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
     @Override
     public void getDataFinish(Intent finishIntent) {
-        finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, 0);
+        finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, R.drawable.ic_won);
         text = finishIntent.getCharSequenceExtra(Keys.FINISH_TEXT);
     }
 

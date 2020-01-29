@@ -34,18 +34,18 @@
         android:id="@+id/imgFinish"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.388" />
+        app:layout_constraintVertical_bias="0.388"
+        app:srcCompat="@drawable/ic_won" />
 
     <EditText
         android:id="@+id/edExtaInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Comment"

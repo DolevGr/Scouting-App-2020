@@ -2,7 +2,6 @@ package com.example.primo2020v1.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +41,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     private Button btnToSubmission;
     private Intent finishIntent, intent;
 
-    private int[] images = {Color.GREEN, Color.RED, Color.YELLOW};
+    private int[] images = {R.drawable.ic_won, R.drawable.ic_lost, R.drawable.ic_draw};
 
     @Nullable
     @Override

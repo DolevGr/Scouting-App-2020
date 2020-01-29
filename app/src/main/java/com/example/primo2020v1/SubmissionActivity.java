@@ -134,6 +134,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         }
 
         dbRef.child("FormInfo").setValue(formInfo);
+        Log.d(TAG, "onSubmit: " + formInfo.toString());
     }
 
     private void resetForm() {

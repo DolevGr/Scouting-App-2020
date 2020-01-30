@@ -191,7 +191,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         listener = null;
     }
 
-    public void placeInfo(){
+    public void placeInfo() {
         if ((pcMissed + pcLower + pcOuter + pcInner) > 0)
             cycles.add(new Cycle(pcMissed, pcLower, pcOuter, pcInner, phase));
     }

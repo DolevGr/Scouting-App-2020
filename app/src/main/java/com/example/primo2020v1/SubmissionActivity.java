@@ -63,10 +63,10 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             fi = (FormInfo) intent.getParcelableExtra(Keys.FORM_INFO);
             c = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
 
-            if (c.get(0).getTotalPC() == 0)
-                c.remove(0);
-
             if (!c.isEmpty()) {
+                if (c.get(0).getTotalPC() == 0)
+                    c.remove(0);
+
                 adapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, c);
                 lvCycles.setAdapter(adapter);
                 Log.d(TAG, "onCreate: " + c.toString());
@@ -106,8 +106,9 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnBack:
                 i = new Intent(SubmissionActivity.this, GameFormActivity.class);
 
-                if (!adapter.getCycles().isEmpty())
-                    c = adapter.getCycles();
+                if (!c.isEmpty())
+                    if (!adapter.getCycles().isEmpty())
+                        c = adapter.getCycles();
 
                 i.putExtra(Keys.FINISH_PC, c);
                 Log.d(TAG, "onClick: " + c);
@@ -122,7 +123,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
         Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
 
-        for (int i = 0; i < c.size(); i++){
+        for (int i = 0; i < c.size(); i++) {
             Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
             Log.d(TAG, "onSubmit: " + cycle.toString());
             dbRef.child("Cycles " + i).setValue(cycle);

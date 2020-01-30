@@ -72,9 +72,10 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
                 numOfCycles = 0;
         } else {
             cycles = new ArrayList<>();
-            cycles.add(new Cycle(0, 0, 0, 0, false));
             numOfCycles = 0;
         }
+
+        Log.d(TAG, "onCreate: " + cycles.toString());
 
     }
 

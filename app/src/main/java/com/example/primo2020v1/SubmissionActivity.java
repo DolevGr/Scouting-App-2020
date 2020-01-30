@@ -32,12 +32,12 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private ListView lvCycles;
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
-    private Switch switchPC, switchCPColor;
+    private Switch isPCnormal, isCPcolor;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
 
-    private Intent intent, finishedForm;
+    private Intent intent, finishedForm, i;
     private FormInfo fi;
     private ArrayList<Cycle> c;
 
@@ -55,8 +55,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         imgEndGame = findViewById(R.id.imgEndGame);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnBack = findViewById(R.id.btnBack);
-        switchPC = findViewById(R.id.switchCP);
-        switchCPColor = findViewById(R.id.switchCPColor);
+        isPCnormal = findViewById(R.id.switchCP);
+        isCPcolor = findViewById(R.id.switchCPColor);
 
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO) && intent.hasExtra(Keys.FINISH_PC)) {
@@ -77,9 +77,9 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
             Log.d(TAG, "onCreate: EngGame Image Id: " + imgEndGame + "; Finish Image Id: " + imgFinish);
             imgEndGame.setImageResource(fi.getEndGame());
-            imgFinish.setBackgroundColor(fi.getFinish());
-            switchPC.setChecked(fi.isControlPanel());
-            switchCPColor.setChecked(fi.isControlPanelColor());
+            imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
+            isPCnormal.setChecked(fi.isControlPanel());
+            isCPcolor.setChecked(fi.isControlPanelColor());
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
         }
@@ -104,22 +104,17 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.btnBack:
-                Intent i = new Intent(SubmissionActivity.this, GameFormActivity.class);
+                i = new Intent(SubmissionActivity.this, GameFormActivity.class);
 
-                if (!c.isEmpty()) {
-                    if (!adapter.getCycles().isEmpty())
-                        c = adapter.getCycles();
+                if (!adapter.getCycles().isEmpty())
+                    c = adapter.getCycles();
 
-                    i.putExtra(Keys.FINISH_PC, c);
-                    Log.d(TAG, "onClick: " + c);
-                }
+                i.putExtra(Keys.FINISH_PC, c);
+                Log.d(TAG, "onClick: " + c);
 
                 i.putExtra(Keys.FORM_INFO, fi);
+                finish();
                 startActivity(i);
-                break;
-
-            default:
-                break;
         }
     }
 
@@ -133,7 +128,12 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             dbRef.child("Cycles " + i).setValue(cycle);
         }
 
-        dbRef.child("FormInfo").setValue(formInfo);
+        dbRef.child("ControlPanel").setValue(fi.isControlPanel());
+        dbRef.child("ControlPanelColor").setValue(fi.isControlPanelColor());
+        dbRef.child("Finish").setValue(fi.getFinish());
+        dbRef.child("EndGame").setValue(fi.getEndGame());
+        dbRef.child("Comment").setValue(fi.getText());
+
         Log.d(TAG, "onSubmit: " + formInfo.toString());
     }
 
@@ -147,8 +147,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             PowerCellsFragment.positions[i] = 0;
         }
 
-        ControlPanelFragment.state1 = false;
-        ControlPanelFragment.state2 = false;
+        ControlPanelFragment.isPCnormal = false;
+        ControlPanelFragment.isPCcolor = false;
 
         EndGameFragment.imageIndex = 0;
 

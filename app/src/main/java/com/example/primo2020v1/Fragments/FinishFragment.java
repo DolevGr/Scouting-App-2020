@@ -92,7 +92,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setImage(){
-        imgReplace.setBackgroundColor(images[imageIndex]);
+        imgReplace.setImageDrawable(getResources().getDrawable(images[imageIndex]));
     }
 
     @Override

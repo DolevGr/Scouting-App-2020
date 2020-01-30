@@ -36,7 +36,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     public String teamNumber = "";
     int spnOptionSelectedIndex = 0, gameNumber = 1, numOfCycles,
             endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won;
-    boolean controlPanel, controlPanelColor;
+    boolean isControlPanelNormal, isControlPanelColor;
     CharSequence text;
 
 
@@ -55,8 +55,8 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
         if (intent.hasExtra(Keys.FORM_INFO)) {
             formInfo = intent.getParcelableExtra(Keys.FORM_INFO);
-            controlPanel = formInfo.isControlPanel();
-            controlPanelColor = formInfo.isControlPanelColor();
+            isControlPanelNormal = formInfo.isControlPanel();
+            isControlPanelColor = formInfo.isControlPanelColor();
             endGameImageId = formInfo.getEndGame();
             finishImgId = formInfo.getFinish();
             text = formInfo.getText();
@@ -124,8 +124,8 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
     @Override
     public void getDataControlPanel(Intent cpIntent) {
-        controlPanel = cpIntent.getBooleanExtra(Keys.CP_NORMAL, false);
-        controlPanelColor = cpIntent.getBooleanExtra(Keys.CP_COLOR, false);
+        isControlPanelNormal = cpIntent.getBooleanExtra(Keys.CP_NORMAL, false);
+        isControlPanelColor = cpIntent.getBooleanExtra(Keys.CP_COLOR, false);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     @Override
     public FormInfo setFormInfo() {
         formInfo = new FormInfo(teamNumber, gameNumber,
-                controlPanel, controlPanelColor,
+                isControlPanelNormal, isControlPanelColor,
                 endGameImageId, finishImgId, text);
         return formInfo;
     }

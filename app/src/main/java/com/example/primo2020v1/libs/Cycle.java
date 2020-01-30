@@ -27,7 +27,7 @@ public class Cycle implements Parcelable {
     }
 
     public int getTotalPC(){
-        return pcMissed = pcLower + pcOuter + pcInner;
+        return pcMissed + pcLower + pcOuter + pcInner;
     }
 
     @NonNull

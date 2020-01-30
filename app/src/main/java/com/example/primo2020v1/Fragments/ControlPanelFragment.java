@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,10 +16,10 @@ import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.Keys;
 
-public class ControlPanelFragment extends Fragment {
-    private Switch switchControlPanelColor, switchControlPanel;
+public class ControlPanelFragment extends Fragment implements View.OnClickListener {
+    private ImageView imgCPnormal, imgCPcolor;
     private ControlPanelListener listener;
-    public static boolean state1 = false, state2 = false;
+    public static boolean isPCnormal = false, isPCcolor = false;
     private Intent cpIntent;
 
 
@@ -32,15 +32,35 @@ public class ControlPanelFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.control_panel, container, false);
 
-        switchControlPanel = v.findViewById(R.id.switchControlPanel);
-        switchControlPanelColor = v.findViewById(R.id.switchControlPanelColor);
+        imgCPnormal = v.findViewById(R.id.imgCPnormal);
+        imgCPcolor = v.findViewById(R.id.imgCPcolor);
 
-        switchControlPanel.setChecked(state1);
-        switchControlPanelColor.setChecked(state2);
+        setBackGroundColor(imgCPnormal, isPCnormal);
+        setBackGroundColor(imgCPcolor, isPCcolor);
+        imgCPnormal.setOnClickListener(this);
+        imgCPcolor.setOnClickListener(this);
 
         cpIntent = new Intent(getContext(), GameFormActivity.class);
 
         return v;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imgCPnormal:
+                isPCnormal = !isPCnormal;
+                setBackGroundColor(imgCPnormal, isPCnormal);
+                break;
+
+            case R.id.imgCPcolor:
+                isPCcolor = !isPCcolor;
+                setBackGroundColor(imgCPcolor, isPCcolor);
+                break;
+
+            default:
+                break;
+        }
     }
 
 
@@ -64,11 +84,16 @@ public class ControlPanelFragment extends Fragment {
         listener = null;
     }
 
+    public void setBackGroundColor(ImageView img, boolean b) {
+        if (b)
+            img.setColorFilter(getResources().getColor(R.color.mainBlue));
+        else
+            img.setColorFilter(getResources().getColor(R.color.defaultColor));
+    }
+
     public void placeInfo(){
-        state1 = switchControlPanel.isChecked();
-        state2 = switchControlPanelColor.isChecked();
-        cpIntent.putExtra(Keys.CP_NORMAL, state1);
-        cpIntent.putExtra(Keys.CP_COLOR, state2);
+        cpIntent.putExtra(Keys.CP_NORMAL, isPCnormal);
+        cpIntent.putExtra(Keys.CP_COLOR, isPCcolor);
 
         listener.getDataControlPanel(cpIntent);
 

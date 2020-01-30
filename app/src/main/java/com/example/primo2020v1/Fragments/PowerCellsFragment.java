@@ -29,7 +29,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
     private PowerCellsListener listener;
     private Intent pcIntent;
 
-    public int pcInner = 0, pcOuter = 0, pcLower = 0, pcMissed = 0;
+    private int pcInner, pcOuter, pcLower, pcMissed;
     public static int[] positions = new int[4];
 
     //Tele: true; Auto: false
@@ -58,6 +58,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         btnCycle = (Button) v.findViewById(R.id.btnCycle);
         btnTeleAuto = (Button) v.findViewById(R.id.btnTeleAuto);
         onReselect();
+        getPCValues();
 
         sbPowerCellsMissed.setOnSeekBarChangeListener(this);
         sbPowerCellsLower.setOnSeekBarChangeListener(this);
@@ -66,7 +67,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         btnTeleAuto.setOnClickListener(this);
         btnCycle.setOnClickListener(this);
 
-        if(phase)
+        if (phase)
             btnTeleAuto.setText("Tele");
         else
             btnTeleAuto.setText("Auto");
@@ -80,8 +81,8 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
     //SeekBars
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if(fromUser) {
-            if(progress > getMax(seekBar))
+        if (fromUser) {
+            if (progress > getMax(seekBar))
                 seekBar.setProgress(getMax(seekBar));
         }
 
@@ -89,14 +90,16 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
     }
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) { }
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
 
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) { }
+    public void onStopTrackingTouch(SeekBar seekBar) {
+    }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnCycle:
                 getPCValues();
                 placeInfo();
@@ -104,7 +107,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
                 break;
 
             case R.id.btnTeleAuto:
-                if (phase){
+                if (phase) {
                     btnTeleAuto.setText("Auto");
                 } else {
                     btnTeleAuto.setText("Tele");
@@ -118,19 +121,19 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         }
     }
 
-    private int getMax(SeekBar sb){
+    private int getMax(SeekBar sb) {
         return 5 - getPowerCellsFromSeekBars() + sb.getProgress();
     }
 
     //Power Cells SeekBars logic
-    private int getPowerCellsFromSeekBars(){
+    private int getPowerCellsFromSeekBars() {
         return sbPowerCellsMissed.getProgress()
                 + sbPowerCellsLower.getProgress()
                 + sbPowerCellsOuter.getProgress()
                 + sbPowerCellsInner.getProgress();
     }
 
-    private void updateSeekBarsText(){
+    private void updateSeekBarsText() {
         getPCValues();
 
         tvPowerCellsMissed.setText(Integer.toString(pcMissed));
@@ -139,21 +142,21 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         tvPowerCellsInner.setText(Integer.toString(pcInner));
     }
 
-    private void resetSeekBars(){
+    private void resetSeekBars() {
         sbPowerCellsMissed.setProgress(0);
         sbPowerCellsLower.setProgress(0);
         sbPowerCellsOuter.setProgress(0);
         sbPowerCellsInner.setProgress(0);
     }
 
-    private void getPCValues(){
+    private void getPCValues() {
         pcMissed = sbPowerCellsMissed.getProgress();
         pcLower = sbPowerCellsLower.getProgress();
         pcOuter = sbPowerCellsOuter.getProgress();
         pcInner = sbPowerCellsInner.getProgress();
     }
 
-    private void onReselect(){
+    private void onReselect() {
         sbPowerCellsMissed.setProgress(positions[0]);
         sbPowerCellsLower.setProgress(positions[1]);
         sbPowerCellsOuter.setProgress(positions[2]);
@@ -170,9 +173,9 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try{
+        try {
             listener = (PowerCellsListener) context;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new RuntimeException(context.toString() +
                     " must implement PowerCellsListener");
         }

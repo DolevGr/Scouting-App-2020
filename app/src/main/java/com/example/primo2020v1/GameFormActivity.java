@@ -20,6 +20,8 @@ import com.example.primo2020v1.libs.Keys;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameFormActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         ControlPanelFragment.ControlPanelListener, MatchSettingsFragment.MatchSettingsListener,
@@ -38,6 +40,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
             endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won;
     boolean isControlPanelNormal, isControlPanelColor;
     CharSequence text;
+    private Map<Integer, Fragment> fragsMap;
 
 
     @Override
@@ -77,32 +80,23 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
         Log.d(TAG, "onCreate: " + cycles.toString());
 
+
+        fragsMap = new HashMap<>();
+        fragsMap.put(R.id.navPowerCells, new PowerCellsFragment());
+        fragsMap.put(R.id.navControlPanel, new ControlPanelFragment());
+        fragsMap.put(R.id.navEndGame, new EndGameFragment());
+        fragsMap.put(R.id.navFinishForm, new FinishFragment());
+        fragsMap.put(R.id.navMatchSettings, new MatchSettingsFragment());
     }
 
 
     //Bottom Navigation View
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.navPowerCells:
-                selectedFragment = new PowerCellsFragment();
-                break;
-
-            case R.id.navControlPanel:
-                selectedFragment = new ControlPanelFragment();
-                break;
-
-            case R.id.navEndGame:
-                selectedFragment = new EndGameFragment();
-                break;
-
-            case R.id.navFinishForm:
-                selectedFragment = new FinishFragment();
-                break;
-
-            default:
-                selectedFragment = new MatchSettingsFragment();
-        }
+        int id = menuItem.getItemId();
+        selectedFragment = fragsMap.get(id);
+        if (selectedFragment == null)
+            selectedFragment = fragsMap.get(R.id.navMatchSettings);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentForm, selectedFragment).commit();
@@ -133,7 +127,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     public void getDataPowerCells(Intent pcIntent) {
         ArrayList<Cycle> c = pcIntent.getParcelableArrayListExtra(Keys.PC_CYCLE);
 
-        if(!c.isEmpty()){
+        if (c != null && !c.isEmpty()) {
             cycles.addAll(c);
         }
     }

@@ -63,10 +63,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             fi = (FormInfo) intent.getParcelableExtra(Keys.FORM_INFO);
             c = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
 
-            if (!c.isEmpty()) {
-                if (c.get(0).getTotalPC() == 0)
-                    c.remove(0);
-
+            if (c != null && !c.isEmpty()) {
                 adapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, c);
                 lvCycles.setAdapter(adapter);
                 Log.d(TAG, "onCreate: " + c.toString());

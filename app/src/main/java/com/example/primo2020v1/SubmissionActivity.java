@@ -120,6 +120,9 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onSubmit() {
+        int totalCycles = c.size(), totalScore = 0,
+            totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
+
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
         dbRef.setValue(""); // Clears Data
         Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
@@ -128,7 +131,22 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
             dbRef.child("Cycles " + (i+1)).setValue(cycle);
             Log.d(TAG, "onSubmit: " + cycle.toString());
+
+            totalPCmissed += c.get(i).pcMissed;
+            totalPClower += c.get(i).pcLower;
+            totalPCouter += c.get(i).pcOuter;
+            totalPCinner += c.get(i).pcInner;
+
+            totalScore += c.get(i).getScore();
         }
+
+        dbRef.child("TotalMissed").setValue(totalPCmissed);
+        dbRef.child("TotalLower").setValue(totalPClower);
+        dbRef.child("TotalOuter").setValue(totalPCouter);
+        dbRef.child("TotalInner").setValue(totalPCinner);
+
+        dbRef.child("TotalScore").setValue(totalScore);
+        dbRef.child("NumberOfCycles").setValue(totalCycles);
 
         dbRef.child("ControlPanel").setValue(fi.isControlPanel());
         dbRef.child("ControlPanelColor").setValue(fi.isControlPanelColor());

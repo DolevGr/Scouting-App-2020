@@ -24,6 +24,12 @@
             app:menu="@menu/bottom_navigation_form"
             app:itemIconTint="@color/nav_item_colors"
             app:itemTextColor="@color/nav_item_colors" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="back to games" />
     </FrameLayout>
 
 </RelativeLayout>

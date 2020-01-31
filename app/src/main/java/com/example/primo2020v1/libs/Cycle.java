@@ -30,6 +30,10 @@ public class Cycle implements Parcelable {
         return pcMissed + pcLower + pcOuter + pcInner;
     }
 
+    public int getScore() {
+        return phase ? pcLower + pcOuter + pcInner : 2 * (pcLower + pcOuter + pcInner);
+    }
+
     @NonNull
     @Override
     public String toString() {

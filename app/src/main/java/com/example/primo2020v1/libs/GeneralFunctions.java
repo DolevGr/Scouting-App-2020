@@ -4,6 +4,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.primo2020v1.Fragments.ControlPanelFragment;
+import com.example.primo2020v1.Fragments.EndGameFragment;
+import com.example.primo2020v1.Fragments.FinishFragment;
+import com.example.primo2020v1.Fragments.MatchSettingsFragment;
+import com.example.primo2020v1.Fragments.PowerCellsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -68,5 +73,26 @@ public class GeneralFunctions {
         });
 
         Log.d(TAG, "setCurrentGame: Current Game: " + User.currentGame);
+    }
+
+    public static void resetForm() {
+        MatchSettingsFragment.teamNumber = "";
+        MatchSettingsFragment.spnIndex = 0;
+        MatchSettingsFragment.gameNumber = User.currentGame;
+
+        PowerCellsFragment.phase = false;
+        for (int i = 0; i < PowerCellsFragment.positions.length; i++) {
+            PowerCellsFragment.positions[i] = 0;
+        }
+
+        ControlPanelFragment.isPCnormal = false;
+        ControlPanelFragment.isPCcolor = false;
+
+        EndGameFragment.imageIndex = 0;
+
+        FinishFragment.imageIndex = 0;
+        FinishFragment.text = "";
+
+        Log.d(TAG, "resetForm: Current Game: " + User.currentGame);
     }
 }

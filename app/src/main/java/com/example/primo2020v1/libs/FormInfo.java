@@ -7,17 +7,18 @@ import androidx.annotation.NonNull;
 
 public class FormInfo implements Parcelable {
     //private ArrayList<Cycle> cycles;
-    public int endGame, finish, gameNumber;
+    public int endGame, finish, gameNumber, ticket;
     public boolean controlPanelColor, controlPanel;
     public CharSequence text;
     public String teamNumber;
 
-    public FormInfo(/*ArrayList<Cycle> c,*/String teamNumber, int gameNumber, boolean controlPanel, boolean controlPanelColor, int endGame, int finish, CharSequence text){
+    public FormInfo(/*ArrayList<Cycle> c,*/String teamNumber, int gameNumber, boolean controlPanel, boolean controlPanelColor, int endGame, int finish, int ticket, CharSequence text){
 //        cycles = new ArrayList<>();
 //        boolean b = cycles.addAll(c);
 
         //Log.d(TAG, "FormInfo: " + b);
 
+        this.ticket = ticket;
         this.gameNumber = gameNumber;
         this.teamNumber = teamNumber;
         this.controlPanel = controlPanel;
@@ -36,6 +37,7 @@ public class FormInfo implements Parcelable {
 //    }
 
     protected FormInfo(Parcel in) {
+        ticket = in.readInt();
         text = in.readString();
         gameNumber = in.readInt();
         teamNumber = in.readString();
@@ -56,6 +58,14 @@ public class FormInfo implements Parcelable {
             return new FormInfo[size];
         }
     };
+
+    public int getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(int ticket) {
+        this.ticket = ticket;
+    }
 
     public int getEndGame() {
         return endGame;
@@ -133,6 +143,7 @@ public class FormInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(ticket);
         parcel.writeString(text.toString());
         parcel.writeInt(gameNumber);
         parcel.writeString(teamNumber);

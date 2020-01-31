@@ -16,15 +16,17 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.213" />
+        app:layout_constraintVertical_bias="0.20999998" />
 
     <ListView
         android:id="@+id/lvCycles"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
         app:layout_constraintBottom_toTopOf="@+id/imgCPcolor"
         app:layout_constraintTop_toBottomOf="@+id/tvSubmission" />
 
@@ -65,25 +67,24 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgCPcolor"
-        app:srcCompat="@color/defaultColor" />
+        app:srcCompat="@drawable/ic_won" />
 
     <ImageView
         android:id="@+id/imgEndGame"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTicket"
         app:layout_constraintEnd_toStartOf="@+id/imgCPcolor"
-        app:layout_constraintStart_toEndOf="@+id/imgFinish"
-        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:layout_constraintStart_toEndOf="@+id/imgTicket"
+        app:layout_constraintTop_toTopOf="@+id/imgTicket"
         app:srcCompat="@drawable/ic_empty" />
 
     <ImageView
         android:id="@+id/imgCPnormal"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="170dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.952"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,9 +94,27 @@
         android:id="@+id/imgCPcolor"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgCPnormal"
         app:layout_constraintEnd_toStartOf="@+id/imgCPnormal"
         app:layout_constraintTop_toTopOf="@+id/imgCPnormal"
         app:srcCompat="@drawable/ic_controlpanel_color" />
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCPnormal" />
+
+    <ImageView
+        android:id="@+id/imgTicket"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
+        app:layout_constraintStart_toEndOf="@+id/imgFinish"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:srcCompat="@color/defaultColor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

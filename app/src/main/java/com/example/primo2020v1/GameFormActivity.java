@@ -1,14 +1,19 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
 import com.example.primo2020v1.Fragments.ControlPanelFragment;
 import com.example.primo2020v1.Fragments.EndGameFragment;
 import com.example.primo2020v1.Fragments.FinishFragment;
@@ -16,7 +21,6 @@ import com.example.primo2020v1.Fragments.MatchSettingsFragment;
 import com.example.primo2020v1.Fragments.PowerCellsFragment;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
-import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,16 +34,18 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         PowerCellsFragment.PowerCellsListener, EndGameFragment.EndGameListener, FinishFragment.FinishListener {
     private static final String TAG = "GameFormActivity";
 
-    private Intent intent;
+    private Intent intent, i;
     BottomNavigationView bnvForm;
     Fragment selectedFragment;
+    private Button btnBack;
+    private AlertDialog.Builder builder;
 
     private ArrayList<Cycle> cycles;
     private FormInfo formInfo;
     public String teamNumber = "";
     int spnOptionSelectedIndex = 0, gameNumber = User.currentGame, numOfCycles,
-            endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won;
-    boolean isControlPanelNormal, isControlPanelColor;
+            endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won, finishTicket = Color.BLACK;
+    boolean isControlPanelNormal, isControlPanelColor, leaveForm;
     CharSequence text;
     private Map<Integer, Fragment> fragsMap;
 
@@ -48,6 +54,20 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_form);
+
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+
+        if (leaveForm) {
+            i = new Intent(GameFormActivity.this, MainActivity.class);
+            finish();
+            startActivity(i);
+        }
 
         fragsMap = new HashMap<>();
         fragsMap.put(R.id.navPowerCells, new PowerCellsFragment());
@@ -90,6 +110,11 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         bnvForm.setOnNavigationItemSelectedListener(this);
 
         Log.d(TAG, "onCreate: " + cycles.toString());
+    }
+
+    public void openDialog() {
+        CancelFormAlertDialog dialog = new CancelFormAlertDialog();
+        dialog.show(getSupportFragmentManager(), "cancel form dialog");
     }
 
 
@@ -145,6 +170,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     @Override
     public void setDataFinish(Intent finishIntent) {
         finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, R.drawable.ic_won);
+        finishTicket = finishIntent.getIntExtra(Keys.FINISH_TICKET, Color.BLACK);
         text = finishIntent.getCharSequenceExtra(Keys.FINISH_TEXT);
     }
 
@@ -152,7 +178,8 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     public FormInfo getFormInfo() {
         formInfo = new FormInfo(teamNumber, gameNumber,
                 isControlPanelNormal, isControlPanelColor,
-                endGameImageId, finishImgId, text);
+                endGameImageId,
+                finishImgId, finishTicket, text);
         return formInfo;
     }
 }

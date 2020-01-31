@@ -41,11 +41,9 @@
         android:ems="10"
         android:hint="Game Number"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/spnTeam"
-        app:layout_constraintStart_toStartOf="@+id/spnTeam"
-        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
 
 
     <Spinner
@@ -54,9 +52,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002" />
+        app:layout_constraintVertical_bias="0.36" />
 
     <Button
         android:id="@+id/btnTest"
@@ -68,5 +67,39 @@
         android:layout_marginTop="16dp"
         android:text="GameNumber++"
         android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Pick Team Position"
+        app:layout_constraintBottom_toBottomOf="@+id/spnTeam"
+        app:layout_constraintEnd_toStartOf="@+id/spnTeam"
+        app:layout_constraintTop_toTopOf="@+id/spnTeam" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Team Number"
+        app:layout_constraintBottom_toBottomOf="@+id/edTeamNumber"
+        app:layout_constraintEnd_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edTeamNumber" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Game Number"
+        app:layout_constraintBottom_toBottomOf="@+id/edGameNumber"
+        app:layout_constraintEnd_toStartOf="@+id/edGameNumber"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edGameNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

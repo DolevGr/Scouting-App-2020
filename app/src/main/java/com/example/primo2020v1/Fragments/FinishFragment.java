@@ -2,6 +2,7 @@ package com.example.primo2020v1.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,14 +35,15 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     FinishListener listener;
-    public static int imageIndex = 0;
+    public static int imageIndex = 0, ticketIndex = 0;
     public static CharSequence text = "";
-    private ImageView imgReplace;
+    private ImageView imgReplace, imgTicket;
     private EditText edExtraInfo;
     private Button btnToSubmission;
     private Intent finishIntent, intent;
 
     private int[] images = {R.drawable.ic_won, R.drawable.ic_lost, R.drawable.ic_draw};
+    private int[] tickets = {Color.BLACK, Color.YELLOW, Color.RED};
 
     @Nullable
     @Override
@@ -50,10 +52,13 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
 
         edExtraInfo = v.findViewById(R.id.edExtaInfo);
         imgReplace = v.findViewById(R.id.imgFinish);
+        imgTicket = v.findViewById(R.id.imgTicket);
         btnToSubmission = v.findViewById(R.id.btnToSubmission);
 
         edExtraInfo.setText(text);
         setImage();
+        setTicket();
+        imgTicket.setOnClickListener(this);
         imgReplace.setOnClickListener(this);
         btnToSubmission.setOnClickListener(this);
 
@@ -69,6 +74,12 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
                 imageIndex++;
                 imageIndex %= images.length;
                 setImage();
+                break;
+
+            case R.id.imgTicket:
+                ticketIndex++;
+                ticketIndex %= tickets.length;
+                setTicket();
                 break;
 
             case R.id.btnToSubmission:
@@ -95,13 +106,17 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
         imgReplace.setImageDrawable(getResources().getDrawable(images[imageIndex]));
     }
 
+    public void setTicket() {
+        imgTicket.setColorFilter(tickets[ticketIndex]);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
         try {
             listener = (FinishListener) context;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new RuntimeException(context.toString() +
                     " must implement FinishListener");
         }
@@ -118,6 +133,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     private void placeInfo(){
         text = edExtraInfo.getText().toString().trim();
         finishIntent.putExtra(Keys.FINISH_TEAM, images[imageIndex]);
+        finishIntent.putExtra(Keys.FINISH_TICKET, tickets[ticketIndex]);
         finishIntent.putExtra(Keys.FINISH_TEXT, text);
         listener.setDataFinish(finishIntent);
     }

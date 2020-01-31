@@ -7,16 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.Adapters.CyclesAdapter;
-import com.example.primo2020v1.Fragments.ControlPanelFragment;
-import com.example.primo2020v1.Fragments.EndGameFragment;
-import com.example.primo2020v1.Fragments.FinishFragment;
-import com.example.primo2020v1.Fragments.MatchSettingsFragment;
-import com.example.primo2020v1.Fragments.PowerCellsFragment;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
 import com.example.primo2020v1.libs.GeneralFunctions;
@@ -35,7 +31,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private ListView lvCycles;
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
-    private ImageView imgPCnormal, imgCPcolor;
+    private ImageView imgPCnormal, imgCPcolor, imgTicket;
+    private TextView tvComment;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
@@ -54,12 +51,14 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         dbRef = User.databaseReference.child("Teams");
 
         lvCycles = findViewById(R.id.lvCycles);
+        imgTicket = findViewById(R.id.imgTicket);
         imgFinish = findViewById(R.id.imgFinish);
         imgEndGame = findViewById(R.id.imgEndGame);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnBack = findViewById(R.id.btnBack);
         imgPCnormal = findViewById(R.id.imgCPnormal);
         imgCPcolor = findViewById(R.id.imgCPcolor);
+        tvComment = findViewById(R.id.tvComment);
 
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO) && intent.hasExtra(Keys.FINISH_PC)) {
@@ -78,10 +77,12 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             Log.d(TAG, "onCreate: EngGame Image Id: " + imgEndGame + "; Finish Image Id: " + imgFinish);
             imgEndGame.setImageResource(fi.getEndGame());
             imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
+            imgTicket.setColorFilter(fi.getTicket());
             imgPCnormal.setColorFilter(fi.isControlPanel() ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
             imgCPcolor.setColorFilter(fi.isControlPanelColor() ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
+            tvComment.setText(fi.getUserComment());
         }
 
         btnBack.setOnClickListener(this);
@@ -93,7 +94,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.btnSubmit:
                 onSubmit();
-                resetForm();
+                GeneralFunctions.resetForm();
                 if (!c.isEmpty())
                     if (!adapter.getCycles().isEmpty())
                         c = adapter.getCycles();
@@ -124,7 +125,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
 
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
-        dbRef.setValue(""); // Clears Data
+        clearMatch();
         Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
 
         for (int i = 0; i < c.size(); i++) {
@@ -152,6 +153,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         dbRef.child("ControlPanelColor").setValue(fi.isControlPanelColor());
         dbRef.child("EndGame").setValue(fi.getEndGame());
         dbRef.child("Finish").setValue(fi.getFinish());
+        dbRef.child("Ticket").setValue(fi.getTicket());
 
         if (fi.getUserComment() != null && !fi.getUserComment().equals(""))
             dbRef.child("Comment").setValue(fi.getUserComment());
@@ -182,24 +184,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    private void resetForm() {
-        MatchSettingsFragment.teamNumber = "";
-        MatchSettingsFragment.spnIndex = 0;
-        MatchSettingsFragment.gameNumber = User.currentGame;
-
-        PowerCellsFragment.phase = false;
-        for (int i = 0; i < PowerCellsFragment.positions.length; i++) {
-            PowerCellsFragment.positions[i] = 0;
-        }
-
-        ControlPanelFragment.isPCnormal = false;
-        ControlPanelFragment.isPCcolor = false;
-
-        EndGameFragment.imageIndex = 0;
-
-        FinishFragment.imageIndex = 0;
-        FinishFragment.text = "";
-
-        Log.d(TAG, "resetForm: Current Game: " + User.currentGame);
+    private void clearMatch() {
+        dbRef.setValue("");
     }
 }

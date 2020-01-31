@@ -15,6 +15,7 @@ public class Keys {
     public static final String EG_IMG_ID = "EG_IMG_ID";
 
     public static final String FINISH_TEAM = "FINISH_TEAM";
+    public static final String FINISH_TICKET = "FINISH_TICKET";
     public static final String FINISH_TEXT = "FINISH_TEXT";
     public static final String FINISH_PC = "FINISH_PC";
 

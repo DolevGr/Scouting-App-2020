@@ -17,4 +17,9 @@ public class Keys {
     public static final String FINISH_TEAM = "FINISH_TEAM";
     public static final String FINISH_TEXT = "FINISH_TEXT";
     public static final String FINISH_PC = "FINISH_PC";
+
+
+    public static final String CURRENT_GAME = "CurrentGame";
+    public static final String MATCHES = "Matches";
+    public static final String USERS = "Users";
 }

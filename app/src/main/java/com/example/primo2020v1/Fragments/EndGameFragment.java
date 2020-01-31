@@ -25,7 +25,7 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
     public static int imageIndex = 0;
 
     public interface EndGameListener {
-        void getDataEndGame(Intent egIntent);
+        void setDataEndGame(Intent egIntent);
     }
 
 
@@ -82,6 +82,6 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
 
     public void placeInfo(){
         egIntent.putExtra(Keys.EG_IMG_ID, images[imageIndex]);
-        listener.getDataEndGame(egIntent);
+        listener.setDataEndGame(egIntent);
     }
 }

@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navMatchSettings"
-        android:icon="@drawable/ic_iconsett"
+        android:icon="@drawable/ic_settings"
         android:title="Match Settings" />
 
     <item

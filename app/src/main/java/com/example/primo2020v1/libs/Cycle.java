@@ -15,7 +15,7 @@ public class Cycle implements Parcelable {
         this.pcMissed = pcMissed;
         this.pcLower = pcLower;
         this.pcOuter = pcOuter;
-        this.pcOuter = pcInner;
+        this.pcInner = pcInner;
     }
 
     public int[] getCycle(){

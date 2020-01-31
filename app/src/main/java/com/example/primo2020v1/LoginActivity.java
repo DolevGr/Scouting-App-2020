@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,8 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.d(TAG, "onClick: " + User.members.toString());
             if (User.members.contains(name)) {
                 Log.d("Debugging Database ", "onDataChange: ");
-                DatabaseReference dbref = User.databaseReference.child("Users").child(Integer.toString(User.members.indexOf(name)));
-                dbref.addValueEventListener(new ValueEventListener() {
+                DatabaseReference dbref = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
+                dbref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try{

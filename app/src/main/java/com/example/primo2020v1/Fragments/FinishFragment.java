@@ -28,8 +28,8 @@ import static android.content.ContentValues.TAG;
 
 public class FinishFragment extends Fragment implements View.OnClickListener {
     public interface FinishListener{
-        void getDataFinish(Intent finishIntent);
-        FormInfo setFormInfo();
+        void setDataFinish(Intent finishIntent);
+        FormInfo getFormInfo();
         ArrayList<Cycle> getCyclesFinish();
     }
 
@@ -76,7 +76,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
                 placeInfo();
 
                 intent = new Intent(getContext(), SubmissionActivity.class);
-                FormInfo formInfo = listener.setFormInfo();
+                FormInfo formInfo = listener.getFormInfo();
                 ArrayList<Cycle> cycles = listener.getCyclesFinish();
                 Log.d(TAG, "onClick: FinishFragment" + formInfo.toString());
 
@@ -119,6 +119,6 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
         text = edExtraInfo.getText().toString().trim();
         finishIntent.putExtra(Keys.FINISH_TEAM, images[imageIndex]);
         finishIntent.putExtra(Keys.FINISH_TEXT, text);
-        listener.getDataFinish(finishIntent);
+        listener.setDataFinish(finishIntent);
     }
 }

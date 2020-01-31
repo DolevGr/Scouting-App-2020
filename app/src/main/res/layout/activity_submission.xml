@@ -24,30 +24,9 @@
     <ListView
         android:id="@+id/lvCycles"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        app:layout_constraintBottom_toTopOf="@+id/switchCPColor"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgCPcolor"
         app:layout_constraintTop_toBottomOf="@+id/tvSubmission" />
-
-    <Switch
-        android:id="@+id/switchCP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
-        android:text="CP"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Switch
-        android:id="@+id/switchCPColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CP Color"
-        app:layout_constraintBottom_toBottomOf="@+id/switchCP"
-        app:layout_constraintEnd_toStartOf="@+id/switchCP"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -79,25 +58,44 @@
 
     <ImageView
         android:id="@+id/imgFinish"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgEndGame"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPcolor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imgEndGame"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/imgCPcolor"
         app:srcCompat="@color/defaultColor" />
 
     <ImageView
         android:id="@+id/imgEndGame"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.858"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchCP"
-        app:layout_constraintVertical_bias="0.25"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
+        app:layout_constraintEnd_toStartOf="@+id/imgCPcolor"
+        app:layout_constraintStart_toEndOf="@+id/imgFinish"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
         app:srcCompat="@drawable/ic_empty" />
+
+    <ImageView
+        android:id="@+id/imgCPnormal"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="170dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_controlpanel_normal" />
+
+    <ImageView
+        android:id="@+id/imgCPcolor"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPnormal"
+        app:layout_constraintEnd_toStartOf="@+id/imgCPnormal"
+        app:layout_constraintTop_toTopOf="@+id/imgCPnormal"
+        app:srcCompat="@drawable/ic_controlpanel_color" />
 </androidx.constraintlayout.widget.ConstraintLayout>

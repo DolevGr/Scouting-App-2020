@@ -36,6 +36,8 @@ public class FormInfo implements Parcelable {
 //    }
 
     protected FormInfo(Parcel in) {
+        text = in.readString();
+        gameNumber = in.readInt();
         teamNumber = in.readString();
         endGame = in.readInt();
         finish = in.readInt();
@@ -87,7 +89,7 @@ public class FormInfo implements Parcelable {
         this.controlPanel = controlPanel;
     }
 
-    public CharSequence getText() {
+    public CharSequence getUserComment() {
         return text;
     }
 
@@ -131,6 +133,8 @@ public class FormInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(text.toString());
+        parcel.writeInt(gameNumber);
         parcel.writeString(teamNumber);
         parcel.writeInt(endGame);
         parcel.writeInt(finish);

@@ -53,13 +53,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnNewForm:
                 next = new Intent(MainActivity.this, GameFormActivity.class);
                 break;
+
             case R.id.btnEditForm:
                 next = new Intent(MainActivity.this, EditFormActivity.class);
                 break;
+
             case R.id.btnExit:
                 next = new Intent(MainActivity.this, LoginActivity.class);
                 finish();
                 break;
+
             default:
                 next = null;
                 break;

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.Match;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DataSnapshot;
@@ -29,11 +30,11 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         int usersNumber = 44;
-        DatabaseReference dbRef = User.databaseReference.child("Users");
+        DatabaseReference dbRef = User.databaseReference.child(Keys.USERS);
 
         for (int i = 0; i < usersNumber; i++){
             final int finalI = i;
-            dbRef.addValueEventListener(new ValueEventListener() {
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     try {
@@ -77,7 +78,7 @@ public class Splash extends AppCompatActivity {
 
         if(addToFirebase)
             addToDatabase();
-
+        GeneralFunctions.setCurrentGame();
 
         Thread th = new Thread() {
             public void run(){
@@ -101,29 +102,24 @@ public class Splash extends AppCompatActivity {
         //Adds matches to Firebase
         for(int i = 1; i < User.matches.size() + 1; i++) {
             Map<String, Object> match = GeneralFunctions.getMap(User.matches.get(i-1));
-            User.databaseReference.child("Match").child(Integer.toString(i)).setValue(match);
+            User.databaseReference.child(Keys.MATCHES).child(Integer.toString(i)).setValue(match);
         }
 
         //Adds users to Firebase
-        int j = 0;
-        for(int i = 0; i < User.members.size(); i++){
-            User u = new User(User.members.get(i),"Test");
+        if (false){ // Never add/remove users through java
+            int j = 0;
+            for(int i = 0; i < User.members.size(); i++){
+                User u = new User(User.members.get(i),"Test");
 
-            if(j < User.admins.size() && User.members.get(i).equals(User.admins.get(j))) {
-                u.setPrivilege();
-                j++;
+                if(j < User.admins.size() && User.members.get(i).equals(User.admins.get(j))) {
+                    u.setPrivilege();
+                    j++;
+                }
+
+                Map<String, Object> user = GeneralFunctions.getMap(u);
+                User.databaseReference.child(Keys.USERS).child(Integer.toString(i)).setValue(user);
             }
-
-            Map<String, Object> user = GeneralFunctions.getMap(u);
-            User.databaseReference.child("Users").child(Integer.toString(i)).setValue(user);
         }
 
-        //Adds teams to Firebase
-        //No need to setValue()
-//        for(int i = 0; i < User.teams.size(); i++) {
-//            User.databaseReference.child("Teams").child(Integer.toString(i)).setValue(User.teams.get(i));
-//        }
-//
-//        User.databaseReference.child("CurrentGame").setValue(User.currentGame);
     }
 }

@@ -3,6 +3,7 @@ package com.example.primo2020v1.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,11 @@ import com.example.primo2020v1.libs.Keys;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
     public interface PowerCellsListener {
-        void getDataPowerCells(Intent pcIntent);
+        void setDataPowerCells(Intent pcIntent);
     }
 
     private PowerCellsListener listener;
@@ -45,18 +48,18 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.power_cells, container, false);
 
-        tvPowerCellsMissed = (TextView) v.findViewById(R.id.tvPowerCellsMissed);
-        tvPowerCellsLower = (TextView) v.findViewById(R.id.tvPowerCellsLower);
-        tvPowerCellsOuter = (TextView) v.findViewById(R.id.tvPowerCellsOuter);
-        tvPowerCellsInner = (TextView) v.findViewById(R.id.tvPowerCellsInner);
+        tvPowerCellsMissed = v.findViewById(R.id.tvPowerCellsMissed);
+        tvPowerCellsLower = v.findViewById(R.id.tvPowerCellsLower);
+        tvPowerCellsOuter = v.findViewById(R.id.tvPowerCellsOuter);
+        tvPowerCellsInner = v.findViewById(R.id.tvPowerCellsInner);
 
-        sbPowerCellsMissed = (SeekBar) v.findViewById(R.id.sbPowerCellsMissed);
-        sbPowerCellsLower = (SeekBar) v.findViewById(R.id.sbPowerCellsLower);
-        sbPowerCellsOuter = (SeekBar) v.findViewById(R.id.sbPowerCellsOuter);
-        sbPowerCellsInner = (SeekBar) v.findViewById(R.id.sbPowerCellsInner);
+        sbPowerCellsMissed =  v.findViewById(R.id.sbPowerCellsMissed);
+        sbPowerCellsLower = v.findViewById(R.id.sbPowerCellsLower);
+        sbPowerCellsOuter = v.findViewById(R.id.sbPowerCellsOuter);
+        sbPowerCellsInner = v.findViewById(R.id.sbPowerCellsInner);
 
-        btnCycle = (Button) v.findViewById(R.id.btnCycle);
-        btnTeleAuto = (Button) v.findViewById(R.id.btnTeleAuto);
+        btnCycle = v.findViewById(R.id.btnCycle);
+        btnTeleAuto = v.findViewById(R.id.btnTeleAuto);
         onReselect();
         getPCValues();
 
@@ -190,12 +193,14 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         positions[2] = sbPowerCellsOuter.getProgress();
         positions[3] = sbPowerCellsInner.getProgress();
         pcIntent.putParcelableArrayListExtra(Keys.PC_CYCLE, cycles);
-        listener.getDataPowerCells(pcIntent);
+        listener.setDataPowerCells(pcIntent);
         listener = null;
     }
 
     public void placeInfo() {
         if ((pcMissed + pcLower + pcOuter + pcInner) > 0)
             cycles.add(new Cycle(pcMissed, pcLower, pcOuter, pcInner, phase));
+        Log.d(TAG, "placeInfo: " + cycles.toString());
+        Log.d(TAG, "placeInfo: " + pcMissed + " " + pcLower + " " + pcOuter + " " + pcInner);
     }
 }

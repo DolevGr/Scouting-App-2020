@@ -24,10 +24,12 @@ import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 
+import static android.content.ContentValues.TAG;
+
 public class MatchSettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public interface MatchSettingsListener {
-        void getDataMatchSettings(Intent msIntent);
+        void setDataMatchSettings(Intent msIntent);
     }
 
 
@@ -62,47 +64,45 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         edTeamNumber.setText(teamNumber);
         spnTeam.setSelection(spnIndex);
 
-        edGameNumber.addTextChangedListener(textWatcherGameNumber);
-        edTeamNumber.addTextChangedListener(textWatcherTeamNumber);
+        edGameNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!edGameNumber.getText().toString().trim().equals("")) {
+                    gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
+                    spnIndex = spnTeam.getSelectedItemPosition();
+                    User.currentGame = gameNumber;
+                }
+
+                Log.d(TAG, "afterTextChanged: Game Number: " + gameNumber);
+            }
+        });
+
+        edTeamNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                teamNumber = edTeamNumber.getText().toString();
+            }
+        });
 
         msIntent = new Intent(getContext(), GameFormActivity.class);
 
         return v;
     }
 
-    private TextWatcher textWatcherTeamNumber = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            teamNumber = edTeamNumber.getText().toString();
-        }
-    };
-
-    private TextWatcher textWatcherGameNumber = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            if(edGameNumber.getText().toString().trim().equals(""))
-                gameNumber = 0;
-            else {
-                gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
-                spnIndex = spnTeam.getSelectedItemPosition();
-            }
-        }
-    };
-
-
-    //Spinner overrides
+    //Spinner
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         spnIndex = i;
@@ -117,7 +117,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) { }
 
 
-    //Fragment overrides
+    //Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -145,6 +145,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         msIntent.putExtra(Keys.MS_TEAM, teamNumber);
         msIntent.putExtra(Keys.MS_NUMBER, gameNumber);
         msIntent.putExtra(Keys.MS_TEAM_INDEX, spnIndex);
-        listener.getDataMatchSettings(msIntent);
+        listener.setDataMatchSettings(msIntent);
     }
 }

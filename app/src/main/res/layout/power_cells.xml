@@ -13,6 +13,8 @@
         android:text="Inner"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsInner"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsInner" />
 
     <TextView
@@ -23,6 +25,8 @@
         android:text="Outer"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsOuter" />
 
     <TextView
@@ -33,21 +37,23 @@
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsInner"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsInner" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsMissed"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="120dp"
+        android:layout_width="280dp"
         android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="4dp"
         android:max="5"
         android:progress="1"
-        app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsInner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
+        app:layout_constraintEnd_toEndOf="@+id/tvPowerCells"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/tvPowerCells"
+        app:layout_constraintTop_toBottomOf="@+id/tvPowerCells" />
 
     <TextView
         android:id="@+id/tvPowerCells5"
@@ -57,6 +63,8 @@
         android:text="Missed"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed" />
 
     <TextView
@@ -67,22 +75,22 @@
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsMissed"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsMissed" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsLower"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="100dp"
+        android:layout_width="280dp"
         android:layout_height="40dp"
+        android:layout_marginTop="20dp"
         android:max="5"
         android:progress="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.321" />
+        app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toStartOf="@+id/sbPowerCellsMissed"
+        app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsMissed" />
 
     <TextView
         android:id="@+id/tvPowerCells"
@@ -105,20 +113,22 @@
         android:text="Lower"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsLower"
         app:layout_constraintEnd_toStartOf="@+id/sbPowerCellsLower"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
 
     <SeekBar
         android:id="@+id/sbPowerCellsOuter"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:max="5"
-        android:progress="1"
-        android:layout_width="100dp"
+        android:layout_width="280dp"
         android:layout_height="40dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="20dp"
+        android:max="5"
+        android:progress="1"
         app:layout_constraintEnd_toEndOf="@+id/sbPowerCellsLower"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvPowerCells1"
+        app:layout_constraintStart_toStartOf="@+id/sbPowerCellsLower"
         app:layout_constraintTop_toBottomOf="@+id/sbPowerCellsLower" />
 
     <TextView
@@ -126,12 +136,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="8dp"
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsLower"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsLower"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsLower" />
 
@@ -139,7 +147,7 @@
     <SeekBar
         android:id="@+id/sbPowerCellsInner"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="100dp"
+        android:layout_width="280dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:max="5"
@@ -156,6 +164,7 @@
         android:text="0"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/sbPowerCellsOuter"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbPowerCellsOuter"
         app:layout_constraintTop_toTopOf="@+id/sbPowerCellsOuter" />
 
@@ -163,8 +172,8 @@
         android:id="@+id/btnCycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text="Cycle"
+        android:layout_marginBottom="70dp"
+        android:text="Next Cycle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"

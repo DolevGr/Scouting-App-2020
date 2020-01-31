@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.Adapters.CyclesAdapter;
@@ -22,7 +22,10 @@ import com.example.primo2020v1.libs.FormInfo;
 import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,7 +35,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private ListView lvCycles;
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
-    private Switch isPCnormal, isCPcolor;
+    private ImageView imgPCnormal, imgCPcolor;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
@@ -48,19 +51,19 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submission);
 
-        dbRef = User.databaseReference.child("Team");
+        dbRef = User.databaseReference.child("Teams");
 
         lvCycles = findViewById(R.id.lvCycles);
         imgFinish = findViewById(R.id.imgFinish);
         imgEndGame = findViewById(R.id.imgEndGame);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnBack = findViewById(R.id.btnBack);
-        isPCnormal = findViewById(R.id.switchCP);
-        isCPcolor = findViewById(R.id.switchCPColor);
+        imgPCnormal = findViewById(R.id.imgCPnormal);
+        imgCPcolor = findViewById(R.id.imgCPcolor);
 
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO) && intent.hasExtra(Keys.FINISH_PC)) {
-            fi = (FormInfo) intent.getParcelableExtra(Keys.FORM_INFO);
+            fi = intent.getParcelableExtra(Keys.FORM_INFO);
             c = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
 
             if (c != null && !c.isEmpty()) {
@@ -75,8 +78,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             Log.d(TAG, "onCreate: EngGame Image Id: " + imgEndGame + "; Finish Image Id: " + imgFinish);
             imgEndGame.setImageResource(fi.getEndGame());
             imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
-            isPCnormal.setChecked(fi.isControlPanel());
-            isCPcolor.setChecked(fi.isControlPanelColor());
+            imgPCnormal.setColorFilter(fi.isControlPanel() ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
+            imgCPcolor.setColorFilter(fi.isControlPanelColor() ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
         }
@@ -103,8 +106,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnBack:
                 i = new Intent(SubmissionActivity.this, GameFormActivity.class);
 
-                if (!c.isEmpty())
-                    if (!adapter.getCycles().isEmpty())
+                if (c != null &&!c.isEmpty())
+                    if (adapter.getCycles() != null && !adapter.getCycles().isEmpty())
                         c = adapter.getCycles();
 
                 i.putExtra(Keys.FINISH_PC, c);
@@ -118,27 +121,53 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
     private void onSubmit() {
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
+        dbRef.setValue(""); // Clears Data
         Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
 
         for (int i = 0; i < c.size(); i++) {
             Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
+            dbRef.child("Cycles " + (i+1)).setValue(cycle);
             Log.d(TAG, "onSubmit: " + cycle.toString());
-            dbRef.child("Cycles " + i).setValue(cycle);
         }
 
         dbRef.child("ControlPanel").setValue(fi.isControlPanel());
         dbRef.child("ControlPanelColor").setValue(fi.isControlPanelColor());
-        dbRef.child("Finish").setValue(fi.getFinish());
         dbRef.child("EndGame").setValue(fi.getEndGame());
-        dbRef.child("Comment").setValue(fi.getText());
+        dbRef.child("Finish").setValue(fi.getFinish());
+
+        if (fi.getUserComment() != null && !fi.getUserComment().equals(""))
+            dbRef.child("Comment").setValue(fi.getUserComment());
+        else
+            dbRef.child("Comment").setValue("Empty comment");
 
         Log.d(TAG, "onSubmit: " + formInfo.toString());
+
+        User.currentGame = fi.getGameNumber() + 1;
+        User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int dbGame;
+
+                dbGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+                Log.d(TAG, "onDataChange: DB Game Number: " + dbGame +
+                        "\n Form Game Number: " + fi.getGameNumber());
+
+                if (User.currentGame != dbGame) {
+                    dbGame = User.currentGame;
+                    User.databaseReference.child(Keys.CURRENT_GAME).setValue(dbGame);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
     }
 
     private void resetForm() {
         MatchSettingsFragment.teamNumber = "";
         MatchSettingsFragment.spnIndex = 0;
-        MatchSettingsFragment.gameNumber = 0;
+        MatchSettingsFragment.gameNumber = User.currentGame;
 
         PowerCellsFragment.phase = false;
         for (int i = 0; i < PowerCellsFragment.positions.length; i++) {
@@ -152,5 +181,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
         FinishFragment.imageIndex = 0;
         FinishFragment.text = "";
+
+        Log.d(TAG, "resetForm: Current Game: " + User.currentGame);
     }
 }

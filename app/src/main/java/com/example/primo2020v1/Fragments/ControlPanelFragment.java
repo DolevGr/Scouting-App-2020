@@ -24,7 +24,7 @@ public class ControlPanelFragment extends Fragment implements View.OnClickListen
 
 
     public interface ControlPanelListener {
-        void getDataControlPanel(Intent cpIntent);
+        void setDataControlPanel(Intent cpIntent);
     }
 
     @Nullable
@@ -85,17 +85,15 @@ public class ControlPanelFragment extends Fragment implements View.OnClickListen
     }
 
     public void setBackGroundColor(ImageView img, boolean b) {
-        if (b)
-            img.setColorFilter(getResources().getColor(R.color.mainBlue));
-        else
-            img.setColorFilter(getResources().getColor(R.color.defaultColor));
+        img.setColorFilter(b ? getResources().getColor(R.color.mainBlue) :
+                getResources().getColor(R.color.defaultColor));
     }
 
     public void placeInfo(){
         cpIntent.putExtra(Keys.CP_NORMAL, isPCnormal);
         cpIntent.putExtra(Keys.CP_COLOR, isPCcolor);
 
-        listener.getDataControlPanel(cpIntent);
+        listener.setDataControlPanel(cpIntent);
 
     }
 }

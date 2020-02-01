@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -36,11 +37,13 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     private MatchSettingsListener listener;
     private Intent msIntent;
     private EditText edGameNumber, edTeamNumber;
+    private ImageButton imgbtnSwitchFields;
     private Spinner spnTeam;
     private String[] positions;
 
     public static int gameNumber = User.currentGame, spnIndex = -1;
     public static String teamNumber = "";
+    public static boolean swichFields;
     private ArrayAdapter<CharSequence> teamAdapter;
 
 
@@ -52,6 +55,8 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         edGameNumber = v.findViewById(R.id.edGameNumber);
         edTeamNumber = v.findViewById(R.id.edTeamNumber);
         spnTeam = v.findViewById(R.id.spnTeam);
+        imgbtnSwitchFields = v.findViewById(R.id.imgbtnSwitchFields);
+        swichFields = true;
 
         positions = new String[]{"R Close", "R Middle", "R Far", "B Close", "B Middle", "B Far"};
         teamAdapter = new ArrayAdapter<CharSequence>(getActivity(), R.layout.spinner_item, positions);
@@ -60,9 +65,18 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
         spnTeam.setOnItemSelectedListener(this);
 
+        switchFields();
         edGameNumber.setText(Integer.toString(gameNumber));
         edTeamNumber.setText(teamNumber);
         spnTeam.setSelection(spnIndex);
+
+
+        imgbtnSwitchFields.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchFields();
+            }
+        });
 
         edGameNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -125,6 +139,12 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    private void switchFields() {
+        swichFields = !swichFields;
+        edGameNumber.setEnabled(swichFields);
+        edTeamNumber.setEnabled(swichFields);
     }
 
 

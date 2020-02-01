@@ -109,7 +109,7 @@
         android:id="@+id/tvComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
@@ -154,12 +154,12 @@
         android:id="@+id/tvCrash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/defaultColor"
         android:text="Crash"
         android:textColor="@android:color/white"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash"
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
         app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
-        app:layout_constraintTop_toTopOf="@+id/imgDidCrash"
-        android:outlineAmbientShadowColor="@color/defaultColor" />
+        app:layout_constraintTop_toTopOf="@+id/imgDidCrash" />
 </androidx.constraintlayout.widget.ConstraintLayout>

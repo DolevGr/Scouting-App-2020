@@ -81,11 +81,17 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO)) {
             formInfo = intent.getParcelableExtra(Keys.FORM_INFO);
+            
             teamNumber = formInfo.getTeamNumber();
+
             isControlPanelNormal = formInfo.isControlPanel();
             isControlPanelColor = formInfo.isControlPanelColor();
+
             endGameImageId = formInfo.getEndGame();
+
             finishImgId = formInfo.getFinish();
+            finishTicket = formInfo.getTicket();
+            finishDidCrash = formInfo.getCrash();
             text = formInfo.getUserComment();
 
             selectedFragment = fragsMap.get(R.id.navFinishForm);

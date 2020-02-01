@@ -1,6 +1,5 @@
 package com.example.primo2020v1;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -75,40 +74,33 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             if (c != null && !c.isEmpty()) {
                 adapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, c);
                 lvCycles.setAdapter(adapter);
-                Log.d(TAG, "onCreate: " + c.toString());
-
-            } else {
-                Log.d(TAG, "onCreate: Cycles = NULL");
             }
 
-            Log.d(TAG, "onCreate: EngGame Image Id: " + imgEndGame + "; Finish Image Id: " + imgFinish);
             imgEndGame.setImageResource(fi.getEndGame());
 
             imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
             imgTicket.setColorFilter(fi.getTicket());
-            tvTicket.setTextColor(fi.getTicket() != Color.BLACK ? Color.BLACK : Color.WHITE);
+            tvTicket.setTextColor(fi.getTicket() == Color.YELLOW ? Color.BLACK : Color.WHITE);
             imgCrash.setColorFilter(fi.getCrash() ? Color.GREEN : Color.RED);
-            tvTicket.setTextColor(fi.getCrash() ? Color.BLACK : Color.WHITE);
+            tvCrash.setTextColor(fi.getCrash() ? Color.BLACK : Color.WHITE);
 
             isCPnormal = fi.isControlPanel();
-            if (!isCPnormal) {
+            if (!isCPnormal)
                 imgPCnormal.setVisibility(View.INVISIBLE);
-            }
             imgPCnormal.setColorFilter(getResources().getColor(R.color.mainBlue));
 
             isCPcolor = fi.isControlPanelColor();
-            if (!isCPcolor) {
+            if (!isCPcolor)
                 imgCPcolor.setVisibility(View.INVISIBLE);
-            }
             imgCPcolor.setColorFilter(getResources().getColor(R.color.mainBlue));
 
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
             tvComment.setText(fi.getUserComment());
-        }
 
-        btnBack.setOnClickListener(this);
-        btnSubmit.setOnClickListener(this);
+            btnBack.setOnClickListener(this);
+            btnSubmit.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -129,7 +121,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                     MissingTeamNumberAlertDialog alertDialog = new MissingTeamNumberAlertDialog();
                     alertDialog.show(getSupportFragmentManager(), "Missing Team Number");
                 }
-
                 break;
 
             case R.id.btnBack:
@@ -161,7 +152,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         for (int i = 0; i < c.size(); i++) {
             Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
             dbRef.child("Cycles " + (i + 1)).setValue(cycle);
-            Log.d(TAG, "onSubmit: " + cycle.toString());
 
             totalPCmissed += c.get(i).pcMissed;
             totalPClower += c.get(i).pcLower;
@@ -191,8 +181,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         else
             dbRef.child("Comment").setValue("Empty comment");
 
-        Log.d(TAG, "onSubmit: " + formInfo.toString());
-
         User.currentGame = fi.getGameNumber() + 1;
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -200,8 +188,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                 int dbGame;
 
                 dbGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
-                Log.d(TAG, "onDataChange: DB Game Number: " + dbGame +
-                        "\n Form Game Number: " + fi.getGameNumber());
 
                 if (User.currentGame != dbGame) {
                     dbGame = User.currentGame;
@@ -211,8 +197,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
 

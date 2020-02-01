@@ -77,8 +77,9 @@ public class GeneralFunctions {
 
     public static void resetForm() {
         MatchSettingsFragment.teamNumber = "";
-        MatchSettingsFragment.spnIndex = 0;
+        MatchSettingsFragment.spnIndex = -1;
         MatchSettingsFragment.gameNumber = User.currentGame;
+        MatchSettingsFragment.swichFields = true;
 
         PowerCellsFragment.phase = false;
         for (int i = 0; i < PowerCellsFragment.positions.length; i++) {

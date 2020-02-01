@@ -40,23 +40,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = (Button) findViewById(R.id.btnLogin);
         context = getApplicationContext();
 
-        Log.d("ONCREATE LoginActivity", "onCereate: Entered onCreate ****************************************************");
-
         btnLogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        Log.d("ONCLICK", "onClick: Entered onClick ");
         name = edName.getText().toString().trim();
         password = edPass.getText().toString().trim();
 
         if (view.getId() == R.id.btnLogin) {
-            Log.d(TAG, "onClick: " + User.members.toString());
             if (User.members.contains(name)) {
-                Log.d("Debugging Database ", "onDataChange: ");
-                DatabaseReference dbref = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
-                dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+                DatabaseReference dbRef = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
+                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try{
@@ -72,36 +67,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (isValidName() && isValidPassword()) {
                             i = new Intent(LoginActivity.this, MainActivity.class);
-                            //Toast.makeText(context, "Loging Button", Toast.LENGTH_LONG).show();
-                            Log.d("Logging in", "onClick: Entered onClick ");
 
                             if (i != null){
                                 i.putExtra("Username", edName.getText().toString());
                                 i.putExtra("Privilege", priv);
                                 startActivity(i);
                             }
+                        } else if (!isValidPassword()) {
+                            Toast.makeText(context.getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
                         }
 
-                        Log.d("From database: ", "onDataChange: " + nameFromDB + "; " + passFromDB);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+                debugger();
 
-                if (debug) {
-                    i = new Intent(LoginActivity.this, MainActivity.class);
-
-                    if (i != null){
-                        i.putExtra("Username", edName.getText().toString());
-                        i.putExtra("Privilege", priv);
-                        startActivity(i);
-                    }
-                }
+            } else {
+                checkPassAndUsername();
             }
 
-            checkPassAndUsername();
         }
 
     }
@@ -114,12 +101,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public boolean isValidName(){
+    private boolean isValidName(){
         return edName.getText().toString().equals(nameFromDB);
     }
 
-    public boolean isValidPassword(){
+    private boolean isValidPassword(){
         return edPass.getText().toString().equals(passFromDB);
+    }
+
+    private void debugger() {
+        if (debug) {
+            i = new Intent(LoginActivity.this, MainActivity.class);
+
+            if (i != null){
+                i.putExtra("Username", edName.getText().toString());
+                i.putExtra("Privilege", priv);
+                startActivity(i);
+            }
+        }
     }
 
 }

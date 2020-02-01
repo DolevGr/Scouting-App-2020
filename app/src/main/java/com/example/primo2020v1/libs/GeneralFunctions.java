@@ -91,7 +91,9 @@ public class GeneralFunctions {
         EndGameFragment.imageIndex = 0;
 
         FinishFragment.imageIndex = 0;
+        FinishFragment.ticketIndex = 0;
         FinishFragment.text = "";
+        FinishFragment.didCrash = false;
 
         Log.d(TAG, "resetForm: Current Game: " + User.currentGame);
     }

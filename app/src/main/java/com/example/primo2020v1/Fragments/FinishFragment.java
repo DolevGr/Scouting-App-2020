@@ -37,13 +37,15 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     FinishListener listener;
     public static int imageIndex = 0, ticketIndex = 0;
     public static CharSequence text = "";
-    private ImageView imgReplace, imgTicket;
+    public static boolean didCrash = false;
+    private ImageView imgReplace, imgTicket, imgCrash;
     private EditText edExtraInfo;
     private Button btnToSubmission;
     private Intent finishIntent, intent;
 
     private int[] images = {R.drawable.ic_won, R.drawable.ic_lost, R.drawable.ic_draw};
     private int[] tickets = {Color.BLACK, Color.YELLOW, Color.RED};
+    private int[] crash = {Color.RED, Color.GREEN};
 
     @Nullable
     @Override
@@ -53,11 +55,15 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
         edExtraInfo = v.findViewById(R.id.edExtaInfo);
         imgReplace = v.findViewById(R.id.imgFinish);
         imgTicket = v.findViewById(R.id.imgTicket);
+        imgCrash = v.findViewById(R.id.imgCrash);
         btnToSubmission = v.findViewById(R.id.btnToSubmission);
 
         edExtraInfo.setText(text);
+        setCrash();
         setImage();
         setTicket();
+
+        imgCrash.setOnClickListener(this);
         imgTicket.setOnClickListener(this);
         imgReplace.setOnClickListener(this);
         btnToSubmission.setOnClickListener(this);
@@ -80,6 +86,11 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
                 ticketIndex++;
                 ticketIndex %= tickets.length;
                 setTicket();
+                break;
+
+            case R.id.imgCrash:
+                didCrash = !didCrash;
+                setCrash();
                 break;
 
             case R.id.btnToSubmission:
@@ -110,6 +121,10 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
         imgTicket.setColorFilter(tickets[ticketIndex]);
     }
 
+    public void setCrash() {
+        imgCrash.setColorFilter(didCrash ? crash[1] : crash[0]);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -134,6 +149,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
         text = edExtraInfo.getText().toString().trim();
         finishIntent.putExtra(Keys.FINISH_TEAM, images[imageIndex]);
         finishIntent.putExtra(Keys.FINISH_TICKET, tickets[ticketIndex]);
+        finishIntent.putExtra(Keys.FINISH_CRASH, didCrash);
         finishIntent.putExtra(Keys.FINISH_TEXT, text);
         listener.setDataFinish(finishIntent);
     }

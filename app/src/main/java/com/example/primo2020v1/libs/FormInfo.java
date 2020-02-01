@@ -8,16 +8,15 @@ import androidx.annotation.NonNull;
 public class FormInfo implements Parcelable {
     //private ArrayList<Cycle> cycles;
     public int endGame, finish, gameNumber, ticket;
-    public boolean controlPanelColor, controlPanel;
+    public boolean controlPanelColor, controlPanel, didCrash;
     public CharSequence text;
     public String teamNumber;
 
-    public FormInfo(/*ArrayList<Cycle> c,*/String teamNumber, int gameNumber, boolean controlPanel, boolean controlPanelColor, int endGame, int finish, int ticket, CharSequence text){
-//        cycles = new ArrayList<>();
-//        boolean b = cycles.addAll(c);
-
-        //Log.d(TAG, "FormInfo: " + b);
-
+    public FormInfo(String teamNumber, int gameNumber,
+                        boolean controlPanel, boolean controlPanelColor,
+                        int endGame,
+                        int finish, int ticket, boolean crash, CharSequence text){
+        this.didCrash = crash;
         this.ticket = ticket;
         this.gameNumber = gameNumber;
         this.teamNumber = teamNumber;
@@ -28,15 +27,8 @@ public class FormInfo implements Parcelable {
         this.text = text;
     }
 
-//    public ArrayList<Cycle> getCyclesFinish() {
-//        return cycles;
-//    }
-//
-//    public void setCycles(ArrayList<Cycle> cycles) {
-//        this.cycles = cycles;
-//    }
-
     protected FormInfo(Parcel in) {
+        didCrash = in.readByte() != 0;
         ticket = in.readInt();
         text = in.readString();
         gameNumber = in.readInt();
@@ -58,6 +50,14 @@ public class FormInfo implements Parcelable {
             return new FormInfo[size];
         }
     };
+
+    public boolean getCrash() {
+        return didCrash;
+    }
+
+    public void setCrash(boolean crash) {
+        this.didCrash = crash;
+    }
 
     public int getTicket() {
         return ticket;
@@ -126,9 +126,7 @@ public class FormInfo implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-//        if (!cycles.isEmpty())
-            return /*"Cycles: " + cycles.toString() +*/
-                    "Team Number: " + teamNumber +
+            return "Team Number: " + teamNumber +
                     "; EndGame: " + endGame +
                     "; Finish: " + finish +
                     "; CP: " + controlPanel + ", " + controlPanelColor +
@@ -143,6 +141,7 @@ public class FormInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeByte((byte) (didCrash ? 1 : 0));
         parcel.writeInt(ticket);
         parcel.writeString(text.toString());
         parcel.writeInt(gameNumber);

@@ -18,17 +18,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.20999998" />
+        app:layout_constraintVertical_bias="0.15" />
 
     <ListView
         android:id="@+id/lvCycles"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="12dp"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
-        app:layout_constraintBottom_toTopOf="@+id/imgCPcolor"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubmission" />
+        app:layout_constraintBottom_toTopOf="@+id/imgFinish"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubmission"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -62,47 +64,52 @@
         android:id="@+id/imgFinish"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgCPcolor"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imgCPcolor"
         app:srcCompat="@drawable/ic_won" />
 
     <ImageView
         android:id="@+id/imgEndGame"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgTicket"
-        app:layout_constraintEnd_toStartOf="@+id/imgCPcolor"
-        app:layout_constraintStart_toEndOf="@+id/imgTicket"
-        app:layout_constraintTop_toTopOf="@+id/imgTicket"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imgDidCrash"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
         app:srcCompat="@drawable/ic_empty" />
 
     <ImageView
         android:id="@+id/imgCPnormal"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.952"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPcolor"
+        app:layout_constraintEnd_toStartOf="@+id/imgCPcolor"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imgEndGame"
+        app:layout_constraintTop_toTopOf="@+id/imgCPcolor"
         app:srcCompat="@drawable/ic_controlpanel_normal" />
 
     <ImageView
         android:id="@+id/imgCPcolor"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgCPnormal"
-        app:layout_constraintEnd_toStartOf="@+id/imgCPnormal"
-        app:layout_constraintTop_toTopOf="@+id/imgCPnormal"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_controlpanel_color" />
 
     <TextView
         android:id="@+id/tvComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
@@ -113,8 +120,46 @@
         android:id="@+id/imgTicket"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgDidCrash"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:srcCompat="@color/defaultColor" />
+
+    <ImageView
+        android:id="@+id/imgDidCrash"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
         app:layout_constraintStart_toEndOf="@+id/imgFinish"
         app:layout_constraintTop_toTopOf="@+id/imgFinish"
-        app:srcCompat="@color/defaultColor" />
+        app:layout_constraintVertical_bias="0.86"
+        app:srcCompat="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/tvTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ticket"
+        android:textColor="@android:color/white"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTicket"
+        app:layout_constraintEnd_toEndOf="@+id/imgTicket"
+        app:layout_constraintStart_toStartOf="@+id/imgTicket"
+        app:layout_constraintTop_toTopOf="@+id/imgTicket"
+        android:outlineAmbientShadowColor="@color/defaultColor"/>
+
+    <TextView
+        android:id="@+id/tvCrash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crash"
+        android:textColor="@android:color/white"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
+        app:layout_constraintTop_toTopOf="@+id/imgDidCrash"
+        android:outlineAmbientShadowColor="@color/defaultColor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

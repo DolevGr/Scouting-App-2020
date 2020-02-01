@@ -16,6 +16,7 @@ public class Keys {
 
     public static final String FINISH_TEAM = "FINISH_TEAM";
     public static final String FINISH_TICKET = "FINISH_TICKET";
+    public static final String FINISH_CRASH = "FINISH_CRASH";
     public static final String FINISH_TEXT = "FINISH_TEXT";
     public static final String FINISH_PC = "FINISH_PC";
 

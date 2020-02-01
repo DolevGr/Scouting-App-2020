@@ -31,7 +31,8 @@ public class Cycle implements Parcelable {
     }
 
     public int getScore() {
-        return phase ? pcLower + pcOuter + pcInner : 2 * (pcLower + pcOuter + pcInner);
+        int score = (1 * pcLower) + (2 * pcOuter) + (3 * pcInner);
+        return phase ? score : (2 * score);
     }
 
     @NonNull
@@ -61,8 +62,8 @@ public class Cycle implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(pcMissed);
         parcel.writeInt(pcLower);
-        parcel.writeInt(pcInner);
         parcel.writeInt(pcOuter);
+        parcel.writeInt(pcInner);
         parcel.writeByte((byte) (phase ? 1 : 0));
     }
 

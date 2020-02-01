@@ -7,4 +7,5 @@
     <color name="mainOrange">#F38843</color>
     <color name="defaultColor">#000000</color>
     <color name="mainBlue">#3A8BD8</color>
+    <color name="background">#E4F8FF</color>
 </resources>

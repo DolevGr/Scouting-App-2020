@@ -1,6 +1,7 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,11 +32,12 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private ListView lvCycles;
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
-    private ImageView imgPCnormal, imgCPcolor, imgTicket;
-    private TextView tvComment;
+    private ImageView imgPCnormal, imgCPcolor, imgTicket, imgCrash;
+    private TextView tvComment, tvTicket, tvCrash;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
+    private boolean isCPnormal, isCPcolor;
 
     private Intent intent, finishedForm, i;
     private FormInfo fi;
@@ -52,6 +54,9 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
         lvCycles = findViewById(R.id.lvCycles);
         imgTicket = findViewById(R.id.imgTicket);
+        tvTicket = findViewById(R.id.tvTicket);
+        imgCrash = findViewById(R.id.imgDidCrash);
+        tvCrash = findViewById(R.id.tvCrash);
         imgFinish = findViewById(R.id.imgFinish);
         imgEndGame = findViewById(R.id.imgEndGame);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -76,10 +81,27 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
             Log.d(TAG, "onCreate: EngGame Image Id: " + imgEndGame + "; Finish Image Id: " + imgFinish);
             imgEndGame.setImageResource(fi.getEndGame());
+
             imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
             imgTicket.setColorFilter(fi.getTicket());
-            imgPCnormal.setColorFilter(fi.isControlPanel() ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
-            imgCPcolor.setColorFilter(fi.isControlPanelColor() ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
+            tvTicket.setTextColor(fi.getTicket() != Color.BLACK ? Color.BLACK : Color.WHITE);
+            imgCrash.setColorFilter(fi.getCrash() ? Color.GREEN : Color.RED);
+            tvTicket.setTextColor(fi.getCrash() ? Color.BLACK : Color.WHITE);
+
+            isCPnormal = fi.isControlPanel();
+            if (!isCPnormal) {
+                imgPCnormal.getLayoutParams().height = 0;
+                imgPCnormal.getLayoutParams().width = 0;
+            }
+            imgPCnormal.setColorFilter(isCPnormal ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
+
+            isCPcolor = fi.isControlPanelColor();
+            if (!isCPcolor) {
+                imgCPcolor.getLayoutParams().height = 0;
+                imgCPcolor.getLayoutParams().width = 0;
+            }
+            imgCPcolor.setColorFilter(isCPcolor ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
+
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
             tvComment.setText(fi.getUserComment());
@@ -154,6 +176,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         dbRef.child("EndGame").setValue(fi.getEndGame());
         dbRef.child("Finish").setValue(fi.getFinish());
         dbRef.child("Ticket").setValue(fi.getTicket());
+        dbRef.child("DidCrash").setValue(fi.getCrash());
 
         if (fi.getUserComment() != null && !fi.getUserComment().equals(""))
             dbRef.child("Comment").setValue(fi.getUserComment());
@@ -185,6 +208,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void clearMatch() {
-        dbRef.setValue("");
+        dbRef.setValue("Clearing Match");
     }
 }

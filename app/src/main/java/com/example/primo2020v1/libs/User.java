@@ -14,6 +14,7 @@ public class User {
     public static ArrayList<String> members = new ArrayList<>();
     public static int currentGame = 1;
     public static ArrayList<String> admins = new ArrayList<>();
+    public static String username = "Scouter";
 
 
     public String name, password;

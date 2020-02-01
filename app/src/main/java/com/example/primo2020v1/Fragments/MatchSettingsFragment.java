@@ -39,7 +39,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     private Spinner spnTeam;
     private String[] positions;
 
-    public static int gameNumber = User.currentGame, spnIndex = 0;
+    public static int gameNumber = User.currentGame, spnIndex = -1;
     public static String teamNumber = "";
     private ArrayAdapter<CharSequence> teamAdapter;
 
@@ -73,7 +73,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(!edGameNumber.getText().toString().trim().equals("")) {
+                if (!edGameNumber.getText().toString().trim().equals("")) {
                     gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
                     spnIndex = spnTeam.getSelectedItemPosition();
                     User.currentGame = gameNumber;
@@ -85,14 +85,19 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
         edTeamNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                teamNumber = edTeamNumber.getText().toString();
+                if (!edTeamNumber.getText().toString().trim().equals("")) {
+                    teamNumber = edTeamNumber.getText().toString().trim();
+                    Log.d(TAG, "afterTextChanged: Changed Team Number " + teamNumber);
+                }
             }
         });
 
@@ -105,16 +110,13 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     //Spinner
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        spnIndex = i;
-
-        if (isValid())
+        if (isValid() && spnIndex != i) {
             teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber), i);
-        else
-            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(User.matches.size()-1), i);
+            spnIndex = i;
+        }
 
         edGameNumber.setText(Integer.toString(gameNumber));
         edTeamNumber.setText(teamNumber);
-        Log.d("Spinner Option ", "onClick: " + teamNumber);
     }
 
     private boolean isValid() {
@@ -122,7 +124,8 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) { }
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 
 
     //Fragment
@@ -130,9 +133,9 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try{
+        try {
             listener = (MatchSettingsListener) context;
-        } catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new RuntimeException(context.toString() +
                     " must implement MatchSettingsListener");
         }
@@ -146,9 +149,9 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         listener = null;
     }
 
-    public void placeInfo(){
-        teamNumber = edTeamNumber.getText().toString();
-        gameNumber = Integer.parseInt(edGameNumber.getText().toString());
+    public void placeInfo() {
+        teamNumber = edTeamNumber.getText().toString().trim();
+        gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
 
         msIntent.putExtra(Keys.MS_TEAM, teamNumber);
         msIntent.putExtra(Keys.MS_NUMBER, gameNumber);

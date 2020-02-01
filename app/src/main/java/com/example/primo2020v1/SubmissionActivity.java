@@ -1,5 +1,6 @@
 package com.example.primo2020v1;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.Adapters.CyclesAdapter;
+import com.example.primo2020v1.AlertDialogs.MissingTeamNumberAlertDialog;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
 import com.example.primo2020v1.libs.GeneralFunctions;
@@ -90,17 +92,15 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
             isCPnormal = fi.isControlPanel();
             if (!isCPnormal) {
-                imgPCnormal.getLayoutParams().height = 0;
-                imgPCnormal.getLayoutParams().width = 0;
+                imgPCnormal.setVisibility(View.INVISIBLE);
             }
-            imgPCnormal.setColorFilter(isCPnormal ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
+            imgPCnormal.setColorFilter(getResources().getColor(R.color.mainBlue));
 
             isCPcolor = fi.isControlPanelColor();
             if (!isCPcolor) {
-                imgCPcolor.getLayoutParams().height = 0;
-                imgCPcolor.getLayoutParams().width = 0;
+                imgCPcolor.setVisibility(View.INVISIBLE);
             }
-            imgCPcolor.setColorFilter(isCPcolor ? getResources().getColor(R.color.mainBlue) : getResources().getColor(R.color.defaultColor));
+            imgCPcolor.setColorFilter(getResources().getColor(R.color.mainBlue));
 
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
@@ -115,21 +115,27 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSubmit:
-                onSubmit();
-                GeneralFunctions.resetForm();
-                if (!c.isEmpty())
-                    if (!adapter.getCycles().isEmpty())
-                        c = adapter.getCycles();
+                if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
+                    onSubmit();
+                    GeneralFunctions.resetForm();
+                    if (!c.isEmpty())
+                        if (!adapter.getCycles().isEmpty())
+                            c = adapter.getCycles();
 
-                finishedForm = new Intent(SubmissionActivity.this, MainActivity.class);
-                finish();
-                startActivity(finishedForm);
+                    finishedForm = new Intent(SubmissionActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(finishedForm);
+                } else {
+                    MissingTeamNumberAlertDialog alertDialog = new MissingTeamNumberAlertDialog();
+                    alertDialog.show(getSupportFragmentManager(), "Missing Team Number");
+                }
+
                 break;
 
             case R.id.btnBack:
                 i = new Intent(SubmissionActivity.this, GameFormActivity.class);
 
-                if (c != null &&!c.isEmpty())
+                if (c != null && !c.isEmpty())
                     if (adapter.getCycles() != null && !adapter.getCycles().isEmpty())
                         c = adapter.getCycles();
 
@@ -144,15 +150,17 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
     private void onSubmit() {
         int totalCycles = c.size(), totalScore = 0,
-            totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
+                totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
 
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
         clearMatch();
         Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
 
+        dbRef.child("CommittedBy").setValue(User.username);
+
         for (int i = 0; i < c.size(); i++) {
             Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
-            dbRef.child("Cycles " + (i+1)).setValue(cycle);
+            dbRef.child("Cycles " + (i + 1)).setValue(cycle);
             Log.d(TAG, "onSubmit: " + cycle.toString());
 
             totalPCmissed += c.get(i).pcMissed;
@@ -203,7 +211,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 

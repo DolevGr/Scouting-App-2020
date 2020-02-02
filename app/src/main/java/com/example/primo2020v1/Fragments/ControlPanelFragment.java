@@ -19,7 +19,7 @@ import com.example.primo2020v1.libs.Keys;
 public class ControlPanelFragment extends Fragment implements View.OnClickListener {
     private ImageView imgCPnormal, imgCPcolor;
     private ControlPanelListener listener;
-    public static boolean isPCnormal = false, isPCcolor = false;
+    public static boolean isPCnormal, isPCcolor;
     private Intent cpIntent;
 
 

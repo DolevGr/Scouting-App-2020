@@ -109,9 +109,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnSubmit:
                 if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
                     onSubmit();
-                    GeneralFunctions.resetForm();
-                    if (!c.isEmpty())
-                        if (!adapter.getCycles().isEmpty())
+                    if (c != null && !c.isEmpty())
+                        if (adapter.getCycles() != null && !adapter.getCycles().isEmpty())
                             c = adapter.getCycles();
 
                     finishedForm = new Intent(SubmissionActivity.this, MainActivity.class);
@@ -140,34 +139,37 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onSubmit() {
-        int totalCycles = c.size(), totalScore = 0,
+        int totalCycles, totalScore = 0,
                 totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
 
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
         clearMatch();
-        Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
+        //Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
 
         dbRef.child("CommittedBy").setValue(User.username);
 
-        for (int i = 0; i < c.size(); i++) {
-            Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
-            dbRef.child("Cycles " + (i + 1)).setValue(cycle);
+        if (c != null && !c.isEmpty()) {
+            totalCycles = c.size();
+            for (int i = 0; i <totalCycles; i++) {
+                Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
+                dbRef.child("Cycles " + (i + 1)).setValue(cycle);
 
-            totalPCmissed += c.get(i).pcMissed;
-            totalPClower += c.get(i).pcLower;
-            totalPCouter += c.get(i).pcOuter;
-            totalPCinner += c.get(i).pcInner;
+                totalPCmissed += c.get(i).pcMissed;
+                totalPClower += c.get(i).pcLower;
+                totalPCouter += c.get(i).pcOuter;
+                totalPCinner += c.get(i).pcInner;
 
-            totalScore += c.get(i).getScore();
+                totalScore += c.get(i).getScore();
+            }
+
+            dbRef.child("TotalMissed").setValue(totalPCmissed);
+            dbRef.child("TotalLower").setValue(totalPClower);
+            dbRef.child("TotalOuter").setValue(totalPCouter);
+            dbRef.child("TotalInner").setValue(totalPCinner);
+
+            dbRef.child("TotalScore").setValue(totalScore);
+            dbRef.child("TotalCycles").setValue(totalCycles);
         }
-
-        dbRef.child("TotalMissed").setValue(totalPCmissed);
-        dbRef.child("TotalLower").setValue(totalPClower);
-        dbRef.child("TotalOuter").setValue(totalPCouter);
-        dbRef.child("TotalInner").setValue(totalPCinner);
-
-        dbRef.child("TotalScore").setValue(totalScore);
-        dbRef.child("NumberOfCycles").setValue(totalCycles);
 
         dbRef.child("ControlPanel").setValue(fi.isControlPanel());
         dbRef.child("ControlPanelColor").setValue(fi.isControlPanelColor());

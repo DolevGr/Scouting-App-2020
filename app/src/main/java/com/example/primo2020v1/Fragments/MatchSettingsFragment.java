@@ -40,10 +40,11 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     private ImageButton imgbtnSwitchFields;
     private Spinner spnTeam;
     private String[] positions;
+    //private int[] locks = {R.drawable.ic_locked_foreground, R.drawable.ic_unlocked_foreground};
 
-    public static int gameNumber = User.currentGame, spnIndex = -1;
-    public static String teamNumber = "";
-    public static boolean swichFields;
+    public static int gameNumber, spnIndex;
+    public static String teamNumber;
+    public boolean swichFields;
     private ArrayAdapter<CharSequence> teamAdapter;
 
 
@@ -142,6 +143,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void switchFields() {
+        //imgbtnSwitchFields.setImageDrawable(getResources().getDrawable(swichFields ? locks[0] : locks[1]));
         swichFields = !swichFields;
         edGameNumber.setEnabled(swichFields);
         edTeamNumber.setEnabled(swichFields);

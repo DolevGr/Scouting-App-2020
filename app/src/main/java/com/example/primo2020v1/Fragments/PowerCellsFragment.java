@@ -36,7 +36,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
     public static int[] positions = new int[4];
 
     //Tele: true; Auto: false
-    public static boolean phase = false;
+    public static boolean phase;
     private ArrayList<Cycle> cycles;
 
     private Button btnCycle, btnTeleAuto;

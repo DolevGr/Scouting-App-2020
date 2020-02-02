@@ -3,7 +3,6 @@ package com.example.primo2020v1;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +20,7 @@ import com.example.primo2020v1.Fragments.MatchSettingsFragment;
 import com.example.primo2020v1.Fragments.PowerCellsFragment;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
+import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,7 +43,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     private ArrayList<Cycle> cycles;
     private FormInfo formInfo;
     public String teamNumber = "";
-    int spnOptionSelectedIndex = 0, gameNumber = User.currentGame, numOfCycles,
+    int spnOptionSelectedIndex = 0, gameNumber = User.currentGame,
             endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won, finishTicket = Color.BLACK;
     boolean isControlPanelNormal, isControlPanelColor, leaveForm, finishDidCrash;
     CharSequence text;
@@ -98,25 +98,17 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
             bnvForm.getMenu().findItem(R.id.navFinishForm).setChecked(true);
         } else {
             selectedFragment = fragsMap.get(R.id.navMatchSettings);
+            GeneralFunctions.resetForm();
         }
 
         if (intent.hasExtra(Keys.FINISH_PC)) {
             cycles = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
-            Log.d(TAG, "onCreate: " + cycles.toString());
-
-            if (!cycles.isEmpty())
-                numOfCycles = cycles.size();
-            else
-                numOfCycles = 0;
         } else {
             cycles = new ArrayList<>();
-            numOfCycles = 0;
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentForm, selectedFragment).commit();
         bnvForm.setOnNavigationItemSelectedListener(this);
-
-        Log.d(TAG, "onCreate: " + cycles.toString());
     }
 
     public void openDialog() {
@@ -145,8 +137,6 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         teamNumber = msIntent.getStringExtra(Keys.MS_TEAM);
         gameNumber = msIntent.getIntExtra(Keys.MS_NUMBER, User.currentGame);
         spnOptionSelectedIndex = msIntent.getIntExtra(Keys.MS_TEAM_INDEX, 0);
-
-        Log.d(TAG, "setDataMatchSettings: Game Number: " + gameNumber);
     }
 
     @Override

@@ -35,9 +35,9 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     FinishListener listener;
-    public static int imageIndex = 0, ticketIndex = 0;
-    public static CharSequence text = "";
-    public static boolean didCrash = false;
+    public static int imageIndex, ticketIndex;
+    public static CharSequence text;
+    public static boolean didCrash;
     private ImageView imgReplace, imgTicket, imgCrash;
     private EditText edExtraInfo;
     private Button btnToSubmission;

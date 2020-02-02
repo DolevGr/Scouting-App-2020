@@ -79,7 +79,6 @@ public class GeneralFunctions {
         MatchSettingsFragment.teamNumber = "";
         MatchSettingsFragment.spnIndex = -1;
         MatchSettingsFragment.gameNumber = User.currentGame;
-        MatchSettingsFragment.swichFields = true;
 
         PowerCellsFragment.phase = false;
         for (int i = 0; i < PowerCellsFragment.positions.length; i++) {

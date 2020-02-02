@@ -22,7 +22,7 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
     private ImageView imgReplace;
     private int[] images = {R.drawable.ic_empty, R.drawable.ic_park, R.drawable.ic_climb, R.drawable.ic_balance};
     //0: nothing; 1: parked; 2: climbed; 3: balanced
-    public static int imageIndex = 0;
+    public static int imageIndex;
 
     public interface EndGameListener {
         void setDataEndGame(Intent egIntent);

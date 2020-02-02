@@ -76,6 +76,8 @@
         android:text="Pick Team Position"
         app:layout_constraintBottom_toBottomOf="@+id/spnTeam"
         app:layout_constraintEnd_toStartOf="@+id/spnTeam"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/spnTeam" />
 
     <TextView
@@ -110,6 +112,7 @@
         app:layout_constraintEnd_toStartOf="@+id/tvMuchSettings"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/tvMuchSettings"
-        app:srcCompat="@android:color/darker_gray" />
+        app:srcCompat="@android:drawable/ic_lock_lock"
+        android:background="@color/background"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

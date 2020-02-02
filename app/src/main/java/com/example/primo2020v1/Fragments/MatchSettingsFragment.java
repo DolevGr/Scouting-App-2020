@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -37,7 +37,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     private MatchSettingsListener listener;
     private Intent msIntent;
     private EditText edGameNumber, edTeamNumber;
-    private ImageButton imgbtnSwitchFields;
+    private ImageView imgbtnSwitchFields;
     private Spinner spnTeam;
     private String[] positions;
     //private int[] locks = {R.drawable.ic_locked_foreground, R.drawable.ic_unlocked_foreground};
@@ -111,7 +111,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
             public void afterTextChanged(Editable editable) {
                 if (!edTeamNumber.getText().toString().trim().equals("")) {
                     teamNumber = edTeamNumber.getText().toString().trim();
-                    Log.d(TAG, "afterTextChanged: Changed Team Number " + teamNumber);
                 }
             }
         });
@@ -134,12 +133,11 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         edTeamNumber.setText(teamNumber);
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) { }
+
     private boolean isValid() {
         return gameNumber > 0 && gameNumber < User.matches.size();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     private void switchFields() {

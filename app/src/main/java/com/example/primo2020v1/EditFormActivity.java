@@ -2,8 +2,11 @@ package com.example.primo2020v1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,15 +15,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EditFormActivity extends AppCompatActivity implements View.OnClickListener/*, AdapterView.OnItemSelectedListener*/
+import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.libs.User;
+
+public class EditFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
-    Spinner teamSpinnerEdit;
-    ArrayAdapter<CharSequence> teamAdapterEdit;
-    EditText edGameNumberEdit, edTeamNumberEdit;
+    Spinner spnTeam;
+    ArrayAdapter<CharSequence> teamAdapter;
+    EditText edGameNumber, edTeamNumber;
     Button btnSearch, btnBackEdit;
 
-    String optionSelected, gameNumber, teamNumber;
-    int optionSelectedIndex;
+    String optionSelected, teamNumber;
+    int spnIndex, gameNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +36,56 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         btnSearch = (Button) findViewById(R.id.btnSearch);
         btnBackEdit = (Button) findViewById(R.id.btnBackEdit);
 
-        edGameNumberEdit = (EditText) findViewById(R.id.edGameNumberEdit);
-        edTeamNumberEdit = (EditText) findViewById(R.id.edTeamNumberEdit);
+        edGameNumber = (EditText) findViewById(R.id.edGameNumberEdit);
+        edTeamNumber = (EditText) findViewById(R.id.edTeamNumberEdit);
 
-        teamSpinnerEdit = (Spinner) findViewById(R.id.spnTeamEdit);
-        teamAdapterEdit = ArrayAdapter.createFromResource(this, R.array.teams, R.layout.support_simple_spinner_dropdown_item);
-        teamAdapterEdit.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        teamSpinnerEdit.setAdapter(teamAdapterEdit);
+        spnTeam = (Spinner) findViewById(R.id.spnTeamEdit);
+        teamAdapter = ArrayAdapter.createFromResource(this, R.array.teams, R.layout.support_simple_spinner_dropdown_item);
+        teamAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnTeam.setAdapter(teamAdapter);
 
         optionSelected = "";
-        optionSelectedIndex = 0;
+        spnIndex = -1;
         teamNumber = "";
-        gameNumber = "";
-        edTeamNumberEdit.setText(teamNumber);
-        edGameNumberEdit.setText(gameNumber);
+
+        edGameNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!edGameNumber.getText().toString().trim().equals("")) {
+                    gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
+                    spnIndex = spnTeam.getSelectedItemPosition();
+                }
+            }
+        });
+
+        edTeamNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!edTeamNumber.getText().toString().trim().equals(""))
+                    teamNumber = edTeamNumber.getText().toString().trim();
+            }
+        });
 
         btnSearch.setOnClickListener(this);
         btnBackEdit.setOnClickListener(this);
-        //teamSpinnerEdit.setOnItemSelectedListener(this);
+        spnTeam.setOnItemSelectedListener(this);
+        spnTeam.setOnClickListener(this);
 
     }
 
@@ -71,20 +109,22 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
-//
-//    @Override
-//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//        optionSelectedIndex = i;
-//        optionSelected = (String) teamSpinnerEdit.getSelectedItem();
-//
-//        Log.d("Spinner Option ", "onClick: " + optionSelected);
-//        Toast.makeText(this, optionSelected + "", Toast.LENGTH_SHORT).show();
-//
-//        GeneralFunctions.updateTeamSpinner(optionSelectedIndex, edGameNumberEdit, edTeamNumberEdit);
-//    }
 
-//    @Override
-//    public void onNothingSelected(AdapterView<?> adapterView) {
-//        optionSelected = (String) teamSpinnerEdit.getItemAtPosition(optionSelectedIndex);
-//    }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (isValid() && spnIndex != i) {
+            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber), i);
+            spnIndex = i;
+            edGameNumber.setText(Integer.toString(gameNumber));
+            edTeamNumber.setText(teamNumber);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    private boolean isValid() {
+        return gameNumber > 0 && gameNumber < User.matches.size();
+    }
 }

@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class User {
-    public static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    public static final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     public static final int NUMBER_OF_MATCHES = 80;
     public static ArrayList<String> teams = new ArrayList<>();

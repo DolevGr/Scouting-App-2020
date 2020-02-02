@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Username"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/edPassword"
         app:layout_constraintEnd_toEndOf="@+id/edPassword"

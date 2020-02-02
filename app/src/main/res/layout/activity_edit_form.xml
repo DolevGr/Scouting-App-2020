@@ -4,32 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditFormActivity">
+    tools:context=".EditFormActivity"
+    tools:layout_editor_absoluteY="25dp">
 
-    <EditText
-        android:id="@+id/edGameNumberEdit"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="Game Number"
-        android:inputType="number"
+    <Button
+        android:id="@+id/btnBackEdit"
+        android:layout_width="66dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Back"
+        android:textSize="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edTeamNumberEdit"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:ems="10"
-        android:hint="Team Number"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
@@ -40,6 +26,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edGameNumberEdit"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:ems="10"
+        android:hint="Game Number"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearch"
+        app:layout_constraintEnd_toStartOf="@+id/spnTeamEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnTeamEdit" />
+
+    <EditText
+        android:id="@+id/edTeamNumberEdit"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="30dp"
+        android:ems="10"
+        android:hint="Team Number"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/spnTeamEdit"
+        app:layout_constraintTop_toBottomOf="@+id/spnTeamEdit" />
 
     <Button
         android:id="@+id/btnSearch"
@@ -52,16 +66,122 @@
         app:layout_constraintTop_toTopOf="@+id/spnTeamEdit"
         app:layout_constraintVertical_bias="0.153" />
 
-    <Button
-        android:id="@+id/btnBackEdit"
-        android:layout_width="54dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Back"
-        android:textSize="10sp"
+    <ListView
+        android:id="@+id/lvCycles"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgFinish"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSearch">
+
+    </ListView>
+
+    <ImageView
+        android:id="@+id/imgCPcolor"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:srcCompat="@drawable/ic_controlpanel_color" />
+
+    <ImageView
+        android:id="@+id/imgFinish"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_won" />
+
+    <ImageView
+        android:id="@+id/imgEndGame"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imgTicket"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:srcCompat="@drawable/ic_empty" />
+
+    <ImageView
+        android:id="@+id/imgCPnormal"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPcolor"
+        app:layout_constraintEnd_toStartOf="@+id/imgCPcolor"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imgEndGame"
+        app:layout_constraintTop_toTopOf="@+id/imgCPcolor"
+        app:srcCompat="@drawable/ic_controlpanel_normal" />
+
+    <ImageView
+        android:id="@+id/imgTicket"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgDidCrash"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:srcCompat="@color/defaultColor" />
+
+    <ImageView
+        android:id="@+id/imgDidCrash"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
+        app:layout_constraintStart_toEndOf="@+id/imgFinish"
+        app:layout_constraintTop_toTopOf="@+id/imgFinish"
+        app:layout_constraintVertical_bias="0.86"
+        app:srcCompat="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/tvCrash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crash"
+        android:textColor="@android:color/white"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
+        app:layout_constraintTop_toTopOf="@+id/imgDidCrash" />
+
+    <TextView
+        android:id="@+id/tvTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ticket"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="546dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTicket"
+        app:layout_constraintEnd_toEndOf="@+id/imgTicket"
+        app:layout_constraintStart_toStartOf="@+id/imgTicket"
+        app:layout_constraintTop_toTopOf="@+id/imgTicket"
+        android:textSize="10dp"/>
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgFinish"
+        app:layout_constraintVertical_bias="0.14999998" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

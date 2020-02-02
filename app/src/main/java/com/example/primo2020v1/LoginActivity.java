@@ -96,17 +96,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void checkPassAndUsername() {
         if(edName.getText().toString().equals("") || edPass.getText().toString().equals("")){
             Toast.makeText(context.getApplicationContext(), "Enter Username or Password", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "checkPassAndUsername: " + passFromDB);
         } else if(!isValidName() || !isValidPassword()) {
             Toast.makeText(context.getApplicationContext(), "Username or Password is incorrect", Toast.LENGTH_LONG).show();
         }
     }
 
     private boolean isValidName(){
-        return edName.getText().toString().equals(nameFromDB);
+        return edName.getText().toString().trim().equals(nameFromDB);
     }
 
     private boolean isValidPassword(){
-        return edPass.getText().toString().equals(passFromDB);
+        return edPass.getText().toString().trim().toLowerCase().equals(passFromDB.toLowerCase());
     }
 
     private void debugger() {

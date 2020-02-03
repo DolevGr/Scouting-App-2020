@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
     EditText edName, edPass;
@@ -40,57 +40,53 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = (Button) findViewById(R.id.btnLogin);
         context = getApplicationContext();
 
-        btnLogin.setOnClickListener(this);
-    }
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                name = edName.getText().toString().trim();
+                password = edPass.getText().toString().trim();
 
-    @Override
-    public void onClick(View view) {
-        name = edName.getText().toString().trim();
-        password = edPass.getText().toString().trim();
+                if (User.members.contains(name)) {
+                    DatabaseReference dbRef = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
+                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            try{
+                                nameFromDB = dataSnapshot.child("name").getValue().toString();
+                                passFromDB = dataSnapshot.child("password").getValue().toString();
+                                privillegeFromDB = dataSnapshot.child("privilege").getValue().toString();
+                                priv = privillege.equals(privillegeFromDB) ? false : true;
 
-        if (view.getId() == R.id.btnLogin) {
-            if (User.members.contains(name)) {
-                DatabaseReference dbRef = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
-                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try{
-                            nameFromDB = dataSnapshot.child("name").getValue().toString();
-                            passFromDB = dataSnapshot.child("password").getValue().toString();
-                            privillegeFromDB = dataSnapshot.child("privilege").getValue().toString();
-                            priv = privillege.equals(privillegeFromDB) ? false : true;
-
-                        } catch (Exception e){
-                            e.printStackTrace();
-                            Log.d("Exception", "onDataChange: Data went missing :-(");
-                        }
-
-                        if (isValidName() && isValidPassword()) {
-                            i = new Intent(LoginActivity.this, MainActivity.class);
-
-                            if (i != null){
-                                i.putExtra("Username", edName.getText().toString());
-                                i.putExtra("Privilege", priv);
-                                startActivity(i);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                                Log.d("Exception", "onDataChange: Data went missing :-(");
                             }
-                        } else if (!isValidPassword()) {
-                            Toast.makeText(context.getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
+
+                            if (isValidName() && isValidPassword()) {
+                                i = new Intent(LoginActivity.this, MainActivity.class);
+
+                                if (i != null){
+                                    i.putExtra("Username", edName.getText().toString());
+                                    i.putExtra("Privilege", priv);
+                                    startActivity(i);
+                                }
+                            } else if (!isValidPassword()) {
+                                Toast.makeText(context.getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-                debugger();
-
-            } else {
-                checkPassAndUsername();
+                } else {
+                    enterOnDebug();
+                    checkPassAndUsername();
+                }
             }
-
-        }
-
+        });
     }
 
     private void checkPassAndUsername() {
@@ -103,14 +99,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean isValidName(){
-        return edName.getText().toString().trim().equals(nameFromDB);
+        return name.equals(nameFromDB);
     }
 
     private boolean isValidPassword(){
-        return edPass.getText().toString().trim().toLowerCase().equals(passFromDB.toLowerCase());
+        return password.toLowerCase().equals(passFromDB.toLowerCase());
     }
 
-    private void debugger() {
+    private void enterOnDebug() {
         if (debug) {
             i = new Intent(LoginActivity.this, MainActivity.class);
 

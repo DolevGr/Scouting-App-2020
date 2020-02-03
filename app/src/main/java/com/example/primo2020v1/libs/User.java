@@ -26,6 +26,8 @@ public class User {
         this.privilege = false;
     }
 
+    public User() { }
+
     public String getName() {
         return name;
     }

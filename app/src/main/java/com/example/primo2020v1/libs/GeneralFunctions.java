@@ -1,15 +1,10 @@
 package com.example.primo2020v1.libs;
 
-import androidx.annotation.NonNull;
-
 import com.example.primo2020v1.Fragments.ControlPanelFragment;
 import com.example.primo2020v1.Fragments.EndGameFragment;
 import com.example.primo2020v1.Fragments.FinishFragment;
 import com.example.primo2020v1.Fragments.MatchSettingsFragment;
 import com.example.primo2020v1.Fragments.PowerCellsFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -52,18 +47,6 @@ public class GeneralFunctions {
             default:
                 return m.getThirdBlueRobot();
         }
-    }
-
-    public static void setCurrentGame() {
-        User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
     }
 
     public static void resetForm() {

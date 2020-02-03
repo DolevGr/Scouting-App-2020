@@ -13,77 +13,39 @@ import com.example.primo2020v1.libs.Match;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class Splash extends AppCompatActivity {
     private static final String TAG = "Splash";
 
     Intent in;
-    boolean addToFireBase = false;
-    int usersNumber, matchesNumber;
-    private DatabaseReference dbRefUsers, dbRefMatches;
+    boolean addToFireBase = false, isFirstEntry = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        User.databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+                Log.d(TAG, "onDataChange: " + User.currentGame);
 
-                usersNumber = Integer.parseInt(dataSnapshot.child("UsersNumber").getValue().toString());
-                matchesNumber = Integer.parseInt(dataSnapshot.child("MatchesNumber").getValue().toString());
-                Log.d(TAG, "onDataChange: " + usersNumber + ", " + matchesNumber);
+                if (isFirstEntry) {
+                    DataSnapshot dsUsers = dataSnapshot.child(Keys.USERS),
+                            dsMatches = dataSnapshot.child(Keys.MATCHES);
+//                setUsersNames(dsUsers);
+//                setMatches(dsMatches);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-
-        dbRefMatches = User.databaseReference.child(Keys.MATCHES);
-        dbRefUsers = User.databaseReference.child(Keys.USERS);
-        for (int i = 0; i < usersNumber; i++) {
-            final int finalI = i;
-            dbRefUsers = dbRefUsers.child(Integer.toString(finalI));
-            dbRefUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    try {
-                        User.members.add(dataSnapshot.child("name").getValue().toString());
-                    } catch (Exception e) {
-                        Log.d(TAG, "onDataChange: Users");
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) { }
-            });
-            Log.d(TAG, "onDataChange: " + User.members.get(i));
-        }
-
-        for (int i = 0; i < matchesNumber; i++) {
-            final int finalI = i;
-            dbRefMatches = dbRefMatches.child(Integer.toString(finalI));
-            dbRefMatches.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    try {
-                        User.matches.add(dataSnapshot.getValue(Match.class));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) { }
-            });
-            Log.d(TAG, "onCreate: Users: " + User.members.toString() + "\nMatches: " + User.matches.toString());
-        }
 
 
 //        User.teams.add("4586 1");
@@ -102,7 +64,7 @@ public class Splash extends AppCompatActivity {
 
         if(addToFireBase)
             addToDatabase();
-        GeneralFunctions.setCurrentGame();
+
 
         Thread th = new Thread() {
             public void run(){
@@ -118,7 +80,30 @@ public class Splash extends AppCompatActivity {
             }
         };
         th.start();
+
     }
+
+    private void setMatches(DataSnapshot dataSnapshot) {
+        int i = 1;
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            User.matches.add(Objects.requireNonNull(ds.child(Integer.toString(i)).getValue(Match.class)));
+            i++;
+        }
+        Log.d(TAG, "setMatches: " + User.matches.toString());
+    }
+
+    private void setUsersNames(DataSnapshot dataSnapshot) {
+        int i = 0;
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            User u = new User();
+            u.setName(ds.child(Integer.toString(i)).getValue(User.class).getName());
+            Log.d(TAG, "setUsersNames: " + u.getName());
+            User.members.add(u.getName());
+            i++;
+        }
+        Log.d(TAG, "setUsersNames: " + User.members.toString());
+    }
+
 
     //This function is for debugging only
     public void addToDatabase() {
@@ -128,7 +113,6 @@ public class Splash extends AppCompatActivity {
             User.databaseReference.child(Keys.MATCHES).child(Integer.toString(i)).setValue(match);
         }
 
-        //Adds users to Firebase
         if (false){ // Never add/remove users with code
             int j = 0;
             for (int i = 0; i < User.members.size(); i++) {

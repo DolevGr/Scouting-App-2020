@@ -188,7 +188,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int dbGame;
-
                 dbGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
 
                 if (User.currentGame != dbGame) {

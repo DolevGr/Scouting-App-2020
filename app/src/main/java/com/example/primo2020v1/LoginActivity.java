@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                                 nameFromDB = dataSnapshot.child("name").getValue().toString();
                                 passFromDB = dataSnapshot.child("password").getValue().toString();
                                 privillegeFromDB = dataSnapshot.child("privilege").getValue().toString();
-                                priv = privillege.equals(privillegeFromDB) ? false : true;
+                                priv = (privillege.equals(privillegeFromDB) ? false : true) && User.admins.contains(name);
 
                             } catch (Exception e){
                                 e.printStackTrace();

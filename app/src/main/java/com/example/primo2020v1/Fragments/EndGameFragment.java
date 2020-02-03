@@ -56,8 +56,8 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setImage(){
-       imgReplace.setImageResource(images[imageIndex]);
+    private void setImage(){
+        imgReplace.setImageResource(images[imageIndex]);
     }
 
     @Override

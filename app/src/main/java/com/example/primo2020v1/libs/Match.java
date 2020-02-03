@@ -8,14 +8,18 @@ public class Match{
     public Match(String r1, String r2, String r3, String b1, String b2, String b3, int game){
         cRed = r1; mRed = r2; fRed = r3;
         cBlue = b1; mBlue = b2; fBlue = b3;
-
         this.gameNum = game;
+    }
+
+    public Match() { }
+
+    public void setGameNum(int gameNum) {
+        this.gameNum = gameNum;
     }
 
     public int getGameNum() {
         return gameNum;
     }
-
 
     public String getFirstRedRobot(){
         return cRed;

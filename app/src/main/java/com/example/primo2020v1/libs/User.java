@@ -4,12 +4,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
     public static final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     public static final int NUMBER_OF_MATCHES = 80;
-    public static ArrayList<String> teams = new ArrayList<>();
+    public static HashMap<Integer, String> teams = new HashMap<>();
     public static ArrayList<Match> matches = new ArrayList<>();
     public static ArrayList<String> members = new ArrayList<>();
     public static int currentGame = 1;
@@ -48,7 +49,7 @@ public class User {
         return privilege;
     }
 
-    public void setPrivilege() {
-        this.privilege = true;
+    public void setPrivilege(boolean b) {
+        this.privilege = b;
     }
 }

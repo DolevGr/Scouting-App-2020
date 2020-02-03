@@ -69,4 +69,8 @@ public class GeneralFunctions {
         FinishFragment.text = "";
         FinishFragment.didCrash = false;
     }
+
+    public static void setCurrentGameInDB() {
+        User.databaseReference.child(Keys.CURRENT_GAME).setValue(Integer.toString(User.currentGame));
+    }
 }

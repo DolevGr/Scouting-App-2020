@@ -37,19 +37,15 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         View view = inflater.inflate(res, null);
 
         TextView tvGame = view.findViewById(R.id.tvGameNumber);
-
         TextView tvR1 = (TextView) view.findViewById(R.id.tvR1);
         TextView tvR2 = (TextView) view.findViewById(R.id.tvR2);
         TextView tvR3 = (TextView) view.findViewById(R.id.tvR3);
         TextView tvB1 = (TextView) view.findViewById(R.id.tvB1);
         TextView tvB2 = (TextView) view.findViewById(R.id.tvB2);
         TextView tvB3 = (TextView) view.findViewById(R.id.tvB3);
-
         ImageView img = (ImageView) view.findViewById(R.id.imgRedBlue);
 
         Match match = this.getItem(position);
-
-
         tvR1.setText(match.getFirstRedRobot());
         tvR2.setText(match.getSecondRedRobot());
         tvR3.setText(match.getThirdRedRobot());
@@ -58,7 +54,6 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         tvB3.setText(match.getThirdBlueRobot());
 
         tvGame.setText(Integer.toString(match.getGameNum()));
-
         img.setImageResource(R.drawable.red_blue);
 
         return view;

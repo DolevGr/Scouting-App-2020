@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Context context;
 
     String name, password, nameFromDB, passFromDB, privillegeFromDB = "", privillege = "false";
-    boolean priv = false, debug = false;
+    boolean priv = false, debug = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

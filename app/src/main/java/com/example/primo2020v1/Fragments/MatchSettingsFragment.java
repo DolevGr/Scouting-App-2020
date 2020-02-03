@@ -125,7 +125,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (isValid() && spnIndex != i) {
-            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber), i);
+            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber-1), i);
             spnIndex = i;
         }
 

@@ -44,8 +44,9 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     private FormInfo formInfo;
     public String teamNumber = "";
     int spnOptionSelectedIndex = 0, gameNumber = User.currentGame,
-            endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won, finishTicket = Color.BLACK;
-    boolean isControlPanelNormal, isControlPanelColor, leaveForm, finishDidCrash;
+            endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won, finishTicket = Color.BLACK,
+            finishDidCrash = Color.RED;
+    boolean isControlPanelNormal, isControlPanelColor, leaveForm;
     CharSequence text;
     private Map<Integer, Fragment> fragsMap;
 
@@ -168,7 +169,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     public void setDataFinish(Intent finishIntent) {
         finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, R.drawable.ic_won);
         finishTicket = finishIntent.getIntExtra(Keys.FINISH_TICKET, Color.BLACK);
-        finishDidCrash = finishIntent.getBooleanExtra(Keys.FINISH_CRASH, false);
+        finishDidCrash = finishIntent.getIntExtra(Keys.FINISH_CRASH, Color.RED);
         text = finishIntent.getCharSequenceExtra(Keys.FINISH_TEXT);
     }
 

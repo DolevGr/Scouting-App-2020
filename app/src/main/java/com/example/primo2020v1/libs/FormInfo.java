@@ -3,20 +3,18 @@ package com.example.primo2020v1.libs;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
 public class FormInfo implements Parcelable {
     //private ArrayList<Cycle> cycles;
-    public int endGame, finish, gameNumber, ticket;
-    public boolean controlPanelColor, controlPanel, didCrash;
-    public CharSequence text;
+    public int endGame, finish, gameNumber, ticket, crash;
+    public boolean controlPanelColor, controlPanel;
+    public CharSequence comment;
     public String teamNumber;
 
     public FormInfo(String teamNumber, int gameNumber,
                         boolean controlPanel, boolean controlPanelColor,
                         int endGame,
-                        int finish, int ticket, boolean crash, CharSequence text){
-        this.didCrash = crash;
+                        int finish, int ticket, int crash, CharSequence text){
+        this.crash = crash;
         this.ticket = ticket;
         this.gameNumber = gameNumber;
         this.teamNumber = teamNumber;
@@ -24,13 +22,15 @@ public class FormInfo implements Parcelable {
         this.controlPanelColor = controlPanelColor;
         this.endGame = endGame;
         this.finish = finish;
-        this.text = text;
+        this.comment = text;
     }
 
+    public FormInfo() { }
+
     protected FormInfo(Parcel in) {
-        didCrash = in.readByte() != 0;
+        crash = in.readInt();
         ticket = in.readInt();
-        text = in.readString();
+        comment = in.readString();
         gameNumber = in.readInt();
         teamNumber = in.readString();
         endGame = in.readInt();
@@ -51,12 +51,12 @@ public class FormInfo implements Parcelable {
         }
     };
 
-    public boolean getCrash() {
-        return didCrash;
+    public int getCrash() {
+        return crash;
     }
 
-    public void setCrash(boolean crash) {
-        this.didCrash = crash;
+    public void setCrash(int crash) {
+        this.crash = crash;
     }
 
     public int getTicket() {
@@ -100,11 +100,11 @@ public class FormInfo implements Parcelable {
     }
 
     public CharSequence getUserComment() {
-        return text;
+        return comment;
     }
 
-    public void setText(CharSequence text) {
-        this.text = text;
+    public void setComment(CharSequence text) {
+        this.comment = text;
     }
 
     public String getTeamNumber() {
@@ -123,15 +123,19 @@ public class FormInfo implements Parcelable {
         this.gameNumber = gameNumber;
     }
 
-    @NonNull
     @Override
     public String toString() {
-            return "Team Number: " + teamNumber +
-                    "; EndGame: " + endGame +
-                    "; Finish: " + finish +
-                    "; CP: " + controlPanel + ", " + controlPanelColor +
-                    "; Text From Scouter: " + text +
-                    "; ";
+        return "FormInfo{" +
+                "endGame=" + endGame +
+                ", finish=" + finish +
+                ", gameNumber=" + gameNumber +
+                ", ticket=" + ticket +
+                ", crash=" + crash +
+                ", controlPanelColor=" + controlPanelColor +
+                ", controlPanel=" + controlPanel +
+                ", comment=" + comment +
+                ", teamNumber='" + teamNumber + '\'' +
+                '}';
     }
 
     @Override
@@ -141,9 +145,9 @@ public class FormInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeByte((byte) (didCrash ? 1 : 0));
+        parcel.writeInt(crash);
         parcel.writeInt(ticket);
-        parcel.writeString(text.toString());
+        parcel.writeString(comment.toString());
         parcel.writeInt(gameNumber);
         parcel.writeString(teamNumber);
         parcel.writeInt(endGame);

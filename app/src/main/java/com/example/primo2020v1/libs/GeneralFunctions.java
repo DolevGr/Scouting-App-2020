@@ -66,8 +66,8 @@ public class GeneralFunctions {
 
         FinishFragment.imageIndex = 0;
         FinishFragment.ticketIndex = 0;
+        FinishFragment.crashIndex = 0;
         FinishFragment.text = "";
-        FinishFragment.didCrash = false;
     }
 
     public static void setCurrentGameInDB() {

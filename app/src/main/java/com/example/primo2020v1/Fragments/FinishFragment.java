@@ -35,9 +35,8 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     FinishListener listener;
-    public static int imageIndex, ticketIndex;
+    public static int imageIndex, ticketIndex, crashIndex;
     public static CharSequence text;
-    public static boolean didCrash;
     private ImageView imgReplace, imgTicket, imgCrash;
     private EditText edExtraInfo;
     private Button btnToSubmission;
@@ -89,7 +88,8 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.imgCrash:
-                didCrash = !didCrash;
+                crashIndex++;
+                crashIndex %= crash.length;
                 setCrash();
                 break;
 
@@ -122,7 +122,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setCrash() {
-        imgCrash.setColorFilter(didCrash ? crash[1] : crash[0]);
+        imgCrash.setColorFilter(crash[crashIndex]);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
         text = edExtraInfo.getText().toString().trim();
         finishIntent.putExtra(Keys.FINISH_TEAM, images[imageIndex]);
         finishIntent.putExtra(Keys.FINISH_TICKET, tickets[ticketIndex]);
-        finishIntent.putExtra(Keys.FINISH_CRASH, didCrash);
+        finishIntent.putExtra(Keys.FINISH_CRASH, crash[crashIndex]);
         finishIntent.putExtra(Keys.FINISH_TEXT, text);
         listener.setDataFinish(finishIntent);
     }

@@ -81,19 +81,10 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
             imgTicket.setColorFilter(fi.getTicket());
             tvTicket.setTextColor(fi.getTicket() == Color.YELLOW ? Color.BLACK : Color.WHITE);
-            imgCrash.setColorFilter(fi.getCrash() ? Color.GREEN : Color.RED);
-            tvCrash.setTextColor(fi.getCrash() ? Color.BLACK : Color.WHITE);
+            imgCrash.setColorFilter(fi.getCrash());
+            tvCrash.setTextColor(fi.getCrash() == Color.GREEN ? Color.BLACK : Color.WHITE);
 
-            isCPnormal = fi.isControlPanel();
-            if (!isCPnormal)
-                imgPCnormal.setVisibility(View.INVISIBLE);
-            imgPCnormal.setColorFilter(getResources().getColor(R.color.mainBlue));
-
-            isCPcolor = fi.isControlPanelColor();
-            if (!isCPcolor)
-                imgCPcolor.setVisibility(View.INVISIBLE);
-            imgCPcolor.setColorFilter(getResources().getColor(R.color.mainBlue));
-
+            setControlPanels();
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
             tvComment.setText(fi.getUserComment());
@@ -101,6 +92,18 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             btnBack.setOnClickListener(this);
             btnSubmit.setOnClickListener(this);
         }
+    }
+
+    private void setControlPanels() {
+        isCPnormal = fi.isControlPanel();
+        if (!isCPnormal)
+            imgPCnormal.setVisibility(View.INVISIBLE);
+        imgPCnormal.setColorFilter(getResources().getColor(R.color.mainBlue));
+
+        isCPcolor = fi.isControlPanelColor();
+        if (!isCPcolor)
+            imgCPcolor.setVisibility(View.INVISIBLE);
+        imgCPcolor.setColorFilter(getResources().getColor(R.color.mainBlue));
     }
 
     @Override
@@ -139,12 +142,14 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onSubmit() {
-        int totalCycles, totalScore = 0,
+        int totalCycles = 0, totalScore = 0,
                 totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
+        if (fi.getUserComment().equals(""))
+            fi.setComment("Empty Comment");
 
         dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
-        clearMatch();
-        //Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
+        Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
+        dbRef.setValue(formInfo);
 
         dbRef.child("CommittedBy").setValue(User.username);
 
@@ -152,7 +157,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             totalCycles = c.size();
             for (int i = 0; i <totalCycles; i++) {
                 Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
-                dbRef.child("Cycles " + (i + 1)).setValue(cycle);
+                dbRef.child("Cycle " + (i + 1)).setValue(cycle);
 
                 totalPCmissed += c.get(i).pcMissed;
                 totalPClower += c.get(i).pcLower;
@@ -167,21 +172,9 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             dbRef.child("TotalOuter").setValue(totalPCouter);
             dbRef.child("TotalInner").setValue(totalPCinner);
 
-            dbRef.child("TotalScore").setValue(totalScore);
-            dbRef.child("TotalCycles").setValue(totalCycles);
+            dbRef.child("TotalPCScore").setValue(totalScore);
         }
-
-        dbRef.child("ControlPanel").setValue(fi.isControlPanel());
-        dbRef.child("ControlPanelColor").setValue(fi.isControlPanelColor());
-        dbRef.child("EndGame").setValue(fi.getEndGame());
-        dbRef.child("Finish").setValue(fi.getFinish());
-        dbRef.child("Ticket").setValue(fi.getTicket());
-        dbRef.child("DidCrash").setValue(fi.getCrash());
-
-        if (fi.getUserComment() != null && !fi.getUserComment().equals(""))
-            dbRef.child("Comment").setValue(fi.getUserComment());
-        else
-            dbRef.child("Comment").setValue("Empty comment");
+        dbRef.child("TotalCycles").setValue(totalCycles);
 
         User.currentGame = fi.getGameNumber() + 1;
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -200,9 +193,5 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-    }
-
-    private void clearMatch() {
-        dbRef.setValue("Clearing Match");
     }
 }

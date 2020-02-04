@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteY="25dp">
 
     <Button
-        android:id="@+id/btnBackEdit"
+        android:id="@+id/btnBack"
         android:layout_width="66dp"
         android:layout_height="39dp"
         android:layout_marginStart="8dp"

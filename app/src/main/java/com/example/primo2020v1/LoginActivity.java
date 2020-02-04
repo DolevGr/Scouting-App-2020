@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 name = edName.getText().toString().trim();
                 password = edPass.getText().toString().trim();
 
-                if (User.members.contains(name)) {
+                if (User.members.contains(name) && !password.equals("")) {
                     DatabaseReference dbRef = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
                     dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

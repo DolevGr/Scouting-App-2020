@@ -14,8 +14,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class Splash extends AppCompatActivity {
-    private static final String TAG = "Splash";
+public class SplashActivity extends AppCompatActivity {
+    private static final String TAG = "SplashActivity";
 
     Intent in;
     boolean isFirstEntry = true;
@@ -56,7 +56,7 @@ public class Splash extends AppCompatActivity {
                 } catch (Exception e){
                     e.printStackTrace();
                 } finally {
-                    in = new Intent(Splash.this, LoginActivity.class);
+                    in = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(in);
                 }
                 finish();

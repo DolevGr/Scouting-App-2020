@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         context = getApplicationContext();
         intent = getIntent();
         username = intent.getStringExtra("Username");
-        User.username = username;
+        if (username != null && !username.equals(""))
+            User.username = username;
         priv = intent.getBooleanExtra("Privilege", false);
         //Toast.makeText(context.getApplicationContext(), username+"", Toast.LENGTH_SHORT).show();
 

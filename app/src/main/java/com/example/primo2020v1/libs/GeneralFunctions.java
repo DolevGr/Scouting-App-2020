@@ -5,8 +5,10 @@ import com.example.primo2020v1.Fragments.EndGameFragment;
 import com.example.primo2020v1.Fragments.FinishFragment;
 import com.example.primo2020v1.Fragments.MatchSettingsFragment;
 import com.example.primo2020v1.Fragments.PowerCellsFragment;
+import com.google.firebase.database.DatabaseReference;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,16 +63,46 @@ public class GeneralFunctions {
 
         ControlPanelFragment.isPCnormal = false;
         ControlPanelFragment.isPCcolor = false;
-
         EndGameFragment.imageIndex = 0;
 
-        FinishFragment.imageIndex = 0;
+        FinishFragment.finishIndex = 0;
         FinishFragment.ticketIndex = 0;
         FinishFragment.crashIndex = 0;
+        FinishFragment.defIndex = 0;
         FinishFragment.text = "";
     }
 
-    public static void setCurrentGameInDB() {
-        User.databaseReference.child(Keys.CURRENT_GAME).setValue(Integer.toString(User.currentGame));
+    public static void onSubmit(DatabaseReference dbRef, FormInfo fi, ArrayList<Cycle> c) {
+        int totalCycles = 0, totalScore = 0,
+                totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
+
+        if (fi.getUserComment().equals(""))
+            fi.setComment("Empty Comment");
+        Map<String, Object> formInfo = getMap(fi);
+        dbRef.setValue(formInfo);
+
+        dbRef.child("CommittedBy").setValue(User.username);
+
+        if (c != null && !c.isEmpty()) {
+            totalCycles = c.size();
+            for (int i = 0; i <totalCycles; i++) {
+                Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
+                dbRef.child("Cycle " + (i + 1)).setValue(cycle);
+
+                totalPCmissed += c.get(i).pcMissed;
+                totalPClower += c.get(i).pcLower;
+                totalPCouter += c.get(i).pcOuter;
+                totalPCinner += c.get(i).pcInner;
+                totalScore += c.get(i).getScore();
+            }
+
+            dbRef.child("TotalMissed").setValue(totalPCmissed);
+            dbRef.child("TotalLower").setValue(totalPClower);
+            dbRef.child("TotalOuter").setValue(totalPCouter);
+            dbRef.child("TotalInner").setValue(totalPCinner);
+            dbRef.child("TotalPCScore").setValue(totalScore);
+        }
+
+        dbRef.child("TotalCycles").setValue(totalCycles);
     }
 }

@@ -15,12 +15,12 @@ import androidx.fragment.app.Fragment;
 import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.Keys;
+import com.example.primo2020v1.libs.User;
 
 public class EndGameFragment extends Fragment implements View.OnClickListener {
     private Intent egIntent;
     private EndGameListener listener;
     private ImageView imgReplace;
-    private int[] images = {R.drawable.ic_empty, R.drawable.ic_park, R.drawable.ic_climb, R.drawable.ic_balance};
     //0: nothing; 1: parked; 2: climbed; 3: balanced
     public static int imageIndex;
 
@@ -48,7 +48,7 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()){
             case R.id.imgPark:
                 imageIndex++;
-                 imageIndex %= images.length;
+                imageIndex %= User.endGameImages.length;
                 setImage();
                 break;
 
@@ -57,7 +57,7 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setImage(){
-        imgReplace.setImageResource(images[imageIndex]);
+        imgReplace.setImageResource(User.endGameImages[imageIndex]);
     }
 
     @Override
@@ -80,8 +80,8 @@ public class EndGameFragment extends Fragment implements View.OnClickListener {
         listener = null;
     }
 
-    public void placeInfo(){
-        egIntent.putExtra(Keys.EG_IMG_ID, images[imageIndex]);
+    public void placeInfo() {
+        egIntent.putExtra(Keys.EG_IMG_ID, imageIndex);
         listener.setDataEndGame(egIntent);
     }
 }

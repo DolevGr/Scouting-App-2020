@@ -1,7 +1,6 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +43,8 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     private FormInfo formInfo;
     public String teamNumber = "";
     int spnOptionSelectedIndex = 0, gameNumber = User.currentGame,
-            endGameImageId = R.drawable.ic_empty, finishImgId = R.drawable.ic_won, finishTicket = Color.BLACK,
-            finishDidCrash = Color.RED;
+            endGameImageId = 0, finishImgId = 0, finishTicket = 0,
+            finishDidCrash = 0, finishDefence;
     boolean isControlPanelNormal, isControlPanelColor, leaveForm;
     CharSequence text;
     private Map<Integer, Fragment> fragsMap;
@@ -82,7 +81,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO)) {
             formInfo = intent.getParcelableExtra(Keys.FORM_INFO);
-            
+
             teamNumber = formInfo.getTeamNumber();
 
             isControlPanelNormal = formInfo.isControlPanel();
@@ -93,6 +92,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
             finishImgId = formInfo.getFinish();
             finishTicket = formInfo.getTicket();
             finishDidCrash = formInfo.getCrash();
+            finishDefence = formInfo.getDefence();
             text = formInfo.getUserComment();
 
             selectedFragment = fragsMap.get(R.id.navFinishForm);
@@ -162,14 +162,15 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
     @Override
     public void setDataEndGame(Intent egIntent) {
-        endGameImageId = egIntent.getIntExtra(Keys.EG_IMG_ID, R.drawable.ic_empty);
+        endGameImageId = egIntent.getIntExtra(Keys.EG_IMG_ID, 0);
     }
 
     @Override
     public void setDataFinish(Intent finishIntent) {
-        finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, R.drawable.ic_won);
-        finishTicket = finishIntent.getIntExtra(Keys.FINISH_TICKET, Color.BLACK);
-        finishDidCrash = finishIntent.getIntExtra(Keys.FINISH_CRASH, Color.RED);
+        finishImgId = finishIntent.getIntExtra(Keys.FINISH_TEAM, 0);
+        finishTicket = finishIntent.getIntExtra(Keys.FINISH_TICKET, 0);
+        finishDidCrash = finishIntent.getIntExtra(Keys.FINISH_CRASH, 0);
+        finishDefence = finishIntent.getIntExtra(Keys.FINISH_DEFENCE, 0);
         text = finishIntent.getCharSequenceExtra(Keys.FINISH_TEXT);
     }
 
@@ -178,7 +179,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         formInfo = new FormInfo(teamNumber, gameNumber,
                 isControlPanelNormal, isControlPanelColor,
                 endGameImageId,
-                finishImgId, finishTicket, finishDidCrash, text);
+                finishImgId, finishTicket, finishDidCrash, finishDefence, text);
         return formInfo;
     }
 }

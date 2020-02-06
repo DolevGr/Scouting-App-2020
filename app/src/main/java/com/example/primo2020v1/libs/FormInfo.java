@@ -5,15 +5,18 @@ import android.os.Parcelable;
 
 public class FormInfo implements Parcelable {
     //private ArrayList<Cycle> cycles;
-    public int endGame, finish, gameNumber, ticket, crash;
+    private int gameNumber;
+    private String teamNumber;
+
+    public int endGame, finish, ticket, crash, defence;
     public boolean controlPanelColor, controlPanel;
     public CharSequence comment;
-    public String teamNumber;
 
     public FormInfo(String teamNumber, int gameNumber,
                         boolean controlPanel, boolean controlPanelColor,
                         int endGame,
-                        int finish, int ticket, int crash, CharSequence text){
+                        int finish, int ticket, int crash, int defence, CharSequence text){
+        this.defence = defence;
         this.crash = crash;
         this.ticket = ticket;
         this.gameNumber = gameNumber;
@@ -28,6 +31,7 @@ public class FormInfo implements Parcelable {
     public FormInfo() { }
 
     protected FormInfo(Parcel in) {
+        defence = in.readInt();
         crash = in.readInt();
         ticket = in.readInt();
         comment = in.readString();
@@ -50,6 +54,14 @@ public class FormInfo implements Parcelable {
             return new FormInfo[size];
         }
     };
+
+    public int getDefence() {
+        return defence;
+    }
+
+    public void setDefence(int defence) {
+        this.defence = defence;
+    }
 
     public int getCrash() {
         return crash;
@@ -135,6 +147,7 @@ public class FormInfo implements Parcelable {
                 ", controlPanel=" + controlPanel +
                 ", comment=" + comment +
                 ", teamNumber='" + teamNumber + '\'' +
+                ", defence='" + defence + '\'' +
                 '}';
     }
 
@@ -145,6 +158,7 @@ public class FormInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(defence);
         parcel.writeInt(crash);
         parcel.writeInt(ticket);
         parcel.writeString(comment.toString());

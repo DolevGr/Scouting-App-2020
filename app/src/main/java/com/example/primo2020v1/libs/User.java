@@ -1,5 +1,8 @@
 package com.example.primo2020v1.libs;
 
+import android.graphics.Color;
+
+import com.example.primo2020v1.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -9,13 +12,18 @@ import java.util.HashMap;
 public class User {
     public static final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    public static final int NUMBER_OF_MATCHES = 80;
     public static HashMap<Integer, String> teams = new HashMap<>();
     public static ArrayList<Match> matches = new ArrayList<>();
     public static ArrayList<String> members = new ArrayList<>();
     public static int currentGame = 1;
     public static ArrayList<String> admins = new ArrayList<>();
     public static String username = "Scouter";
+
+    public static final int[] endGameImages = {R.drawable.ic_empty, R.drawable.ic_park, R.drawable.ic_climb, R.drawable.ic_balance};
+    public static final int[] finishImages = {R.drawable.ic_won, R.drawable.ic_lost, R.drawable.ic_draw};
+    public static final int[] finishTickets = {Color.BLACK, Color.YELLOW, Color.RED};
+    public static final int[] finishCrash = {Color.RED, Color.GREEN};
+    public static final int[] finishDefence = {Color.RED, Color.GREEN};
 
 
     public String name, password;

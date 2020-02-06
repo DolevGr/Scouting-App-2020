@@ -3,7 +3,6 @@ package com.example.primo2020v1;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,15 +25,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class SubmissionActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "SubmissionActivity";
     private ListView lvCycles;
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
-    private ImageView imgPCnormal, imgCPcolor, imgTicket, imgCrash;
-    private TextView tvComment, tvTicket, tvCrash;
+    private ImageView imgPCnormal, imgCPcolor, imgTicket, imgCrash, imgDefence;
+    private TextView tvComment, tvTicket, tvCrash, tvDefence;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
@@ -58,6 +56,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         tvTicket = findViewById(R.id.tvTicket);
         imgCrash = findViewById(R.id.imgDidCrash);
         tvCrash = findViewById(R.id.tvCrash);
+        imgDefence = findViewById(R.id.imgDefence);
+        tvDefence = findViewById(R.id.tvDefence);
         imgFinish = findViewById(R.id.imgFinish);
         imgEndGame = findViewById(R.id.imgEndGame);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -76,22 +76,24 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                 lvCycles.setAdapter(adapter);
             }
 
-            imgEndGame.setImageResource(fi.getEndGame());
-
-            imgFinish.setImageDrawable(getResources().getDrawable(fi.getFinish()));
-            imgTicket.setColorFilter(fi.getTicket());
-            tvTicket.setTextColor(fi.getTicket() == Color.YELLOW ? Color.BLACK : Color.WHITE);
-            imgCrash.setColorFilter(fi.getCrash());
-            tvCrash.setTextColor(fi.getCrash() == Color.GREEN ? Color.BLACK : Color.WHITE);
-
+            imgEndGame.setImageResource(User.endGameImages[fi.getEndGame()]);
+            imgFinish.setImageDrawable(getResources().getDrawable(User.finishImages[fi.getFinish()]));
+            imgTicket.setColorFilter(User.finishTickets[fi.getTicket()]);
+            tvTicket.setTextColor(fi.getTicket() == 1 ? Color.BLACK : Color.WHITE);
+            imgCrash.setColorFilter(User.finishCrash[fi.getCrash()]);
+            tvCrash.setTextColor(fi.getCrash() == 1 ? Color.BLACK : Color.WHITE);
+            imgDefence.setColorFilter(User.finishDefence[fi.getDefence()]);
+            tvDefence.setTextColor(fi.getDefence() == 1 ? Color.BLACK : Color.WHITE);
+            tvComment.setText(fi.getUserComment());
             setControlPanels();
+
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
-            tvComment.setText(fi.getUserComment());
 
-            btnBack.setOnClickListener(this);
             btnSubmit.setOnClickListener(this);
         }
+
+        btnBack.setOnClickListener(this);
     }
 
     private void setControlPanels() {
@@ -111,11 +113,12 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.btnSubmit:
                 if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
+                    dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
                     onSubmit();
+
                     if (c != null && !c.isEmpty())
                         if (adapter.getCycles() != null && !adapter.getCycles().isEmpty())
                             c = adapter.getCycles();
-
                     finishedForm = new Intent(SubmissionActivity.this, MainActivity.class);
                     finish();
                     startActivity(finishedForm);
@@ -133,8 +136,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                         c = adapter.getCycles();
 
                 i.putExtra(Keys.FINISH_PC, c);
-                Log.d(TAG, "onClick: " + c);
-
                 i.putExtra(Keys.FORM_INFO, fi);
                 finish();
                 startActivity(i);
@@ -142,40 +143,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onSubmit() {
-        int totalCycles = 0, totalScore = 0,
-                totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
-        if (fi.getUserComment().equals(""))
-            fi.setComment("Empty Comment");
-
-        dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
-        Map<String, Object> formInfo = GeneralFunctions.getMap(fi);
-        dbRef.setValue(formInfo);
-
-        dbRef.child("CommittedBy").setValue(User.username);
-
-        if (c != null && !c.isEmpty()) {
-            totalCycles = c.size();
-            for (int i = 0; i <totalCycles; i++) {
-                Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
-                dbRef.child("Cycle " + (i + 1)).setValue(cycle);
-
-                totalPCmissed += c.get(i).pcMissed;
-                totalPClower += c.get(i).pcLower;
-                totalPCouter += c.get(i).pcOuter;
-                totalPCinner += c.get(i).pcInner;
-
-                totalScore += c.get(i).getScore();
-            }
-
-            dbRef.child("TotalMissed").setValue(totalPCmissed);
-            dbRef.child("TotalLower").setValue(totalPClower);
-            dbRef.child("TotalOuter").setValue(totalPCouter);
-            dbRef.child("TotalInner").setValue(totalPCinner);
-
-            dbRef.child("TotalPCScore").setValue(totalScore);
-        }
-        dbRef.child("TotalCycles").setValue(totalCycles);
-
+        GeneralFunctions.onSubmit(dbRef, fi, c);
         User.currentGame = fi.getGameNumber() + 1;
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

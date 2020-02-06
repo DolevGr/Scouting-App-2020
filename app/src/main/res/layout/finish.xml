@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imgFinish"
+        android:id="@+id/imgFinishFinish"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,16 +50,18 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgFinish" />
+        app:layout_constraintTop_toBottomOf="@+id/imgFinishFinish" />
 
     <ImageView
-        android:id="@+id/imgTicket"
+        android:id="@+id/imgTicketFinish"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgCrash"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCrashFinish"
         app:layout_constraintEnd_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/imgCrash"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgCrashFinish"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@color/defaultColor" />
 
@@ -68,13 +70,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
-        android:text="Foul Ticket"
-        app:layout_constraintBottom_toBottomOf="@+id/imgTicket"
-        app:layout_constraintEnd_toStartOf="@+id/imgTicket"
+        android:text="Foul Card"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTicketFinish"
+        app:layout_constraintEnd_toStartOf="@+id/imgTicketFinish"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imgTicket"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintTop_toTopOf="@+id/imgTicketFinish" />
 
     <TextView
         android:id="@+id/textView7"
@@ -82,12 +83,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
         android:text="Did Crash"
-        app:layout_constraintBottom_toBottomOf="@+id/imgCrash"
-        app:layout_constraintEnd_toStartOf="@+id/imgCrash"
-        app:layout_constraintTop_toTopOf="@+id/imgCrash" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgCrashFinish"
+        app:layout_constraintEnd_toStartOf="@+id/imgCrashFinish"
+        app:layout_constraintTop_toTopOf="@+id/imgCrashFinish" />
 
     <ImageView
-        android:id="@+id/imgCrash"
+        android:id="@+id/imgCrashFinish"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@+id/btnToSubmission"
@@ -96,5 +97,29 @@
         app:layout_constraintStart_toStartOf="@+id/edExtaInfo"
         app:layout_constraintTop_toBottomOf="@+id/edExtaInfo"
         app:srcCompat="@android:color/holo_red_light" />
+
+    <ImageView
+        android:id="@+id/imgDefenceFinish"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTicketFinish"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgTicketFinish"
+        app:srcCompat="@color/defaultColor" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:text="Defence"
+        app:layout_constraintBottom_toBottomOf="@+id/imgDefenceFinish"
+        app:layout_constraintEnd_toStartOf="@+id/imgDefenceFinish"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgDefenceFinish" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

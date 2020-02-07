@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,19 +14,26 @@ import com.example.primo2020v1.Adapters.GamesAdapter;
 import com.example.primo2020v1.libs.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    ListView lvGames;
-    Intent intent, next;
-    Context context;
-    Button btnNewForm, btnEditForm, btnExit;
-    GamesAdapter gamesAdapter;
+    private ListView lvGames;
+    private Intent intent, next;
+    private Context context;
+    private Button btnNewForm, btnEditForm, btnExit;
+    private GamesAdapter gamesAdapter;
+    private Toolbar toolbar;
 
-    String username;
-    boolean priv;
+    private String username;
+    private boolean priv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        lvGames = (ListView) findViewById(R.id.lvGames);
+        btnNewForm = (Button) findViewById(R.id.btnNewForm);
+        btnEditForm = (Button) findViewById(R.id.btnEditForm);
+        btnExit = (Button) findViewById(R.id.btnExit);
+        //toolbar = findViewById(R.id.toolbar);
 
         context = getApplicationContext();
         intent = getIntent();
@@ -33,13 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (username != null && !username.equals(""))
             User.username = username;
         priv = intent.getBooleanExtra("Privilege", false);
-        //Toast.makeText(context.getApplicationContext(), username+"", Toast.LENGTH_SHORT).show();
-
-        lvGames = (ListView) findViewById(R.id.lvGames);
-
-        btnNewForm = (Button) findViewById(R.id.btnNewForm);
-        btnEditForm = (Button) findViewById(R.id.btnEditForm);
-        btnExit = (Button) findViewById(R.id.btnExit);
 
         gamesAdapter = new GamesAdapter(context, R.layout.costum_games_layout, User.matches);
         lvGames.setAdapter(gamesAdapter);

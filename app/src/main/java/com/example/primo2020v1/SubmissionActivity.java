@@ -31,12 +31,11 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private ListView lvCycles;
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
-    private ImageView imgPCnormal, imgCPcolor, imgTicket, imgCrash, imgDefence;
+    private ImageView imgPCRC, imgCPPC, imgTicket, imgCrash, imgDefence;
     private TextView tvComment, tvTicket, tvCrash, tvDefence;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
-    private boolean isCPnormal, isCPcolor;
 
     private Intent intent, finishedForm, i;
     private FormInfo fi;
@@ -62,8 +61,8 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         imgEndGame = findViewById(R.id.imgEndGame);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnBack = findViewById(R.id.btnBack);
-        imgPCnormal = findViewById(R.id.imgCPnormal);
-        imgCPcolor = findViewById(R.id.imgCPcolor);
+        imgPCRC = findViewById(R.id.imgCPnormal);
+        imgCPPC = findViewById(R.id.imgCPcolor);
         tvComment = findViewById(R.id.tvComment);
 
         intent = getIntent();
@@ -76,8 +75,10 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                 lvCycles.setAdapter(adapter);
             }
 
+            imgPCRC.setImageResource(User.controlPanelRotation[fi.getCpRotation()]);
+            imgCPPC.setImageResource(User.controlPanelPosition[fi.getCpPosition()]);
             imgEndGame.setImageResource(User.endGameImages[fi.getEndGame()]);
-            imgFinish.setImageDrawable(getResources().getDrawable(User.finishImages[fi.getFinish()]));
+            imgFinish.setImageResource(User.finishImages[fi.getFinish()]);
             imgTicket.setColorFilter(User.finishTickets[fi.getTicket()]);
             tvTicket.setTextColor(fi.getTicket() == 1 ? Color.BLACK : Color.WHITE);
             imgCrash.setColorFilter(User.finishCrash[fi.getCrash()]);
@@ -85,7 +86,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             imgDefence.setColorFilter(User.finishDefence[fi.getDefence()]);
             tvDefence.setTextColor(fi.getDefence() == 1 ? Color.BLACK : Color.WHITE);
             tvComment.setText(fi.getUserComment());
-            setControlPanels();
 
             teamNumber = fi.getTeamNumber();
             gameNumber = fi.getGameNumber();
@@ -94,18 +94,6 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         }
 
         btnBack.setOnClickListener(this);
-    }
-
-    private void setControlPanels() {
-        isCPnormal = fi.isControlPanel();
-        if (!isCPnormal)
-            imgPCnormal.setVisibility(View.INVISIBLE);
-        imgPCnormal.setColorFilter(getResources().getColor(R.color.mainBlue));
-
-        isCPcolor = fi.isControlPanelColor();
-        if (!isCPcolor)
-            imgCPcolor.setVisibility(View.INVISIBLE);
-        imgCPcolor.setColorFilter(getResources().getColor(R.color.mainBlue));
     }
 
     @Override

@@ -9,8 +9,8 @@ public class Keys {
 
     public static final String PC_CYCLE = "PC_CYCLES";
 
-    public static final String CP_NORMAL = "CP_NORMAL";
-    public static final String CP_COLOR = "CP_COLOR";
+    public static final String CP_RC = "CP_RC";
+    public static final String CP_PC = "CP_PC";
 
     public static final String EG_IMG_ID = "EG_IMG_ID";
 

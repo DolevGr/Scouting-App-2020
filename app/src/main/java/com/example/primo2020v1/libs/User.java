@@ -19,6 +19,8 @@ public class User {
     public static ArrayList<String> admins = new ArrayList<>();
     public static String username = "Scouter";
 
+    public static final int[] controlPanelRotation = {R.drawable.cp_rc, R.drawable.cp_rc_selected};
+    public static final int[] controlPanelPosition= {R.drawable.cp_pc, R.drawable.cp_pc_selected};
     public static final int[] endGameImages = {R.drawable.ic_empty, R.drawable.ic_park, R.drawable.ic_climb, R.drawable.ic_balance};
     public static final int[] finishImages = {R.drawable.ic_won, R.drawable.ic_lost, R.drawable.ic_draw};
     public static final int[] finishTickets = {Color.BLACK, Color.YELLOW, Color.RED};

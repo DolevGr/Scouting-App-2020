@@ -132,7 +132,7 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setImageFinish(){
-        imgFinish.setImageDrawable(getResources().getDrawable(User.finishImages[finishIndex]));
+        imgFinish.setImageResource(User.finishImages[finishIndex]);
     }
 
     @Override

@@ -15,8 +15,10 @@
         android:layout_marginTop="8dp"
         android:text="Back"
         android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/edGameNumberEdit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/spnTeamEdit"
@@ -59,12 +61,11 @@
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:text="Search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spnTeamEdit"
-        app:layout_constraintVertical_bias="0.153" />
+        app:layout_constraintEnd_toStartOf="@+id/edTeamNumberEdit"
+        app:layout_constraintStart_toEndOf="@+id/edGameNumberEdit"
+        app:layout_constraintTop_toBottomOf="@+id/spnTeamEdit" />
 
     <ListView
         android:id="@+id/lvCycles"
@@ -94,8 +95,8 @@
         android:id="@+id/imgFinish"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="125dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,36 +162,35 @@
         android:layout_height="wrap_content"
         android:text="Card"
         android:textColor="@android:color/white"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="546dp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgCard"
         app:layout_constraintEnd_toEndOf="@+id/imgCard"
         app:layout_constraintStart_toStartOf="@+id/imgCard"
         app:layout_constraintTop_toTopOf="@+id/imgCard"
-        android:textSize="10dp"/>
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="546dp" />
 
     <EditText
         android:id="@+id/edComment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgFinish"
-        app:layout_constraintVertical_bias="0.15"
-        android:textSize="14dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/imgFinish" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edComment" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imgDefence"

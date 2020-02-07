@@ -8,12 +8,11 @@ public class FormInfo implements Parcelable {
     private int gameNumber;
     private String teamNumber;
 
-    public int endGame, finish, ticket, crash, defence;
-    public boolean controlPanelColor, controlPanel;
+    public int endGame, finish, ticket, crash, defence, cpPosition, cpRotation;
     public CharSequence comment;
 
     public FormInfo(String teamNumber, int gameNumber,
-                        boolean controlPanel, boolean controlPanelColor,
+                        int cpRotation, int cpPosition,
                         int endGame,
                         int finish, int ticket, int crash, int defence, CharSequence text){
         this.defence = defence;
@@ -21,8 +20,8 @@ public class FormInfo implements Parcelable {
         this.ticket = ticket;
         this.gameNumber = gameNumber;
         this.teamNumber = teamNumber;
-        this.controlPanel = controlPanel;
-        this.controlPanelColor = controlPanelColor;
+        this.cpPosition = cpPosition;
+        this.cpRotation = cpRotation;
         this.endGame = endGame;
         this.finish = finish;
         this.comment = text;
@@ -39,8 +38,8 @@ public class FormInfo implements Parcelable {
         teamNumber = in.readString();
         endGame = in.readInt();
         finish = in.readInt();
-        controlPanelColor = in.readByte() != 0;
-        controlPanel = in.readByte() != 0;
+        cpPosition = in.readInt();
+        cpRotation = in.readInt();
     }
 
     public static final Creator<FormInfo> CREATOR = new Creator<FormInfo>() {
@@ -95,20 +94,20 @@ public class FormInfo implements Parcelable {
         this.finish = finish;
     }
 
-    public boolean isControlPanelColor() {
-        return controlPanelColor;
+    public int getCpPosition() {
+        return cpPosition;
     }
 
-    public void setControlPanelColor(boolean controlPanelColor) {
-        this.controlPanelColor = controlPanelColor;
+    public void setCpPosition(int cpPosition) {
+        this.cpPosition = cpPosition;
     }
 
-    public boolean isControlPanel() {
-        return controlPanel;
+    public int getCpRotation() {
+        return cpRotation;
     }
 
-    public void setControlPanel(boolean controlPanel) {
-        this.controlPanel = controlPanel;
+    public void setCpRotation(int cpRotation) {
+        this.cpRotation = cpRotation;
     }
 
     public CharSequence getUserComment() {
@@ -143,8 +142,8 @@ public class FormInfo implements Parcelable {
                 ", gameNumber=" + gameNumber +
                 ", ticket=" + ticket +
                 ", crash=" + crash +
-                ", controlPanelColor=" + controlPanelColor +
-                ", controlPanel=" + controlPanel +
+                ", controlPanelPosition=" + cpPosition +
+                ", controlPanelRotation=" + cpRotation +
                 ", comment=" + comment +
                 ", teamNumber='" + teamNumber + '\'' +
                 ", defence='" + defence + '\'' +
@@ -166,7 +165,7 @@ public class FormInfo implements Parcelable {
         parcel.writeString(teamNumber);
         parcel.writeInt(endGame);
         parcel.writeInt(finish);
-        parcel.writeByte((byte) (controlPanelColor ? 1 : 0));
-        parcel.writeByte((byte) (controlPanel ? 1 : 0));
+        parcel.writeInt(cpPosition);
+        parcel.writeInt(cpRotation);
     }
 }

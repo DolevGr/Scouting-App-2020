@@ -23,15 +23,13 @@
         android:id="@+id/edTeamNumber"
         android:layout_width="190dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Team Number"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/spnTeam"
         app:layout_constraintStart_toStartOf="@+id/spnTeam"
-        app:layout_constraintTop_toBottomOf="@+id/spnTeam"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/spnTeam" />
 
     <EditText
         android:id="@+id/edGameNumber"
@@ -41,32 +39,22 @@
         android:ems="10"
         android:hint="Game Number"
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
         app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
-        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber"
+        app:layout_constraintVertical_bias="0.0" />
 
 
     <Spinner
         android:id="@+id/spnTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.603"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
-
-    <Button
-        android:id="@+id/btnTest"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="GameNumber++"
-        android:visibility="invisible" />
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvMuchSettings"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/tvMuchSettings"
+        app:layout_constraintTop_toBottomOf="@+id/tvMuchSettings" />
 
     <TextView
         android:id="@+id/textView"

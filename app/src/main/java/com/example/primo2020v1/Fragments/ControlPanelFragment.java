@@ -15,11 +15,12 @@ import androidx.fragment.app.Fragment;
 import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.Keys;
+import com.example.primo2020v1.libs.User;
 
 public class ControlPanelFragment extends Fragment implements View.OnClickListener {
-    private ImageView imgCPnormal, imgCPcolor;
+    private ImageView imgCPRC, imgCPPC;
     private ControlPanelListener listener;
-    public static boolean isPCnormal, isPCcolor;
+    public static int rcIndex, pcIndex;
     private Intent cpIntent;
 
 
@@ -32,30 +33,40 @@ public class ControlPanelFragment extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.control_panel, container, false);
 
-        imgCPnormal = v.findViewById(R.id.imgCPnormal);
-        imgCPcolor = v.findViewById(R.id.imgCPcolor);
+        imgCPRC = v.findViewById(R.id.imgCPnormal);
+        imgCPPC = v.findViewById(R.id.imgCPcolor);
 
-        setBackGroundColor(imgCPnormal, isPCnormal);
-        setBackGroundColor(imgCPcolor, isPCcolor);
-        imgCPnormal.setOnClickListener(this);
-        imgCPcolor.setOnClickListener(this);
+        setRotationControlImage();
+        setPositionControlImage();
+        imgCPRC.setOnClickListener(this);
+        imgCPPC.setOnClickListener(this);
 
         cpIntent = new Intent(getContext(), GameFormActivity.class);
 
         return v;
     }
 
+    private void setRotationControlImage() {
+        imgCPRC.setImageResource(User.controlPanelRotation[rcIndex]);
+    }
+
+    private void setPositionControlImage() {
+        imgCPPC.setImageResource(User.controlPanelPosition[pcIndex]);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imgCPnormal:
-                isPCnormal = !isPCnormal;
-                setBackGroundColor(imgCPnormal, isPCnormal);
+                rcIndex++;
+                rcIndex %= User.controlPanelRotation.length;
+                setRotationControlImage();
                 break;
 
             case R.id.imgCPcolor:
-                isPCcolor = !isPCcolor;
-                setBackGroundColor(imgCPcolor, isPCcolor);
+                pcIndex++;
+                pcIndex %= User.controlPanelPosition.length;
+                setPositionControlImage();
                 break;
 
             default:
@@ -90,8 +101,8 @@ public class ControlPanelFragment extends Fragment implements View.OnClickListen
     }
 
     public void placeInfo(){
-        cpIntent.putExtra(Keys.CP_NORMAL, isPCnormal);
-        cpIntent.putExtra(Keys.CP_COLOR, isPCcolor);
+        cpIntent.putExtra(Keys.CP_RC, rcIndex);
+        cpIntent.putExtra(Keys.CP_PC, pcIndex);
 
         listener.setDataControlPanel(cpIntent);
 

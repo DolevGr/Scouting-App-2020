@@ -61,8 +61,8 @@ public class GeneralFunctions {
             PowerCellsFragment.positions[i] = 0;
         }
 
-        ControlPanelFragment.isPCnormal = false;
-        ControlPanelFragment.isPCcolor = false;
+        ControlPanelFragment.pcIndex = 0;
+        ControlPanelFragment.rcIndex = 0;
         EndGameFragment.imageIndex = 0;
 
         FinishFragment.finishIndex = 0;

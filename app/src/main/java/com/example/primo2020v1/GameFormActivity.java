@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -37,15 +36,15 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     BottomNavigationView bnvForm;
     Fragment selectedFragment;
     private Button btnBack;
-    private AlertDialog.Builder builder;
 
     private ArrayList<Cycle> cycles;
     private FormInfo formInfo;
     public String teamNumber = "";
     int spnOptionSelectedIndex = 0, gameNumber = User.currentGame,
+            cpRotation, cpPosition,
             endGameImageId = 0, finishImgId = 0, finishTicket = 0,
             finishDidCrash = 0, finishDefence;
-    boolean isControlPanelNormal, isControlPanelColor, leaveForm;
+    boolean leaveForm;
     CharSequence text;
     private Map<Integer, Fragment> fragsMap;
 
@@ -84,8 +83,8 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
             teamNumber = formInfo.getTeamNumber();
 
-            isControlPanelNormal = formInfo.isControlPanel();
-            isControlPanelColor = formInfo.isControlPanelColor();
+            cpPosition = formInfo.getCpPosition();
+            cpRotation = formInfo.getCpRotation();
 
             endGameImageId = formInfo.getEndGame();
 
@@ -147,8 +146,8 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
 
     @Override
     public void setDataControlPanel(Intent cpIntent) {
-        isControlPanelNormal = cpIntent.getBooleanExtra(Keys.CP_NORMAL, false);
-        isControlPanelColor = cpIntent.getBooleanExtra(Keys.CP_COLOR, false);
+        cpRotation = cpIntent.getIntExtra(Keys.CP_RC, 0);
+        cpPosition = cpIntent.getIntExtra(Keys.CP_PC, 0);
     }
 
     @Override
@@ -177,7 +176,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     @Override
     public FormInfo getFormInfo() {
         formInfo = new FormInfo(teamNumber, gameNumber,
-                isControlPanelNormal, isControlPanelColor,
+                cpRotation, cpPosition,
                 endGameImageId,
                 finishImgId, finishTicket, finishDidCrash, finishDefence, text);
         return formInfo;

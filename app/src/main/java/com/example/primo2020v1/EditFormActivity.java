@@ -39,7 +39,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     private ArrayAdapter<CharSequence> teamAdapter;
     private EditText edGameNumber, edTeamNumber;
     private Button btnSearch, btnBack, btnSubmit;
-    private ImageView imgFinish, imgTicket, imgCrash, imgDefence, imgEndGame, imgCPnormal, imgCPcolor;
+    private ImageView imgFinish, imgTicket, imgCrash, imgDefence, imgEndGame, imgCPRC, imgCPPC;
     private EditText edComment;
     private ListView lvCycles;
     private TextView tvTicket, tvCrash, tvDefence;
@@ -69,8 +69,8 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         imgDefence = findViewById(R.id.imgDefence);
         tvDefence = findViewById(R.id.tvDefence);
         imgEndGame = findViewById(R.id.imgEndGame);
-        imgCPnormal = findViewById(R.id.imgCPnormal);
-        imgCPcolor = findViewById(R.id.imgCPcolor);
+        imgCPRC = findViewById(R.id.imgCPnormal);
+        imgCPPC = findViewById(R.id.imgCPcolor);
         edComment = findViewById(R.id.edComment);
         lvCycles = findViewById(R.id.lvCycles);
 
@@ -120,8 +120,8 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         btnSearch.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         spnTeam.setOnItemSelectedListener(this);
-        imgCPcolor.setOnClickListener(this);
-        imgCPnormal.setOnClickListener(this);
+        imgCPPC.setOnClickListener(this);
+        imgCPRC.setOnClickListener(this);
         imgFinish.setOnClickListener(this);
         imgEndGame.setOnClickListener(this);
         imgTicket.setOnClickListener(this);
@@ -158,23 +158,23 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.imgCPnormal:
-                formInfo.setControlPanel(!formInfo.isControlPanel());
-                imgCPnormal.setColorFilter(getResources().getColor(formInfo.isControlPanel() ? R.color.mainBlue : R.color.defaultColor));
+                formInfo.setCpRotation((formInfo.getCpRotation() + 1) % User.controlPanelRotation.length);
+                imgCPRC.setImageResource(User.controlPanelRotation[formInfo.getCpRotation()]);
                 break;
 
             case R.id.imgCPcolor:
-                formInfo.setControlPanelColor(!formInfo.isControlPanelColor());
-                imgCPcolor.setColorFilter(getResources().getColor(formInfo.isControlPanel() ? R.color.mainBlue : R.color.defaultColor));
+                formInfo.setCpPosition((formInfo.getCpPosition() + 1) % User.controlPanelPosition.length);
+                imgCPPC.setImageResource(User.controlPanelPosition[formInfo.getCpPosition()]);
                 break;
 
             case R.id.imgEndGame:
                 formInfo.setEndGame((formInfo.getEndGame() + 1) % User.endGameImages.length);
-                imgEndGame.setImageDrawable(getResources().getDrawable(User.endGameImages[formInfo.getEndGame()]));
+                imgEndGame.setImageResource(User.endGameImages[formInfo.getEndGame()]);
                 break;
 
             case R.id.imgFinish:
                 formInfo.setFinish((formInfo.getFinish() + 1) % User.finishImages.length);
-                imgFinish.setImageDrawable(getResources().getDrawable(User.finishImages[formInfo.getFinish()]));
+                imgFinish.setImageResource(User.finishImages[formInfo.getFinish()]);
                 break;
 
             case R.id.imgDidCrash:
@@ -267,8 +267,8 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
     private void getFormInfo (DataSnapshot dataSnapshot) {
         formInfo = new FormInfo();
-        formInfo.setControlPanel(Boolean.parseBoolean(dataSnapshot.child("controlPanel").getValue().toString()));
-        formInfo.setControlPanelColor(Boolean.parseBoolean(dataSnapshot.child("controlPanelColor").getValue().toString()));
+        formInfo.setCpRotation(Integer.parseInt(dataSnapshot.child("cpRotation").getValue().toString()));
+        formInfo.setCpPosition(Integer.parseInt(dataSnapshot.child("cpPosition").getValue().toString()));
         formInfo.setEndGame(Integer.parseInt(dataSnapshot.child("endGame").getValue().toString()));
         formInfo.setFinish(Integer.parseInt(dataSnapshot.child("finish").getValue().toString()));
         formInfo.setCrash(Integer.parseInt(dataSnapshot.child("crash").getValue().toString()));
@@ -281,6 +281,9 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     private void placeInFormInfo() {
         setViewsInvisible(View.VISIBLE);
 
+        imgCPRC.setImageResource(User.controlPanelRotation[formInfo.getCpRotation()]);
+        imgCPPC.setImageResource(User.controlPanelPosition[formInfo.getCpPosition()]);
+        imgEndGame.setImageResource(User.endGameImages[formInfo.getEndGame()]);
         imgFinish.setImageResource(User.finishImages[formInfo.getFinish()]);
         imgTicket.setColorFilter(User.finishTickets[formInfo.getTicket()]);
         tvTicket.setTextColor(formInfo.getTicket() == 1 ? Color.BLACK : Color.WHITE);
@@ -288,18 +291,11 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         tvCrash.setTextColor(formInfo.getCrash() == 1 ? Color.BLACK : Color.WHITE);
         imgDefence.setColorFilter(User.finishDefence[formInfo.getDefence()]);
         tvDefence.setTextColor(formInfo.getDefence() == 1 ? Color.BLACK : Color.WHITE);
-        imgEndGame.setImageResource(User.endGameImages[formInfo.getEndGame()]);
 
         if (!formInfo.getUserComment().equals("Empty Comment"))
             edComment.setText(formInfo.getUserComment());
         else
             edComment.setHint(formInfo.getUserComment());
-        setControlPanels();
-    }
-
-    private void setControlPanels() {
-        imgCPnormal.setColorFilter(getResources().getColor(formInfo.isControlPanel() ? R.color.mainBlue : R.color.defaultColor));
-        imgCPcolor.setColorFilter(getResources().getColor(formInfo.isControlPanelColor() ? R.color.mainBlue : R.color.defaultColor));
     }
 
     private void setViewsInvisible(int visibility) {
@@ -311,8 +307,8 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         imgDefence.setVisibility(visibility);
         tvDefence.setVisibility(visibility);
         imgEndGame.setVisibility(visibility);
-        imgCPnormal.setVisibility(visibility);
-        imgCPcolor.setVisibility(visibility);
+        imgCPRC.setVisibility(visibility);
+        imgCPPC.setVisibility(visibility);
         edComment.setVisibility(visibility);
     }
 }

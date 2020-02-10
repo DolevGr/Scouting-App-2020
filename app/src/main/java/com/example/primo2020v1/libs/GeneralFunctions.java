@@ -1,10 +1,10 @@
 package com.example.primo2020v1.libs;
 
-import com.example.primo2020v1.Fragments.ControlPanelFragment;
-import com.example.primo2020v1.Fragments.EndGameFragment;
-import com.example.primo2020v1.Fragments.FinishFragment;
-import com.example.primo2020v1.Fragments.MatchSettingsFragment;
-import com.example.primo2020v1.Fragments.PowerCellsFragment;
+import com.example.primo2020v1.GameFormFragments.ControlPanelFragment;
+import com.example.primo2020v1.GameFormFragments.EndGameFragment;
+import com.example.primo2020v1.GameFormFragments.FinishFragment;
+import com.example.primo2020v1.GameFormFragments.MatchSettingsFragment;
+import com.example.primo2020v1.GameFormFragments.PowerCellsFragment;
 import com.google.firebase.database.DatabaseReference;
 
 import java.lang.reflect.Field;

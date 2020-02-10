@@ -18,9 +18,7 @@ public class Cycle implements Parcelable {
         this.pcInner = pcInner;
     }
 
-    public Cycle() {}
-
-    public int[] getCycle(){
+    public int[] getCycle() {
         return new int[]{pcMissed, pcLower, pcOuter, pcInner};
     }
 
@@ -28,7 +26,7 @@ public class Cycle implements Parcelable {
         return phase;
     }
 
-    public int getTotalPC(){
+    public int getTotalPC() {
         return pcMissed + pcLower + pcOuter + pcInner;
     }
 
@@ -37,11 +35,15 @@ public class Cycle implements Parcelable {
         return phase ? score : (2 * score);
     }
 
+    public Cycle copy() {
+        return new Cycle(pcMissed, pcLower, pcOuter, pcInner, phase);
+    }
+
     @NonNull
     @Override
     public String toString() {
         String state;
-        if(phase)
+        if (phase)
             state = "Tele";
         else
             state = "Auto";

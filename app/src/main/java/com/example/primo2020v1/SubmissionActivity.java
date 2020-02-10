@@ -75,8 +75,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                 lvCycles.setAdapter(adapter);
             }
 
-            imgPCRC.setImageResource(User.controlPanelRotation[fi.getCpRotation()]);
-            imgCPPC.setImageResource(User.controlPanelPosition[fi.getCpPosition()]);
+            setControlPanels();
             imgEndGame.setImageResource(User.endGameImages[fi.getEndGame()]);
             imgFinish.setImageResource(User.finishImages[fi.getFinish()]);
             imgTicket.setColorFilter(User.finishTickets[fi.getTicket()]);
@@ -96,6 +95,18 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         btnBack.setOnClickListener(this);
     }
 
+    private void setControlPanels() {
+        if (fi.getCpRotation() == 1)
+            imgPCRC.setImageResource(User.controlPanelRotation[0]);
+        else
+            imgPCRC.setVisibility(View.INVISIBLE);
+
+        if (fi.getCpPosition() == 1)
+            imgCPPC.setImageResource(User.controlPanelPosition[0]);
+        else
+            imgCPPC.setVisibility(View.INVISIBLE);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -107,7 +118,9 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                     if (c != null && !c.isEmpty())
                         if (adapter.getCycles() != null && !adapter.getCycles().isEmpty())
                             c = adapter.getCycles();
-                    finishedForm = new Intent(SubmissionActivity.this, MainActivity.class);
+                    finishedForm = new Intent(SubmissionActivity.this, DrawerActivity.class);
+
+                    finishedForm.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     finish();
                     startActivity(finishedForm);
                 } else {

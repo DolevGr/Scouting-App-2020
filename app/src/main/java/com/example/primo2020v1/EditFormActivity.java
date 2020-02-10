@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -148,13 +149,13 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 formInfo.setComment(edComment.getText().toString().trim());
                 GeneralFunctions.onSubmit(dbRef, formInfo, cycles);
                 finish();
-                startActivity(new Intent(EditFormActivity.this, MainActivity.class));
+                startActivity(new Intent(EditFormActivity.this, DrawerActivity.class));
                 break;
 
             case R.id.btnBack:
                 spnIndex = -1;
                 finish();
-                startActivity(new Intent(EditFormActivity.this, MainActivity.class));
+                startActivity(new Intent(EditFormActivity.this, DrawerActivity.class));
                 break;
 
             case R.id.imgCPnormal:
@@ -210,8 +211,14 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 if (cyclesAdapter != null &&!cyclesAdapter.isEmpty())
                     cyclesAdapter.clear();
 
-                getFormInfo(dataSnapshot);
-                getCycles(dataSnapshot);
+                try {
+                    getFormInfo(dataSnapshot);
+                    getCycles(dataSnapshot);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(EditFormActivity.this, "Team was not found or hasn't played yet", Toast.LENGTH_SHORT).show();
+                }
+
                 Log.d(TAG, "onDataChange: " + cycles.toString() + " FormInfo: " + formInfo.toString());
 
                 if (cycles != null && !cycles.isEmpty()) {
@@ -245,7 +252,13 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean isValidTeamNumber() {
-        return User.teams.containsKey(Integer.parseInt(teamNumber));
+        boolean b = false;
+        try {
+            b = User.teams.containsKey(Integer.parseInt(teamNumber));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     private void getCycles(DataSnapshot dataSnapshot) {
@@ -253,14 +266,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
         for (int i = 0; i < numberOfCycles; i++) {
             String stringCycle = "Cycle " + (i+1);
-            //Cycle c = dataSnapshot.child(stringCycle).getValue(Cycle.class);
-
-            Cycle c = new Cycle();
-            c.pcMissed = dataSnapshot.child(stringCycle).getValue(Cycle.class).pcMissed;
-            c.pcLower = dataSnapshot.child(stringCycle).getValue(Cycle.class).pcLower;
-            c.pcOuter = dataSnapshot.child(stringCycle).getValue(Cycle.class).pcOuter;
-            c.pcInner = dataSnapshot.child(stringCycle).getValue(Cycle.class).pcInner;
-            c.phase = dataSnapshot.child(stringCycle).getValue(Cycle.class).phase;
+            Cycle c = dataSnapshot.child(stringCycle).getValue(Cycle.class).copy();
             cycles.add(c);
         }
     }

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PitsFormActivity">
+
+    <TextView
+        android:id="@+id/tvPitsForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pits Form"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edRobotHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Robot's Height (cm)"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
+
+    <EditText
+        android:id="@+id/edRobotChassie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Robot's Wills Config"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edRobotMass"
+        app:layout_constraintStart_toStartOf="@+id/edRobotMass"
+        app:layout_constraintTop_toBottomOf="@+id/edRobotMass" />
+
+    <EditText
+        android:id="@+id/edRobotMass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Robot's Mass (kg)"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="@+id/edRobotHeight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edRobotHeight"
+        app:layout_constraintTop_toBottomOf="@+id/edRobotHeight" />
+
+    <Switch
+        android:id="@+id/switchAuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Autonomous"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCPPC"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imgCPPC"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edRobotChassie"
+        app:srcCompat="@drawable/ic_cppc" />
+
+    <ImageView
+        android:id="@+id/imgCPRC"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPPC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imgCPPC"
+        app:layout_constraintTop_toTopOf="@+id/imgCPPC"
+        app:srcCompat="@drawable/ic_cprc" />
+
+    <ImageView
+        android:id="@+id/imgEndGame"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPPC"
+        app:layout_constraintEnd_toStartOf="@+id/imgCPPC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgCPPC"
+        app:srcCompat="@drawable/ic_park" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Submit Form"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edTeamNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Team Number"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/tvPitsForm"
+        app:layout_constraintStart_toStartOf="@+id/tvPitsForm"
+        app:layout_constraintTop_toBottomOf="@+id/tvPitsForm" />
+
+    <TextView
+        android:id="@+id/tvTeamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/edTeamNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintTop_toTopOf="@+id/edTeamNumber" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

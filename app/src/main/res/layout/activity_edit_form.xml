@@ -89,7 +89,7 @@
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgFinish"
-        app:srcCompat="@drawable/ic_controlpanel_color" />
+        app:srcCompat="@drawable/ic_cppc" />
 
     <ImageView
         android:id="@+id/imgFinish"
@@ -123,7 +123,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imgEndGame"
         app:layout_constraintTop_toTopOf="@+id/imgCPcolor"
-        app:srcCompat="@drawable/ic_controlpanel_normal" />
+        app:srcCompat="@drawable/ic_cprc" />
 
     <ImageView
         android:id="@+id/imgCard"

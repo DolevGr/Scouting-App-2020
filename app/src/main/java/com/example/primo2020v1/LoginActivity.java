@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Context context;
 
     String name, password, nameFromDB, passFromDB, privillegeFromDB = "", privillege = "false";
-    boolean priv = false, debug = true;
+    boolean priv = false, debug = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                             if (isValidName() && isValidPassword()) {
-                                i = new Intent(LoginActivity.this, MainActivity.class);
+                                i = new Intent(LoginActivity.this, DrawerActivity.class);
 
                                 if (i != null){
                                     i.putExtra("Username", edName.getText().toString());
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void enterOnDebug() {
         if (debug) {
-            i = new Intent(LoginActivity.this, MainActivity.class);
+            i = new Intent(LoginActivity.this, DrawerActivity.class);
 
             if (i != null){
                 i.putExtra("Username", edName.getText().toString());

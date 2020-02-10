@@ -13,18 +13,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubmissionActivity" android:theme="@style/AppTheme.FullBackground"/>
-        <activity android:name=".EditFormActivity" android:theme="@style/AppTheme.FullBackground"/>
-        <activity android:name=".GameFormActivity" android:theme="@style/AppTheme.FullBackground"/>
-        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.FullBackground"/>
-        <activity android:name=".SplashActivity" android:theme="@style/AppTheme.FullBackground">
+        <activity android:name=".PitsFormActivity"></activity>
+        <activity
+            android:name=".DrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SubmissionActivity"
+            android:theme="@style/AppTheme.FullBackground" />
+        <activity
+            android:name=".EditFormActivity"
+            android:theme="@style/AppTheme.FullBackground" />
+        <activity
+            android:name=".GameFormActivity"
+            android:theme="@style/AppTheme.FullBackground" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.FullBackground" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.FullBackground">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.FullBackground"/>
     </application>
 
 </manifest>

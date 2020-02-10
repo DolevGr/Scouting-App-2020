@@ -68,12 +68,10 @@ public class SplashActivity extends AppCompatActivity {
 
     private void setMatches(DataSnapshot dataSnapshot) {
         DataSnapshot dsMatches = dataSnapshot.child(Keys.MATCHES);
-        int i = 1;
         for (DataSnapshot ds : dsMatches.getChildren()) {
             Match m = ds.getValue(Match.class);
-            m.setGameNum(i);
+            m.setGameNum(Integer.parseInt(ds.getKey()));
             User.matches.add(m);
-            i++;
         }
         Log.d(TAG, "setMatches: " + User.matches.toString());
     }

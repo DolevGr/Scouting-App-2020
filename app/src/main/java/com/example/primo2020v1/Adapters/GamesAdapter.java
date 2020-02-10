@@ -56,6 +56,20 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         tvGame.setText(Integer.toString(match.getGameNum()));
         img.setImageResource(R.drawable.red_blue);
 
-        return view;
+        if (tvR1.getText().toString().equals("4586")){
+            tvR1.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        } else if (tvR2.getText().toString().equals("4586")){
+            tvR2.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        } else if (tvR3.getText().toString().equals("4586")){
+            tvR3.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        } else if (tvB1.getText().toString().equals("4586")){
+            tvB1.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        } else if (tvB2.getText().toString().equals("4586")){
+            tvB2.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        } else if (tvB3.getText().toString().equals("4586")){
+            tvB3.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        }
+
+            return view;
     }
 }

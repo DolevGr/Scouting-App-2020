@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navMatches">
+
+    <fragment
+        android:id="@+id/navMatches"
+        android:name="com.example.primo2020v1.ui.matches.MatchesFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navTeamOverview"
+        android:name="com.example.primo2020v1.ui.teamOverview.TeamOverviewFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_team_overview" />
+
+    <fragment
+        android:id="@+id/navAbilityRating"
+        android:name="com.example.primo2020v1.ui.abilityRating.AbilityRatingFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_ability_rating"/>
+
+    <fragment
+        android:id="@+id/navTeamComparision"
+        android:name="com.example.primo2020v1.ui.pits.PitsFragment"
+        android:label="@string/menu_tools"
+        tools:layout="@layout/fragment_pits" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="com.example.primo2020v1.ui.send.SendFragment"
+        android:label="@string/menu_send"
+        tools:layout="@layout/fragment_send" />
+</navigation>

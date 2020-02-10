@@ -54,6 +54,7 @@ public class Match{
                 ", fBlue='" + fBlue + '\'' +
                 ", mBlue='" + mBlue + '\'' +
                 ", cBlue='" + cBlue + '\'' +
+                ", GameNumber'" + gameNum + '\'' +
                 '}';
     }
 }

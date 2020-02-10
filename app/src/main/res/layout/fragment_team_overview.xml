@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/btnStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stats"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPits"
+        app:layout_constraintEnd_toStartOf="@+id/btnPits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnPits" />
+
+    <Button
+        android:id="@+id/btnPits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Pits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnMatches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Match"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnPits"
+        app:layout_constraintTop_toTopOf="@+id/btnPits" />
+
+    <EditText
+        android:id="@+id/edTeamNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Team Number"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/btnPits"
+        app:layout_constraintStart_toStartOf="@+id/btnPits"
+        app:layout_constraintTop_toBottomOf="@+id/btnPits" />
+
+    <FrameLayout
+        android:id="@+id/fragmentTeamOverview"
+        android:layout_width="409dp"
+        android:layout_height="488dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber">
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

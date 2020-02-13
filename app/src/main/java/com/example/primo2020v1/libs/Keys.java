@@ -25,4 +25,7 @@ public class Keys {
     public static final String CURRENT_GAME = "CurrentGame";
     public static final String MATCHES = "Matches";
     public static final String USERS = "Users";
+    public static final String TEAMS = "Teams";
+    public static final String PIT = "Pit";
+    public static final String STATS = "Stats";
 }

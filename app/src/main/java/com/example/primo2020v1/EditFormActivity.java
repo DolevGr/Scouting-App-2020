@@ -32,8 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class EditFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
-{
+public class EditFormActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private final static String TAG = "EditFormActivity";
 
     private Spinner spnTeam;
@@ -85,15 +84,18 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         teamAdapter = ArrayAdapter.createFromResource(this, R.array.teams, R.layout.support_simple_spinner_dropdown_item);
         teamAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spnTeam.setAdapter(teamAdapter);
+        edTeamNumber.setEnabled(false);
 
         setViewsInvisible(View.INVISIBLE);
 
         edGameNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -106,10 +108,12 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
         edTeamNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -202,13 +206,14 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void showResults() {
-         dbRef = User.databaseReference.child("Teams")
-                .child(teamNumber).child(Integer.toString(gameNumber));
+        dbRef = User.databaseReference.child("Teams").child(teamNumber);
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (cyclesAdapter != null &&!cyclesAdapter.isEmpty())
+                dataSnapshot = dataSnapshot.child(Integer.toString(formInfo.getMatchNumber()));
+
+                if (cyclesAdapter != null && !cyclesAdapter.isEmpty())
                     cyclesAdapter.clear();
 
                 try {
@@ -217,9 +222,8 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(EditFormActivity.this, "Team was not found or hasn't played yet", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onDataChange: ");
                 }
-
-                Log.d(TAG, "onDataChange: " + cycles.toString() + " FormInfo: " + formInfo.toString());
 
                 if (cycles != null && !cycles.isEmpty()) {
                     cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, cycles);
@@ -229,14 +233,15 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (isValidGameNumber() && spnIndex != i) {
-            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber-1), i);
+            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber - 1), i);
             spnIndex = i;
             edGameNumber.setText(Integer.toString(gameNumber));
             edTeamNumber.setText(teamNumber);
@@ -265,13 +270,13 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         int numberOfCycles = Integer.parseInt(dataSnapshot.child("TotalCycles").getValue().toString());
 
         for (int i = 0; i < numberOfCycles; i++) {
-            String stringCycle = "Cycle " + (i+1);
+            String stringCycle = "Cycle " + (i + 1);
             Cycle c = dataSnapshot.child(stringCycle).getValue(Cycle.class).copy();
             cycles.add(c);
         }
     }
 
-    private void getFormInfo (DataSnapshot dataSnapshot) {
+    private void getFormInfo(DataSnapshot dataSnapshot) {
         formInfo = new FormInfo();
         formInfo.setCpRotation(Integer.parseInt(dataSnapshot.child("cpRotation").getValue().toString()));
         formInfo.setCpPosition(Integer.parseInt(dataSnapshot.child("cpPosition").getValue().toString()));

@@ -12,9 +12,9 @@ public class FormInfo implements Parcelable {
     public CharSequence comment;
 
     public FormInfo(String teamNumber, int gameNumber,
-                        int cpRotation, int cpPosition,
-                        int endGame,
-                        int finish, int ticket, int crash, int defence, CharSequence text){
+                    int cpRotation, int cpPosition,
+                    int endGame,
+                    int finish, int ticket, int crash, int defence, CharSequence text) {
         this.defence = defence;
         this.crash = crash;
         this.ticket = ticket;
@@ -27,7 +27,8 @@ public class FormInfo implements Parcelable {
         this.comment = text;
     }
 
-    public FormInfo() { }
+    public FormInfo() {
+    }
 
     protected FormInfo(Parcel in) {
         defence = in.readInt();
@@ -126,12 +127,19 @@ public class FormInfo implements Parcelable {
         this.teamNumber = teamNumber;
     }
 
-    public int getGameNumber() {
+    public int getMatchNumber() {
         return gameNumber;
     }
 
     public void setGameNumber(int gameNumber) {
         this.gameNumber = gameNumber;
+    }
+
+    public FormInfo copy() {
+        return new FormInfo(teamNumber, gameNumber,
+                cpRotation, cpPosition,
+                endGame,
+                finish, ticket, crash, defence, comment);
     }
 
     @Override

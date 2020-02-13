@@ -45,6 +45,12 @@ public class Match{
         return fBlue;
     }
 
+    public Match copy() {
+        return new Match(cRed, mRed, fRed,
+                cBlue, mBlue, fBlue,
+                gameNum);
+    }
+
     @Override
     public String toString() {
         return "Match{" +

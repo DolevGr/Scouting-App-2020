@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DatabaseReference;
 
 public class PitsFormActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText edRobotHeight, edRobotChassie, edRobotMass, edTeamNumber;
+    private EditText edRobotHeight, edRobotChassie, edRobotMass, edTeamNumber, edComment;
     private TextView tvTeamName;
     private ImageView imgCPPC, imgCPRC, imgEndGame;
     private Switch switchAuto;
@@ -34,9 +35,10 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         btnSubmit = findViewById(R.id.btnSubmit);
         tvTeamName = findViewById(R.id.tvTeamName);
         edTeamNumber = findViewById(R.id.edTeamNumber);
-        edRobotChassie = findViewById(R.id.edRobotHeight);
+        edRobotHeight = findViewById(R.id.edRobotHeight);
         edRobotChassie = findViewById(R.id.edRobotChassie);
         edRobotMass = findViewById(R.id.edRobotMass);
+        edComment = findViewById(R.id.edComment);
         imgCPPC = findViewById(R.id.imgCPPC);
         imgCPRC = findViewById(R.id.imgCPRC);
         imgEndGame = findViewById(R.id.imgEndGame);
@@ -117,15 +119,17 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                 !edTeamNumber.getText().toString().trim().equals("") &&
                 !edRobotHeight.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("") &&
+                !edComment.getText().toString().trim().equals("") &&
                 User.teams.containsKey(Integer.parseInt(name));
     }
 
     private void onSubmit() {
-        DatabaseReference dbRef = User.databaseReference.child("Teams").child(edTeamNumber.getText().toString().trim());
+        DatabaseReference dbRef = User.databaseReference.child(Keys.TEAMS).child(edTeamNumber.getText().toString().trim()).child(Keys.PIT);
 
         dbRef.child("RobotHeight").setValue(edRobotHeight.getText().toString().trim());
         dbRef.child("RobotChassie").setValue(edRobotChassie.getText().toString().trim());
         dbRef.child("RobotMass").setValue(edRobotMass.getText().toString().trim());
+        dbRef.child("Comment").setValue(edComment.getText().toString().trim());
         dbRef.child("HasAuto").setValue(switchAuto.isActivated());
         dbRef.child("CPRC").setValue(rcIndex);
         dbRef.child("CPPC").setValue(cpIndex);

@@ -54,6 +54,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_form);
 
+        bnvForm = findViewById(R.id.bottomNavFormBar);
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +75,6 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         fragsMap.put(R.id.navEndGame, new EndGameFragment());
         fragsMap.put(R.id.navFinishForm, new FinishFragment());
         fragsMap.put(R.id.navMatchSettings, new MatchSettingsFragment());
-
-        bnvForm = findViewById(R.id.bottomNavFormBar);
 
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO)) {

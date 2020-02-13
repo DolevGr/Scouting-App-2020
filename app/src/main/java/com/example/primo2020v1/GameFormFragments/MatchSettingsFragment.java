@@ -37,7 +37,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     private ImageView imgbtnSwitchFields;
     private Spinner spnTeam;
     private String[] positions;
-    //private int[] locks = {R.drawable.ic_locked_foreground, R.drawable.ic_unlocked_foreground};
+    private int[] locks = {R.drawable.ic_closed, R.drawable.ic_opened};
 
     public static int gameNumber, spnIndex;
     public static String teamNumber;
@@ -54,7 +54,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         edTeamNumber = v.findViewById(R.id.edTeamNumber);
         spnTeam = v.findViewById(R.id.spnTeam);
         imgbtnSwitchFields = v.findViewById(R.id.imgbtnSwitchFields);
-        swichFields = true;
 
         positions = new String[]{"R Close", "R Middle", "R Far", "B Close", "B Middle", "B Far"};
         teamAdapter = new ArrayAdapter<CharSequence>(getActivity(), R.layout.spinner_item, positions);
@@ -63,11 +62,11 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
         spnTeam.setOnItemSelectedListener(this);
 
+        swichFields = true;
         switchFields();
         edGameNumber.setText(Integer.toString(gameNumber));
         edTeamNumber.setText(teamNumber);
         spnTeam.setSelection(spnIndex == -1 ? 0 : spnIndex);
-
 
         imgbtnSwitchFields.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +74,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
                 switchFields();
             }
         });
-
         edGameNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -138,8 +136,8 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void switchFields() {
-        //imgbtnSwitchFields.setImageDrawable(getResources().getDrawable(swichFields ? locks[0] : locks[1]));
         swichFields = !swichFields;
+        imgbtnSwitchFields.setImageResource(swichFields ? locks[1] : locks[0]);
         edGameNumber.setEnabled(swichFields);
         edTeamNumber.setEnabled(swichFields);
     }

@@ -36,12 +36,13 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
+    public static boolean isValid = true;
 
     private Intent intent, finishedForm, i;
-    private FormInfo fi;
-    private ArrayList<Cycle> c;
+    public FormInfo fi;
+    public ArrayList<Cycle> c;
 
-    private DatabaseReference dbRef;
+    public DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             tvComment.setText(fi.getUserComment());
 
             teamNumber = fi.getTeamNumber();
-            gameNumber = fi.getGameNumber();
+            gameNumber = fi.getMatchNumber();
 
             btnSubmit.setOnClickListener(this);
         }
@@ -112,20 +113,22 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.btnSubmit:
                 if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
-                    dbRef = dbRef.child(teamNumber).child(Integer.toString(gameNumber));
+                    dbRef = dbRef.child(teamNumber);
                     onSubmit();
 
-                    if (c != null && !c.isEmpty())
-                        if (adapter.getCycles() != null && !adapter.getCycles().isEmpty())
-                            c = adapter.getCycles();
-                    finishedForm = new Intent(SubmissionActivity.this, DrawerActivity.class);
-
-                    finishedForm.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    finish();
-                    startActivity(finishedForm);
-                } else {
-                    MissingTeamNumberAlertDialog alertDialog = new MissingTeamNumberAlertDialog();
-                    alertDialog.show(getSupportFragmentManager(), "Missing Team Number");
+                    if (isValid) {
+                        finishedForm = new Intent(SubmissionActivity.this, DrawerActivity.class);
+                        if (this.c != null && !this.c.isEmpty()) {
+                            if (adapter.getCycles() != null && !adapter.getCycles().isEmpty()) {
+                                c = adapter.getCycles();
+                            } else {
+                                MissingTeamNumberAlertDialog alertDialog = new MissingTeamNumberAlertDialog();
+                                alertDialog.show(getSupportFragmentManager(), "Missing Team Number");
+                            }
+                        }
+                        finish();
+                        startActivity(finishedForm);
+                    }
                 }
                 break;
 
@@ -144,23 +147,33 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onSubmit() {
-        GeneralFunctions.onSubmit(dbRef, fi, c);
-        User.currentGame = fi.getGameNumber() + 1;
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int dbGame;
-                dbGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+                int dbGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+                GeneralFunctions.onSubmit(dbRef, fi, c);
+                User.currentGame = fi.getMatchNumber() + 1;
 
                 if (User.currentGame != dbGame) {
                     dbGame = User.currentGame;
                     User.databaseReference.child(Keys.CURRENT_GAME).setValue(dbGame);
+
                 }
+//                else if (User.currentGame <= dbGame) {
+//                    Log.d(TAG, "onDataChange: " + dbGame);
+//                    OverrideExistingMatchAlertDialog alertDialog = new OverrideExistingMatchAlertDialog();
+//                    alertDialog.show(getSupportFragmentManager(), "override match");
+//                    if (isValid) {
+//                        GeneralFunctions.onSubmit(dbRef, fi, c, dbRefStats);
+//                        User.currentGame = fi.getMatchNumber() + 1;
+//                    }
+//                }
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 }

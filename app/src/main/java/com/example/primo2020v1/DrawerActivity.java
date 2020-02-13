@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 public class DrawerActivity extends AppCompatActivity {
     private Intent intent;
     private String username;
-    private boolean priv;
+    private static boolean priv;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -27,10 +27,14 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drawer);
 
         intent = getIntent();
-        username = intent.getStringExtra("Username");
-        if (username != null && !username.equals(""))
+        if (intent.hasExtra("Username")) {
+            username = intent.getStringExtra("Username");
             User.username = username;
-        priv = intent.getBooleanExtra("Privilege", false);
+            priv = intent.getBooleanExtra("Privilege", false);
+//            TextView tvHeader = findViewById(R.id.tvHeader);
+//            String info = "Hello " + username;
+//            tvHeader.setText(info);
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

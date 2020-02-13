@@ -1,4 +1,4 @@
-package com.example.primo2020v1.ui.TeanComparision.matches;
+package com.example.primo2020v1.ui.TeanComparision.TeamComparision;
 
 import android.content.Intent;
 import android.os.Bundle;

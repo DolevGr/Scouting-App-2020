@@ -14,23 +14,24 @@ import java.util.Map;
 
 public class GeneralFunctions {
 
-    public static Map<String,Object> getMap(Object obj) {
-        Map<String,Object> map = new HashMap<>();
+    public static Map<String, Object> getMap(Object obj) {
+        Map<String, Object> map = new HashMap<>();
 
         try {
             Field[] fields = obj.getClass().getFields();
 
-            for(Field f : fields) {
+            for (Field f : fields) {
                 if (!java.lang.reflect.Modifier.isStatic(f.getModifiers()))
-                    map.put(f.getName(),f.get(obj));
+                    map.put(f.getName(), f.get(obj));
             }
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         return map;
     }
 
-    public static String convertTeamFromSpinnerTODB(Match m, int index){
-        switch (index){
+    public static String convertTeamFromSpinnerTODB(Match m, int index) {
+        switch (index) {
             case 0:
                 return m.getFirstRedRobot();
 
@@ -72,22 +73,22 @@ public class GeneralFunctions {
         FinishFragment.text = "";
     }
 
-    public static void onSubmit(DatabaseReference dbRef, FormInfo fi, ArrayList<Cycle> c) {
-        int totalCycles = 0, totalScore = 0,
-                totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0;
+    public static void onSubmit(DatabaseReference dbRef, final FormInfo fi, ArrayList<Cycle> c) {
+        int totalCycles = 0, totalScore = 0, totalShots = 0, totalPCmissed = 0, totalPClower = 0, totalPCouter = 0, totalPCinner = 0,
+                dbShots = 0, dbPClower = 0, dbPCouter = 0, dbPCinner = 0, dbCPRC = 0, dbCPPC = 0, dbBalanced = 0, dbClimb = 0;
+
+        final DatabaseReference dbRefMatch = dbRef.child(Integer.toString(fi.getMatchNumber())),
+                dbRefStats = dbRef.child(Keys.STATS).child(Integer.toString(fi.getMatchNumber()));
 
         if (fi.getUserComment().equals(""))
             fi.setComment("Empty Comment");
-        Map<String, Object> formInfo = getMap(fi);
-        dbRef.setValue(formInfo);
-
-        dbRef.child("CommittedBy").setValue(User.username);
+        final Map<String, Object> formInfo = getMap(fi);
 
         if (c != null && !c.isEmpty()) {
             totalCycles = c.size();
-            for (int i = 0; i <totalCycles; i++) {
+            for (int i = 0; i < totalCycles; i++) {
                 Map<String, Object> cycle = GeneralFunctions.getMap(c.get(i));
-                dbRef.child("Cycle " + (i + 1)).setValue(cycle);
+                dbRefMatch.child("Cycle " + (i + 1)).setValue(cycle);
 
                 totalPCmissed += c.get(i).pcMissed;
                 totalPClower += c.get(i).pcLower;
@@ -95,14 +96,39 @@ public class GeneralFunctions {
                 totalPCinner += c.get(i).pcInner;
                 totalScore += c.get(i).getScore();
             }
-
-            dbRef.child("TotalMissed").setValue(totalPCmissed);
-            dbRef.child("TotalLower").setValue(totalPClower);
-            dbRef.child("TotalOuter").setValue(totalPCouter);
-            dbRef.child("TotalInner").setValue(totalPCinner);
-            dbRef.child("TotalPCScore").setValue(totalScore);
         }
 
-        dbRef.child("TotalCycles").setValue(totalCycles);
+        for (Cycle cycle : c) {
+            totalShots += cycle.getTotalPC();
+        }
+
+        dbShots += totalShots;
+        dbPClower += totalPClower;
+        dbPCouter += totalPCouter;
+        dbPCinner += totalPCinner;
+        dbCPRC += fi.getCpRotation() == 1 ? 1 : 0;
+        dbCPPC += fi.getCpPosition() == 1 ? 1 : 0;
+        dbBalanced += fi.getEndGame() == 3 ? 1 : 0;
+        dbClimb += fi.getEndGame() == 2 ? 1 : 0;
+
+
+        dbRefMatch.setValue(formInfo);
+        dbRefMatch.child("CommittedBy").setValue(User.username);
+        dbRefMatch.child("TotalMissed").setValue(totalPCmissed);
+        dbRefMatch.child("TotalLower").setValue(totalPClower);
+        dbRefMatch.child("TotalOuter").setValue(totalPCouter);
+        dbRefMatch.child("TotalInner").setValue(totalPCinner);
+        dbRefMatch.child("TotalShots").setValue((totalPClower + totalPCouter + totalPCinner));
+        dbRefMatch.child("TotalPCScore").setValue(Integer.toString(totalScore));
+        dbRefMatch.child("TotalCycles").setValue(totalCycles);
+
+        dbRefStats.child("Balanced").setValue(Integer.toString(dbBalanced));
+        dbRefStats.child("Climb").setValue(Integer.toString(dbClimb));
+        dbRefStats.child("PC").setValue(Integer.toString(dbCPPC));
+        dbRefStats.child("RC").setValue(Integer.toString(dbCPRC));
+        dbRefStats.child("TotalShots").setValue(Integer.toString(dbShots));
+        dbRefStats.child("TotalLower").setValue(Integer.toString(dbPClower));
+        dbRefStats.child("TotalOuter").setValue(Integer.toString(dbPCouter));
+        dbRefStats.child("TotalInner").setValue(Integer.toString(dbPCinner));
     }
 }

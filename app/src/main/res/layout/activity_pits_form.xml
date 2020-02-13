@@ -33,7 +33,7 @@
         android:id="@+id/edRobotHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="Robot's Height (cm)"
         android:inputType="numberDecimal"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ems="10"
-        android:hint="Robot's Wills Config"
+        android:hint="Robot's Wheels Config"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/edRobotMass"
         app:layout_constraintStart_toStartOf="@+id/edRobotMass"
@@ -70,7 +70,7 @@
         android:id="@+id/switchAuto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="3dp"
         android:text="Autonomous"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,12 +83,13 @@
         android:id="@+id/imgCPPC"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.57"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edRobotChassie"
+        app:layout_constraintTop_toBottomOf="@+id/edComment"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_cppc" />
 
     <ImageView
@@ -126,7 +127,7 @@
         android:id="@+id/edTeamNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Team Number"
         android:inputType="number"
@@ -142,5 +143,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edTeamNumber"
         app:layout_constraintTop_toTopOf="@+id/edTeamNumber" />
+
+    <EditText
+        android:id="@+id/edComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Comment"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edRobotChassie"
+        app:layout_constraintStart_toStartOf="@+id/edRobotChassie"
+        app:layout_constraintTop_toBottomOf="@+id/edRobotChassie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

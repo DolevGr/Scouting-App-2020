@@ -36,7 +36,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
         btnPitsForm = v.findViewById(R.id.btnPits);
 
         if (gamesAdapter == null)
-            gamesAdapter = new GamesAdapter(getContext(), R.layout.costum_games_layout, User.matches);
+            gamesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, User.matches);
         lvGames.setAdapter(gamesAdapter);
 
         btnNewForm.setOnClickListener(this);
@@ -63,6 +63,11 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnExit:
+                try {
+                    getActivity().getApplicationContext().deleteFile("LoginInfo.txt");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 next = new Intent(getContext(), LoginActivity.class);
                 getActivity().finish();
                 break;

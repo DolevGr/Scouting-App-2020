@@ -36,10 +36,15 @@ public class SplashActivity extends AppCompatActivity {
                     setUsersNames(dataSnapshot);
                     setMatches(dataSnapshot);
                 }
+
+                in = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(in);
+                finish();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
 
         User.admins.add("Dolev");
@@ -48,22 +53,21 @@ public class SplashActivity extends AppCompatActivity {
         User.admins.add("Tohar");
         User.admins.add("Samuel");
         User.admins.add("Mor");
+        User.admins.add("Tal");
 
-        Thread th = new Thread() {
-            public void run(){
-                try {
-                    sleep(2000);
-                } catch (Exception e){
-                    e.printStackTrace();
-                } finally {
-                    in = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(in);
-                }
-                finish();
-            }
-        };
-        th.start();
-
+//        Thread th = new Thread() {
+//            public void run(){
+//                try {
+//                    sleep(2000);
+//                } catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//                in = new Intent(SplashActivity.this, LoginActivity.class);
+//                startActivity(in);
+//                finish();
+//            }
+//        };
+//        th.start();
     }
 
     private void setMatches(DataSnapshot dataSnapshot) {

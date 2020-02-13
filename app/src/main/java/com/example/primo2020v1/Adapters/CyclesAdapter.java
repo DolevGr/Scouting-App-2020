@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,6 +75,7 @@ public class CyclesAdapter extends ArrayAdapter<Cycle> {
             public void onClick(View view) {
                 cycles.remove(position);
                 notifyDataSetChanged();
+                Toast.makeText(getContext(), "Deleted Cycle", Toast.LENGTH_SHORT).show();
             }
         });
 

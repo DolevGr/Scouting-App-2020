@@ -19,12 +19,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
     EditText edName, edPass;
     Button btnLogin;
-    Intent i;
+    Intent in;
     Context context;
 
     String name, password, nameFromDB, passFromDB, privillegeFromDB = "", privillege = "false";
@@ -51,25 +57,36 @@ public class LoginActivity extends AppCompatActivity {
                     dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            try{
+                            try {
                                 nameFromDB = dataSnapshot.child("name").getValue().toString();
                                 passFromDB = dataSnapshot.child("password").getValue().toString();
                                 privillegeFromDB = dataSnapshot.child("privilege").getValue().toString();
-                                priv = (privillege.equals(privillegeFromDB) ? false : true) && User.admins.contains(name);
+                                priv = !privillege.equals(privillegeFromDB) && User.admins.contains(name);
 
-                            } catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 Log.d("Exception", "onDataChange: Data went missing :-(");
                             }
 
                             if (isValidName() && isValidPassword()) {
-                                i = new Intent(LoginActivity.this, DrawerActivity.class);
+                                try {
+//                                    String path = Environment.getDataDirectory().getPath();
+//                                    FileWriter loginFileWriter = new FileWriter(path + "/LoginInfo.txt");
+//                                    loginFileWriter.write(name + '\n' + password + '\n' + priv + '\n');
+//                                    loginFileWriter.close();
 
-                                if (i != null){
-                                    i.putExtra("Username", edName.getText().toString());
-                                    i.putExtra("Privilege", priv);
-                                    startActivity(i);
+                                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("LoginInfo.txt", Context.MODE_PRIVATE));
+                                    outputStreamWriter.write(name + '\n' + password + '\n' + priv + '\n');
+                                    outputStreamWriter.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
+
+                                in = new Intent(LoginActivity.this, DrawerActivity.class);
+                                in.putExtra("Username", edName.getText().toString());
+                                in.putExtra("Privilege", priv);
+                                startActivity(in);
+
                             } else if (!isValidPassword()) {
                                 Toast.makeText(context.getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
                             }
@@ -87,35 +104,70 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        String path = Environment.getDataDirectory().getPath();
+        try {
+//            BufferedReader loginFileReader = new BufferedReader(new FileReader(path + "/LoginInfo.txt"));
+//            String name = loginFileReader.readLine();
+//            String pass = loginFileReader.readLine();
+//            String privString = loginFileReader.readLine();
+//            loginFileReader.close();
+//            edName.setText(name);
+//            edPass.setText(pass);
+            InputStream inputStream = context.openFileInput("LoginInfo.txt");
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                name = bufferedReader.readLine();
+                password = bufferedReader.readLine();
+                privillege = bufferedReader.readLine();
+                inputStream.close();
+
+                if (name != null && password != null && privillege != null) {
+                    edName.setText(name);
+                    edPass.setText(password);
+                    edName.setEnabled(false);
+                    edPass.setEnabled(false);
+                    btnLogin.setEnabled(false);
+
+                    in = new Intent(LoginActivity.this, DrawerActivity.class);
+                    in.putExtra("Username", edName.getText().toString());
+                    in.putExtra("Privilege", Boolean.parseBoolean(privillege));
+                    startActivity(in);
+                    finish();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkPassAndUsername() {
-        if(edName.getText().toString().equals("") || edPass.getText().toString().equals("")){
+        if (edName.getText().toString().equals("") || edPass.getText().toString().equals("")) {
             Toast.makeText(context.getApplicationContext(), "Enter Username or Password", Toast.LENGTH_LONG).show();
             Log.d(TAG, "checkPassAndUsername: " + passFromDB);
-        } else if(!isValidName() || !isValidPassword()) {
+        } else if (!isValidName() || !isValidPassword()) {
             Toast.makeText(context.getApplicationContext(), "Username or Password is incorrect", Toast.LENGTH_LONG).show();
         }
     }
 
-    private boolean isValidName(){
+    private boolean isValidName() {
         return name.equals(nameFromDB);
     }
 
-    private boolean isValidPassword(){
+    private boolean isValidPassword() {
         return password.toLowerCase().equals(passFromDB.toLowerCase());
     }
 
     private void enterOnDebug() {
         if (debug) {
-            i = new Intent(LoginActivity.this, DrawerActivity.class);
+            in = new Intent(LoginActivity.this, DrawerActivity.class);
 
-            if (i != null){
-                i.putExtra("Username", edName.getText().toString());
-                i.putExtra("Privilege", priv);
-                startActivity(i);
-            }
+            in.putExtra("Username", edName.getText().toString());
+            in.putExtra("Privilege", priv);
+            startActivity(in);
+
         }
     }
-
 }

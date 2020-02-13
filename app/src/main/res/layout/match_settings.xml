@@ -72,6 +72,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="4dp"
         android:text="Team Number"
         app:layout_constraintBottom_toBottomOf="@+id/edTeamNumber"
@@ -84,6 +85,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="4dp"
         android:text="Game Number"
         app:layout_constraintBottom_toBottomOf="@+id/edGameNumber"
@@ -94,13 +96,14 @@
 
     <ImageView
         android:id="@+id/imgbtnSwitchFields"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/tvMuchSettings"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/background"
+        app:layout_constraintBottom_toTopOf="@+id/spnTeam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMuchSettings"
-        app:srcCompat="@android:drawable/ic_lock_lock"
-        android:background="@color/background"/>
+        app:srcCompat="@android:drawable/ic_lock_lock" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

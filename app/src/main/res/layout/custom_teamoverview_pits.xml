@@ -20,56 +20,80 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Robot's Height (cm): " />
+                android:text="Robot's Height (cm): "
+                android:textSize="16dp" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Robot's Mass (kg): " />
+                android:text="Robot's Mass (kg): "
+                android:textSize="16sp" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvMass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Robot's Wheels Config: " />
+                android:text="Robot's Wheels Config: "
+                android:textSize="16sp" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvWheels"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,18 +102,26 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Comment: " />
+                android:text="Comment: "
+                android:textSize="16sp" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,8 +134,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Has Autonomous"
+                android:textSize="16sp"
+                android:textColor="@color/defaultColor"
                 android:thumbTint="@color/mainOrange" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +150,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="5dp"
+                android:layout_height="15dp"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -123,22 +161,22 @@
 
             <ImageView
                 android:id="@+id/img1"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_park" />
 
             <ImageView
                 android:id="@+id/img2"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_cppc" />
 
             <ImageView
                 android:id="@+id/img3"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_cprc" />
         </LinearLayout>

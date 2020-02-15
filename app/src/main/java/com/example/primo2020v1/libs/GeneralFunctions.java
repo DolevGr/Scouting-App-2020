@@ -80,9 +80,11 @@ public class GeneralFunctions {
         final DatabaseReference dbRefMatch = dbRef.child(Integer.toString(fi.getMatchNumber())),
                 dbRefStats = dbRef.child(Keys.STATS).child(Integer.toString(fi.getMatchNumber()));
 
-        if (fi.getUserComment().equals(""))
+        if (fi.getUserComment().toString().trim().equals(""))
             fi.setComment("Empty Comment");
         final Map<String, Object> formInfo = getMap(fi);
+        dbRefMatch.setValue(formInfo);
+        dbRefMatch.child("CommittedBy").setValue(User.username);
 
         if (c != null && !c.isEmpty()) {
             totalCycles = c.size();
@@ -95,11 +97,8 @@ public class GeneralFunctions {
                 totalPCouter += c.get(i).pcOuter;
                 totalPCinner += c.get(i).pcInner;
                 totalScore += c.get(i).getScore();
+                totalShots += c.get(i).getTotalPC();
             }
-        }
-
-        for (Cycle cycle : c) {
-            totalShots += cycle.getTotalPC();
         }
 
         dbShots += totalShots;
@@ -112,16 +111,6 @@ public class GeneralFunctions {
         dbClimb += fi.getEndGame() == 2 ? 1 : 0;
 
 
-        dbRefMatch.setValue(formInfo);
-        dbRefMatch.child("CommittedBy").setValue(User.username);
-        dbRefMatch.child("TotalMissed").setValue(totalPCmissed);
-        dbRefMatch.child("TotalLower").setValue(totalPClower);
-        dbRefMatch.child("TotalOuter").setValue(totalPCouter);
-        dbRefMatch.child("TotalInner").setValue(totalPCinner);
-        dbRefMatch.child("TotalShots").setValue((totalPClower + totalPCouter + totalPCinner));
-        dbRefMatch.child("TotalPCScore").setValue(Integer.toString(totalScore));
-        dbRefMatch.child("TotalCycles").setValue(totalCycles);
-
         dbRefStats.child("Balanced").setValue(Integer.toString(dbBalanced));
         dbRefStats.child("Climb").setValue(Integer.toString(dbClimb));
         dbRefStats.child("PC").setValue(Integer.toString(dbCPPC));
@@ -130,5 +119,7 @@ public class GeneralFunctions {
         dbRefStats.child("TotalLower").setValue(Integer.toString(dbPClower));
         dbRefStats.child("TotalOuter").setValue(Integer.toString(dbPCouter));
         dbRefStats.child("TotalInner").setValue(Integer.toString(dbPCinner));
+        dbRefStats.child("TotalPCScore").setValue(Integer.toString(totalScore));
+        dbRefStats.child("TotalCycles").setValue(totalCycles);
     }
 }

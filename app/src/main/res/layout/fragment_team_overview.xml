@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Pits"
+        android:text="Pit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
         android:id="@+id/btnMatches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Match"
+        android:text="Matches"
         app:layout_constraintBottom_toBottomOf="@+id/btnPits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnPits"
@@ -55,10 +55,21 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="3dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edTeamNumber">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/tvTeamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/edTeamNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintTop_toTopOf="@+id/edTeamNumber" />
 </androidx.constraintlayout.widget.ConstraintLayout>

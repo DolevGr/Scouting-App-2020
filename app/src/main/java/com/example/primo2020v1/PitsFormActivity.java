@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +72,8 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                 if (!name.equals("")) {
                     if (User.teams.containsKey(Integer.parseInt(name))) {
                         tvTeamName.setText(User.teams.get(Integer.parseInt(name)));
+                    } else if (name.toLowerCase().equals(Keys.HYPIXEL_PIT.toLowerCase())) {
+                        tvTeamName.setText(Keys.HYPIXEL_PIT);
                     }
                 }
             }
@@ -107,8 +110,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.btnBack:
-                finish();
-                startActivity(new Intent(PitsFormActivity.this, DrawerActivity.class));
+                openDialog();
                 break;
         }
     }
@@ -134,5 +136,10 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         dbRef.child("CPRC").setValue(rcIndex);
         dbRef.child("CPPC").setValue(cpIndex);
         dbRef.child("EndGame").setValue(endgameIndex);
+    }
+
+    private void openDialog() {
+        CancelFormAlertDialog dialog = new CancelFormAlertDialog();
+        dialog.show(getSupportFragmentManager(), "cancel form dialog");
     }
 }

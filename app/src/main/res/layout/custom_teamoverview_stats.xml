@@ -22,34 +22,53 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvShot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of Shots: " />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvShotInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_weight="1" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvLower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lower: " />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvLowerInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,36 +76,53 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvOuter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Outer: " />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvOuterInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_weight="1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvInner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Inner: " />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvInnerInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,36 +130,47 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/imgRC"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_cprc" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvRC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <Space
-                android:layout_width="5dp"
+                android:layout_width="7dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/imgPC"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_cppc" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvPC"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,30 +179,34 @@
 
             <ImageView
                 android:id="@+id/imgClimb"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_climb" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvClimb"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <Space
-                android:layout_width="5dp"
+                android:layout_width="7dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/imgBalanced"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_balanced" />
 
             <TextView
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 android:id="@+id/tvBalanced"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MatchInfoActivity">
+
+    <TextView
+        android:id="@+id/tvComment2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text=""
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgFinishInfo" />
+
+    <ImageView
+        android:id="@+id/imgCard2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgDidCrash2"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash2"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash2"
+        app:srcCompat="@color/defaultColor" />
+
+    <ImageView
+        android:id="@+id/imgDidCrash2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinishInfo"
+        app:layout_constraintStart_toEndOf="@+id/imgFinishInfo"
+        app:layout_constraintTop_toTopOf="@+id/imgFinishInfo"
+        app:srcCompat="@android:color/holo_red_dark" />
+
+    <ImageView
+        android:id="@+id/imgDefence2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash2"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash2"
+        app:layout_constraintTop_toBottomOf="@+id/imgDidCrash2"
+        app:srcCompat="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/tvCrash2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crash"
+        android:textColor="@android:color/white"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash2"
+        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash2"
+        app:layout_constraintStart_toStartOf="@+id/imgDidCrash2"
+        app:layout_constraintTop_toTopOf="@+id/imgDidCrash2" />
+
+    <TextView
+        android:id="@+id/tvTicket2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Card"
+        android:textColor="@android:color/white"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCard2"
+        app:layout_constraintEnd_toEndOf="@+id/imgCard2"
+        app:layout_constraintStart_toStartOf="@+id/imgCard2"
+        app:layout_constraintTop_toTopOf="@+id/imgCard2" />
+
+    <TextView
+        android:id="@+id/tvDefence2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Defence"
+        android:textColor="@android:color/white"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgDefence2"
+        app:layout_constraintEnd_toEndOf="@+id/imgDefence2"
+        app:layout_constraintStart_toStartOf="@+id/imgDefence2"
+        app:layout_constraintTop_toTopOf="@+id/imgDefence2" />
+
+
+
+    <TextView
+        android:id="@+id/tvPitsForm2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Match Info"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <ListView
+        android:id="@+id/lvCyclesInfo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgFinishInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubmittedInfo" />
+
+    <TextView
+        android:id="@+id/tvSubmittedInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Submitted by: "
+        android:textColor="@color/defaultColor"
+        app:layout_constraintEnd_toEndOf="@+id/tvPitsForm2"
+        app:layout_constraintStart_toStartOf="@+id/tvPitsForm2"
+        app:layout_constraintTop_toBottomOf="@+id/tvPitsForm2" />
+
+    <Button
+        android:id="@+id/btnBackInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgFinishInfo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_won" />
+
+    <ImageView
+        android:id="@+id/imgEndGameInfo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinishInfo"
+        app:layout_constraintStart_toEndOf="@+id/imgDidCrash2"
+        app:layout_constraintTop_toTopOf="@+id/imgFinishInfo"
+        app:srcCompat="@drawable/ic_empty" />
+
+    <ImageView
+        android:id="@+id/imgCPPCInfo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFinishInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgFinishInfo"
+        app:srcCompat="@drawable/ic_cppc" />
+
+    <ImageView
+        android:id="@+id/imgCPRCInfo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCPPCInfo"
+        app:layout_constraintEnd_toStartOf="@+id/imgCPPCInfo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imgEndGameInfo"
+        app:layout_constraintTop_toTopOf="@+id/imgCPPCInfo"
+        app:srcCompat="@drawable/ic_cprc" />
+</androidx.constraintlayout.widget.ConstraintLayout>

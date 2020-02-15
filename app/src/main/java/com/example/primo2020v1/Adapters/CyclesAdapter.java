@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.primo2020v1.EditFormActivity;
 import com.example.primo2020v1.R;
+import com.example.primo2020v1.SubmissionActivity;
 import com.example.primo2020v1.libs.Cycle;
 
 import java.util.ArrayList;
@@ -52,7 +54,6 @@ public class CyclesAdapter extends ArrayAdapter<Cycle> {
         TextView tv10 = v.findViewById(R.id.tv10);
 
         ImageView imgDelete = v.findViewById(R.id.imgDelete);
-        imgDelete.setImageResource(R.drawable.ic_delete_black_24dp);
 
         int[] c = cycles.get(position).getCycle();
         edMissed.setText(Integer.toString(c[0]));
@@ -70,15 +71,18 @@ public class CyclesAdapter extends ArrayAdapter<Cycle> {
         }
 
         tvPhase.setText(phase);
-        imgDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cycles.remove(position);
-                notifyDataSetChanged();
-                Toast.makeText(getContext(), "Deleted Cycle", Toast.LENGTH_SHORT).show();
-            }
-        });
 
+        if (context instanceof SubmissionActivity || context instanceof EditFormActivity) {
+            imgDelete.setImageResource(R.drawable.ic_delete_black_24dp);
+            imgDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cycles.remove(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Deleted Cycle", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         return v;
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,8 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
         swichFields = true;
         switchFields();
-        edGameNumber.setText(Integer.toString(gameNumber));
         edTeamNumber.setText(teamNumber);
+        edGameNumber.setText(Integer.toString(gameNumber));
         spnTeam.setSelection(spnIndex == -1 ? 0 : spnIndex);
 
         imgbtnSwitchFields.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +82,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
@@ -89,6 +91,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
                     gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
                     spnIndex = spnTeam.getSelectedItemPosition();
                     User.currentGame = gameNumber;
+                    onSelection(spnIndex);
                 }
             }
         });
@@ -118,13 +121,22 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     //Spinner
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (isValid() && spnIndex != i) {
+        if (spnIndex != i) {
+            onSelection(i);
+        }
+        edGameNumber.setText(Integer.toString(gameNumber));
+    }
+
+    private void onSelection(int i) {
+        if (isValid()) {
             teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber - 1), i);
             spnIndex = i;
         }
 
-        edGameNumber.setText(Integer.toString(gameNumber));
+        Log.d("game", String.valueOf(gameNumber));
+        Log.d("team", String.valueOf(teamNumber));
         edTeamNumber.setText(teamNumber);
+
     }
 
     @Override
@@ -165,9 +177,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     }
 
     public void placeInfo() {
-        teamNumber = edTeamNumber.getText().toString().trim();
-        gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
-
         msIntent.putExtra(Keys.MS_TEAM, teamNumber);
         msIntent.putExtra(Keys.MS_NUMBER, gameNumber);
         msIntent.putExtra(Keys.MS_TEAM_INDEX, spnIndex);

@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PitsFormActivity"></activity>
+        <activity android:name=".MatchInfoActivity"></activity>
+        <activity
+            android:name=".PitsFormActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />

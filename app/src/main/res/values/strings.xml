@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">
         Scouting v1.0
-<!--        Yango-->
+        <!--        Yango-->
     </string>
     <string name="action_settings">Settings</string>
     <string-array name="teams">

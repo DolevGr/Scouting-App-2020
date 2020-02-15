@@ -110,7 +110,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
         bnvForm.setOnNavigationItemSelectedListener(this);
     }
 
-    public void openDialog() {
+    private void openDialog() {
         CancelFormAlertDialog dialog = new CancelFormAlertDialog();
         dialog.show(getSupportFragmentManager(), "cancel form dialog");
     }

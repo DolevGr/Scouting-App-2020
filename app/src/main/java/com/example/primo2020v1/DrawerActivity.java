@@ -15,11 +15,15 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.primo2020v1.libs.User;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Map;
+
 public class DrawerActivity extends AppCompatActivity {
     private Intent intent;
     private String username;
     private static boolean priv;
     private AppBarConfiguration mAppBarConfiguration;
+    private Map<String, Integer> navs;
+    private int res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,11 @@ public class DrawerActivity extends AppCompatActivity {
 //            tvHeader.setText(info);
         }
 
+        res = R.id.navMatches;
+        if (intent.hasExtra("Navigation")) {
+            res = intent.getIntExtra("Navigation", R.id.navMatches);
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -48,6 +57,7 @@ public class DrawerActivity extends AppCompatActivity {
                     .setDrawerLayout(drawer)
                     .build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            navController.navigate(res);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
         } else {

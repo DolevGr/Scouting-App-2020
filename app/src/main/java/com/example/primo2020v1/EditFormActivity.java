@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.Adapters.CyclesAdapter;
+import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
 import com.example.primo2020v1.libs.GeneralFunctions;
@@ -84,10 +85,9 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         teamAdapter = ArrayAdapter.createFromResource(this, R.array.teams, R.layout.support_simple_spinner_dropdown_item);
         teamAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spnTeam.setAdapter(teamAdapter);
-        edTeamNumber.setEnabled(false);
 
         setViewsInvisible(View.INVISIBLE);
-
+        edGameNumber.setText(teamNumber);
         edGameNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -102,6 +102,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 if (!edGameNumber.getText().toString().trim().equals("")) {
                     gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
                     spnIndex = spnTeam.getSelectedItemPosition();
+                    onSelection(spnIndex);
                 }
             }
         });
@@ -117,7 +118,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!edTeamNumber.getText().toString().trim().equals(""))
+                if (!edTeamNumber.getText().toString().trim().equals("") && isValidTeamNumber())
                     teamNumber = edTeamNumber.getText().toString().trim();
             }
         });
@@ -143,7 +144,14 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                     teamNumber = edTeamNumber.getText().toString().trim();
 
                     if (isValidGameNumber() && isValidTeamNumber()) {
-                        showResults();
+                        if (User.matches.get(Integer.parseInt(edGameNumber.getText().toString().trim()))
+                                .hasTeam(edTeamNumber.getText().toString().trim())) {
+                            showResults();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Team does not play in this match", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Invalid team or Match", Toast.LENGTH_SHORT).show();
                     }
                     btnSubmit.setOnClickListener(this);
                 }
@@ -157,9 +165,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.btnBack:
-                spnIndex = -1;
-                finish();
-                startActivity(new Intent(EditFormActivity.this, DrawerActivity.class));
+                openDialog();
                 break;
 
             case R.id.imgCPnormal:
@@ -205,6 +211,11 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void openDialog() {
+        CancelFormAlertDialog dialog = new CancelFormAlertDialog();
+        dialog.show(getSupportFragmentManager(), "cancel form dialog");
+    }
+
     private void showResults() {
         dbRef = User.databaseReference.child("Teams").child(teamNumber);
 
@@ -240,16 +251,22 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (isValidGameNumber() && spnIndex != i) {
-            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber - 1), i);
-            spnIndex = i;
-            edGameNumber.setText(Integer.toString(gameNumber));
-            edTeamNumber.setText(teamNumber);
+        if (spnIndex != i) {
+            onSelection(i);
         }
+        edGameNumber.setText(Integer.toString(gameNumber));
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    private void onSelection(int i) {
+        if (isValidGameNumber()) {
+            teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber - 1), i);
+            spnIndex = i;
+        }
+        edTeamNumber.setText(teamNumber);
     }
 
     private boolean isValidGameNumber() {
@@ -257,13 +274,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean isValidTeamNumber() {
-        boolean b = false;
-        try {
-            b = User.teams.containsKey(Integer.parseInt(teamNumber));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return b;
+        return User.teams.containsKey(Integer.parseInt(edTeamNumber.getText().toString().trim()));
     }
 
     private void getCycles(DataSnapshot dataSnapshot) {

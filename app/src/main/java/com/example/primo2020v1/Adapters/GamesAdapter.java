@@ -20,19 +20,21 @@ public class GamesAdapter extends ArrayAdapter<Match> {
 
     private Context context;
     private int res;
+    private String highlightedTeam;
     private ArrayList<Match> arrList;
 
-    public GamesAdapter(Context context, int id, ArrayList<Match> lst) {
+    public GamesAdapter(Context context, int id, ArrayList<Match> lst, String highlightedTeam) {
         super(context, id, lst);
 
         this.context = context;
         this.res = id;
+        this.highlightedTeam = highlightedTeam;
         arrList = lst;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView,   @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(res, null);
 
@@ -56,20 +58,20 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         tvGame.setText(Integer.toString(match.getGameNum()));
         img.setImageResource(R.drawable.red_blue);
 
-        if (tvR1.getText().toString().equals("4586")){
+        if (tvR1.getText().toString().equals(this.highlightedTeam)) {
             tvR1.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvR2.getText().toString().equals("4586")){
+        } else if (tvR2.getText().toString().equals(this.highlightedTeam)) {
             tvR2.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvR3.getText().toString().equals("4586")){
+        } else if (tvR3.getText().toString().equals(this.highlightedTeam)) {
             tvR3.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvB1.getText().toString().equals("4586")){
+        } else if (tvB1.getText().toString().equals(this.highlightedTeam)) {
             tvB1.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvB2.getText().toString().equals("4586")){
+        } else if (tvB2.getText().toString().equals(this.highlightedTeam)) {
             tvB2.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvB3.getText().toString().equals("4586")){
+        } else if (tvB3.getText().toString().equals(this.highlightedTeam)) {
             tvB3.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
         }
 
-            return view;
+        return view;
     }
 }

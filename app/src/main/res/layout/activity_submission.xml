@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
-        android:text="Back"
+        android:text="Change"
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +124,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imgDidCrash"
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
         app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
-        app:srcCompat="@color/defaultColor" />
+        app:srcCompat="@drawable/ic_no_foul" />
 
     <ImageView
         android:id="@+id/imgDidCrash"
@@ -133,33 +133,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
         app:layout_constraintStart_toEndOf="@+id/imgFinish"
         app:layout_constraintTop_toTopOf="@+id/imgFinish"
-        app:srcCompat="@android:color/holo_red_dark" />
-
-    <TextView
-        android:id="@+id/tvTicket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:outlineAmbientShadowColor="@color/defaultColor"
-        android:text="Card"
-        android:textColor="@android:color/white"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgTicket"
-        app:layout_constraintEnd_toEndOf="@+id/imgTicket"
-        app:layout_constraintStart_toStartOf="@+id/imgTicket"
-        app:layout_constraintTop_toTopOf="@+id/imgTicket" />
-
-    <TextView
-        android:id="@+id/tvCrash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:outlineAmbientShadowColor="@color/defaultColor"
-        android:text="Crash"
-        android:textColor="@android:color/white"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash"
-        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
-        app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
-        app:layout_constraintTop_toTopOf="@+id/imgDidCrash" />
+        app:srcCompat="@drawable/ic_no_crash" />
 
     <ImageView
         android:id="@+id/imgDefence"
@@ -169,17 +143,5 @@
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
         app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
         app:layout_constraintTop_toBottomOf="@+id/imgDidCrash"
-        app:srcCompat="@android:color/holo_red_dark" />
-
-    <TextView
-        android:id="@+id/tvDefence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Defence"
-        android:textColor="@android:color/white"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgDefence"
-        app:layout_constraintEnd_toEndOf="@+id/imgDefence"
-        app:layout_constraintStart_toStartOf="@+id/imgDefence"
-        app:layout_constraintTop_toBottomOf="@+id/imgDidCrash" />
+        app:srcCompat="@drawable/ic_no_defence" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,5 @@ public class Keys {
     public static final String TEAMS = "Teams";
     public static final String PIT = "Pit";
     public static final String STATS = "Stats";
-
-    public static final String HYPIXEL_PIT = "mc.hypixel.net";
+    public static final String STATS_SUM = "Sum";
 }

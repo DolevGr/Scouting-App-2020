@@ -27,7 +27,6 @@ public class CyclesAdapter extends ArrayAdapter<Cycle> {
 
     public CyclesAdapter(@NonNull Context context, int resource, ArrayList<Cycle> cycles) {
         super(context, resource, cycles);
-
         this.context = context;
         res = resource;
         this.cycles = cycles;
@@ -48,41 +47,33 @@ public class CyclesAdapter extends ArrayAdapter<Cycle> {
         TextView tvCycles = v.findViewById(R.id.tvCycle);
         TextView tvPhase = v.findViewById(R.id.tvPhase);
 
-        TextView tv7 = v.findViewById(R.id.tv7);
-        TextView tv8 = v.findViewById(R.id.tv8);
-        TextView tv9 = v.findViewById(R.id.tv9);
-        TextView tv10 = v.findViewById(R.id.tv10);
-
         ImageView imgDelete = v.findViewById(R.id.imgDelete);
 
-        int[] c = cycles.get(position).getCycle();
-        edMissed.setText(Integer.toString(c[0]));
-        edLower.setText(Integer.toString(c[1]));
-        edOuter.setText(Integer.toString(c[2]));
-        edInner.setText(Integer.toString(c[3]));
+        int[] arrCycle = cycles.get(position).toArray();
+        edMissed.setText(Integer.toString(arrCycle[0]));
+        edLower.setText(Integer.toString(arrCycle[1]));
+        edOuter.setText(Integer.toString(arrCycle[2]));
+        edInner.setText(Integer.toString(arrCycle[3]));
         tvCycles.setText(tvCycles.getText().toString() + " " + (position + 1));
 
         String phase = "Auto";
         tvPhase.setTextColor(R.color.mainOrange);
 
         if (cycles.get(position).getPhase()){
-            phase = "Tele";
+            phase = "TeleOp";
             tvPhase.setHintTextColor(R.color.mainOrange);
         }
-
         tvPhase.setText(phase);
 
-        if (context instanceof SubmissionActivity || context instanceof EditFormActivity) {
+        if (context instanceof SubmissionActivity || context.getApplicationContext() instanceof EditFormActivity) {
             imgDelete.setImageResource(R.drawable.ic_delete_black_24dp);
-            imgDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cycles.remove(position);
-                    notifyDataSetChanged();
-                    Toast.makeText(getContext(), "Deleted Cycle", Toast.LENGTH_SHORT).show();
-                }
+            imgDelete.setOnClickListener(view -> {
+                cycles.remove(position);
+                notifyDataSetChanged();
+                Toast.makeText(getContext(), "Deleted Cycle", Toast.LENGTH_SHORT).show();
             });
         }
+
         return v;
     }
 

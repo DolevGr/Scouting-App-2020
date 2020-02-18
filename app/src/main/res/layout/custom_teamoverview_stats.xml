@@ -22,20 +22,18 @@
             android:orientation="horizontal">
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvShot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of Shots: " />
+                android:text="Number of Shots: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
                 android:id="@+id/tvShotInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <Space
@@ -43,6 +41,29 @@
             android:layout_height="7dp"
             android:layout_weight="1" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Success Rate: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSuccessRateInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,25 +71,23 @@
             android:orientation="horizontal">
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvLower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lower: " />
+                android:text="Lower: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
                 android:id="@+id/tvLowerInfo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="7dp"
-            android:layout_weight="1" />
+            android:layout_height="7dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,20 +95,42 @@
             android:orientation="horizontal">
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvOuter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Outer: " />
+                android:text="Outer: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
                 android:id="@+id/tvOuterInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="7dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inner: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvInnerInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <Space
@@ -102,26 +143,106 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvInner"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Inner: " />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvInnerInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <ImageView
+                    android:id="@+id/textView11"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_yellow_foul"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvYellowCardsInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/defaultColor"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                    app:layout_constraintStart_toEndOf="@+id/textView11"
+                    app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+                <ImageView
+                    android:id="@+id/textView15"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_red_foul"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView11"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView11"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+                <TextView
+                    android:id="@+id/tvRedCardsInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/defaultColor"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                    app:layout_constraintStart_toEndOf="@+id/textView15"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+                <ImageView
+                    android:id="@+id/textView17"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_defence"
+                    app:layout_constraintStart_toEndOf="@+id/tvYellowCardsInfo" />
+
+                <ImageView
+                    android:id="@+id/textView18"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_crash"
+                    android:text="Matches Crashed: "
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView17"
+                    app:layout_constraintStart_toStartOf="@+id/textView17"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+                <TextView
+                    android:id="@+id/tvCrashInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textColor="@color/defaultColor"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView18"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/tvDefenceInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/defaultColor"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView17"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView17"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="5dp"
             android:layout_weight="1" />
 
         <LinearLayout
@@ -130,24 +251,25 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
                 android:id="@+id/imgRC"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp"
                 app:srcCompat="@drawable/ic_cprc" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvRC"
+                android:id="@+id/tvRCComp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
 
             <Space
-                android:layout_width="7dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
@@ -159,12 +281,13 @@
                 app:srcCompat="@drawable/ic_cppc" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvPC"
+                android:textAlignment="center"
+                android:id="@+id/tvPCComp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <Space
@@ -185,15 +308,16 @@
                 app:srcCompat="@drawable/ic_climb" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvClimb"
+                android:textAlignment="center"
+                android:id="@+id/tvClimbInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
 
             <Space
-                android:layout_width="7dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
@@ -205,14 +329,15 @@
                 app:srcCompat="@drawable/ic_balanced" />
 
             <TextView
-                android:textColor="@color/defaultColor"
-                android:textSize="16sp"
-                android:id="@+id/tvBalanced"
+                android:textAlignment="center"
+                android:id="@+id/tvBalancedInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
         </LinearLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

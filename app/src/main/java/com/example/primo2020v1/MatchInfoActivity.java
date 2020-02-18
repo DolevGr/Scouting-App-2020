@@ -91,7 +91,7 @@ public class MatchInfoActivity extends AppCompatActivity {
             i++;
         } while (hasCycles);
 
-        CyclesAdapter cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, cycles);
+        CyclesAdapter cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_cycles_adapter, cycles);
         lvCycles.setAdapter(cyclesAdapter);
 
         btnBack.setOnClickListener(new View.OnClickListener() {

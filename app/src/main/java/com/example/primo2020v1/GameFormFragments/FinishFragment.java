@@ -120,15 +120,15 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setImageTicket(){
-        imgTicket.setColorFilter(User.finishTickets[ticketIndex]);
+        imgTicket.setImageResource(User.finishTickets[ticketIndex]);
     }
 
     private void setImageCrash(){
-        imgCrash.setColorFilter(User.finishCrash[crashIndex]);
+        imgCrash.setImageResource(User.finishCrash[crashIndex]);
     }
 
     private void setImageDefence() {
-        imgDefence.setColorFilter(User.finishDefence[defIndex]);
+        imgDefence.setImageResource(User.finishDefence[defIndex]);
     }
 
     private void setImageFinish(){

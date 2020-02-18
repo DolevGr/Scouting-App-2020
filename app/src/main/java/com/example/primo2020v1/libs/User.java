@@ -1,7 +1,5 @@
 package com.example.primo2020v1.libs;
 
-import android.graphics.Color;
-
 import com.example.primo2020v1.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -12,7 +10,7 @@ import java.util.HashMap;
 public class User {
     public static final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    public static HashMap<Integer, String> teams = new HashMap<>();
+    public static HashMap<Integer, String> participants = new HashMap<>();
     public static ArrayList<Match> matches = new ArrayList<>();
     public static ArrayList<String> members = new ArrayList<>();
     public static int currentGame = 1;
@@ -23,9 +21,9 @@ public class User {
     public static final int[] controlPanelPosition= {R.drawable.ic_cppc, R.drawable.ic_cppc_selected};
     public static final int[] endGameImages = {R.drawable.ic_empty, R.drawable.ic_park, R.drawable.ic_climb, R.drawable.ic_balanced};
     public static final int[] finishImages = {R.drawable.ic_won, R.drawable.ic_lost, R.drawable.ic_draw};
-    public static final int[] finishTickets = {Color.BLACK, Color.YELLOW, Color.RED};
-    public static final int[] finishCrash = {Color.RED, Color.GREEN};
-    public static final int[] finishDefence = {Color.RED, Color.GREEN};
+    public static final int[] finishTickets = {R.drawable.ic_no_foul, R.drawable.ic_yellow_foul, R.drawable.ic_red_foul};
+    public static final int[] finishCrash = {R.drawable.ic_no_crash, R.drawable.ic_crash};
+    public static final int[] finishDefence = {R.drawable.ic_no_defence, R.drawable.ic_defence};
 
 
     public String name, password;

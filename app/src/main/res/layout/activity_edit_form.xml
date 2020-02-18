@@ -9,12 +9,14 @@
 
     <Button
         android:id="@+id/btnBack"
-        android:layout_width="66dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:minWidth="70dp"
+        android:minHeight="40dp"
         android:text="Back"
-        android:textSize="10dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toTopOf="@+id/edGameNumberEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +26,7 @@
         android:id="@+id/spnTeamEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +37,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
         android:ems="10"
-        android:hint="Game Number"
+        android:hint="Match Number"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/btnSearch"
         app:layout_constraintEnd_toStartOf="@+id/spnTeamEdit"
@@ -135,7 +137,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imgDidCrash"
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
         app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
-        app:srcCompat="@color/defaultColor" />
+        app:srcCompat="@drawable/ic_no_foul" />
 
     <ImageView
         android:id="@+id/imgDidCrash"
@@ -144,33 +146,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imgFinish"
         app:layout_constraintStart_toEndOf="@+id/imgFinish"
         app:layout_constraintTop_toTopOf="@+id/imgFinish"
-        app:srcCompat="@android:color/holo_red_dark" />
-
-    <TextView
-        android:id="@+id/tvCrash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crash"
-        android:textColor="@android:color/white"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash"
-        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
-        app:layout_constraintStart_toStartOf="@+id/imgDidCrash"
-        app:layout_constraintTop_toTopOf="@+id/imgDidCrash" />
-
-    <TextView
-        android:id="@+id/tvTicket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Card"
-        android:textColor="@android:color/white"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgCard"
-        app:layout_constraintEnd_toEndOf="@+id/imgCard"
-        app:layout_constraintStart_toStartOf="@+id/imgCard"
-        app:layout_constraintTop_toTopOf="@+id/imgCard"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="546dp" />
+        app:srcCompat="@drawable/ic_no_crash" />
 
     <EditText
         android:id="@+id/edComment"
@@ -202,18 +178,6 @@
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash"
         app:layout_constraintStart_toEndOf="@+id/imgFinish"
         app:layout_constraintTop_toBottomOf="@+id/imgDidCrash"
-        app:srcCompat="@android:color/holo_red_dark" />
-
-    <TextView
-        android:id="@+id/tvDefence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Defence"
-        android:textColor="@android:color/white"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgDefence"
-        app:layout_constraintEnd_toEndOf="@+id/imgDefence"
-        app:layout_constraintStart_toStartOf="@+id/imgDefence"
-        app:layout_constraintTop_toBottomOf="@+id/imgDidCrash" />
+        app:srcCompat="@drawable/ic_no_defence" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

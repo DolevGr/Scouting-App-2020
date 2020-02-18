@@ -23,9 +23,8 @@ public class PitAdapter extends ArrayAdapter {
     private ArrayList<String> values;
     private ArrayList<TextView> tvs;
 
-    public PitAdapter(@NonNull Context context, int resource, ArrayList<String> values) {
-        super(context, resource, values);
-
+    public PitAdapter(@NonNull Context context, int resource, ArrayList<String> values, ArrayList<Integer> single) {
+        super(context, resource, single);
         this.context = context;
         this.res = resource;
         this.values = values;

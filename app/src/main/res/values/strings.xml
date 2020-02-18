@@ -13,6 +13,16 @@
         <item>B Far</item>
     </string-array>
 
+    <string-array name="ability_categories">
+        <item>Lower</item>
+        <item>Outer</item>
+        <item>Inner</item>
+        <item>CP Rotation</item>
+        <item>CP Position</item>
+        <item>Climb</item>
+        <item>Balance</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_message">Are you sure you want to cancel?</string>
@@ -26,7 +36,7 @@
     <string name="menu_home">Matches</string>
     <string name="menu_gallery">Team Overview</string>
     <string name="menu_slideshow">Ability Rating</string>
-    <string name="menu_tools">Pits</string>
+    <string name="menu_tools">Team Comparision</string>
     <string name="menu_team_comparision">Team Comparision</string>
     <string name="menu_send">Send</string>
 </resources>

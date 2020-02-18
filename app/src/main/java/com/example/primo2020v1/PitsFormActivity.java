@@ -68,12 +68,10 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String name = edTeamNumber.getText().toString().trim();
-                if (!name.equals("")) {
-                    if (User.teams.containsKey(Integer.parseInt(name))) {
-                        tvTeamName.setText(User.teams.get(Integer.parseInt(name)));
-                    } else if (name.toLowerCase().equals(Keys.HYPIXEL_PIT.toLowerCase())) {
-                        tvTeamName.setText(Keys.HYPIXEL_PIT);
+                String number = edTeamNumber.getText().toString().trim();
+                if (!number.equals("")) {
+                    if (User.participants.containsKey(Integer.parseInt(number))) {
+                        tvTeamName.setText(User.participants.get(Integer.parseInt(number)).replaceAll(" ", "\n"));
                     }
                 }
             }
@@ -122,7 +120,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                 !edRobotHeight.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("") &&
                 !edComment.getText().toString().trim().equals("") &&
-                User.teams.containsKey(Integer.parseInt(name));
+                User.participants.containsKey(Integer.parseInt(name));
     }
 
     private void onSubmit() {

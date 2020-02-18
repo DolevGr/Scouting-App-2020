@@ -1,4 +1,4 @@
-package com.example.primo2020v1.ui.teamOverview;
+package com.example.primo2020v1.ui.TeamComparision;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class StatsAdapter extends ArrayAdapter {
+public class TeamComparisionAdapter extends ArrayAdapter {
     private int res;
     private double avrgShots;
     private Context context;
     private ArrayList<Double> values;
     private ArrayList<TextView> tvs;
 
-    public StatsAdapter(Context context, int resource, ArrayList<Double> values, ArrayList<Integer> single) {
+    public TeamComparisionAdapter(@NonNull Context context, int resource, ArrayList<Double> values, ArrayList<Integer> single) {
         super(context, resource, single);
         this.values = values;
         this.res = resource;
@@ -40,19 +40,19 @@ public class StatsAdapter extends ArrayAdapter {
 
         if (position == 0) {
             tvs = new ArrayList<>();
-            tvs.add(view.findViewById(R.id.tvCrashInfo));
-            tvs.add(view.findViewById(R.id.tvDefenceInfo));
-            tvs.add(view.findViewById(R.id.tvYellowCardsInfo));
-            tvs.add(view.findViewById(R.id.tvRedCardsInfo));
-            tvs.add(view.findViewById(R.id.tvShotInfo));
-            tvs.add(view.findViewById(R.id.tvSuccessRateInfo));
-            tvs.add(view.findViewById(R.id.tvLowerInfo));
-            tvs.add(view.findViewById(R.id.tvOuterInfo));
-            tvs.add(view.findViewById(R.id.tvInnerInfo));
+            tvs.add(view.findViewById(R.id.tvCrashesComp));
+            tvs.add(view.findViewById(R.id.tvDefendedComp));
+            tvs.add(view.findViewById(R.id.tvYellowCardsComp));
+            tvs.add(view.findViewById(R.id.tvRedCardsComp));
+            tvs.add(view.findViewById(R.id.tvShotsComp));
+            tvs.add(view.findViewById(R.id.tvSuccessRateComp));
+            tvs.add(view.findViewById(R.id.tvLowerComp));
+            tvs.add(view.findViewById(R.id.tvOuterComp));
+            tvs.add(view.findViewById(R.id.tvInnerComp));
             tvs.add(view.findViewById(R.id.tvRCComp));
             tvs.add(view.findViewById(R.id.tvPCComp));
-            tvs.add(view.findViewById(R.id.tvClimbInfo));
-            tvs.add(view.findViewById(R.id.tvBalancedInfo));
+            tvs.add(view.findViewById(R.id.tvClimbComp));
+            tvs.add(view.findViewById(R.id.tvBalancedComp));
 
             DecimalFormat df = new DecimalFormat("#.##");
             for (int i = 0; i < tvs.size(); i++) {

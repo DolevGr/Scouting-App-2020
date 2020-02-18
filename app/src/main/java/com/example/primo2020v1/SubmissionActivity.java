@@ -1,7 +1,6 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +31,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     private ImageView imgEndGame, imgFinish;
     private Button btnSubmit, btnBack;
     private ImageView imgPCRC, imgCPPC, imgTicket, imgCrash, imgDefence;
-    private TextView tvComment, tvTicket, tvCrash, tvDefence;
+    private TextView tvComment;
     private String teamNumber;
     private int gameNumber;
     private CyclesAdapter adapter;
@@ -53,18 +52,16 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
 
         lvCycles = findViewById(R.id.lvCycles);
         imgTicket = findViewById(R.id.imgTicket);
-        tvTicket = findViewById(R.id.tvTicket);
         imgCrash = findViewById(R.id.imgDidCrash);
-        tvCrash = findViewById(R.id.tvCrash);
         imgDefence = findViewById(R.id.imgDefence);
-        tvDefence = findViewById(R.id.tvDefence);
         imgFinish = findViewById(R.id.imgFinish);
         imgEndGame = findViewById(R.id.imgEndGame);
-        btnSubmit = findViewById(R.id.btnSubmit);
-        btnBack = findViewById(R.id.btnBack);
         imgPCRC = findViewById(R.id.imgCPnormal);
         imgCPPC = findViewById(R.id.imgCPcolor);
+
         tvComment = findViewById(R.id.tvComment);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnBack = findViewById(R.id.btnBack);
 
         intent = getIntent();
         if (intent.hasExtra(Keys.FORM_INFO) && intent.hasExtra(Keys.FINISH_PC)) {
@@ -72,19 +69,16 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             c = intent.getParcelableArrayListExtra(Keys.FINISH_PC);
 
             if (c != null && !c.isEmpty()) {
-                adapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, c);
+                adapter = new CyclesAdapter(this, R.layout.custom_cycles_adapter, c);
                 lvCycles.setAdapter(adapter);
             }
 
             setControlPanels();
             imgEndGame.setImageResource(User.endGameImages[fi.getEndGame()]);
             imgFinish.setImageResource(User.finishImages[fi.getFinish()]);
-            imgTicket.setColorFilter(User.finishTickets[fi.getTicket()]);
-            tvTicket.setTextColor(fi.getTicket() == 1 ? Color.BLACK : Color.WHITE);
-            imgCrash.setColorFilter(User.finishCrash[fi.getCrash()]);
-            tvCrash.setTextColor(fi.getCrash() == 1 ? Color.BLACK : Color.WHITE);
-            imgDefence.setColorFilter(User.finishDefence[fi.getDefence()]);
-            tvDefence.setTextColor(fi.getDefence() == 1 ? Color.BLACK : Color.WHITE);
+            imgTicket.setImageResource(User.finishTickets[fi.getTicket()]);
+            imgCrash.setImageResource(User.finishCrash[fi.getCrash()]);
+            imgDefence.setImageResource(User.finishDefence[fi.getDefence()]);
             tvComment.setText(fi.getUserComment());
 
             teamNumber = fi.getTeamNumber();

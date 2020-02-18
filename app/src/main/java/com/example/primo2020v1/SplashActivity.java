@@ -1,10 +1,12 @@
 package com.example.primo2020v1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.libs.Keys;
@@ -39,6 +41,16 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
+                alertDialog.setTitle("No Internet");
+                alertDialog.setMessage("Trying to connect");
+
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 
@@ -71,10 +83,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void setAllTeams(DataSnapshot dataSnapshot) {
-        DataSnapshot dsTeams = dataSnapshot.child("Participants");
+        DataSnapshot dsParticipants = dataSnapshot.child("Participants");
 
-        for (DataSnapshot ds : dsTeams.getChildren()) {
-            User.teams.put(Integer.parseInt(ds.getKey()), ds.getValue().toString());
+        for (DataSnapshot ds : dsParticipants.getChildren()) {
+            User.participants.put(Integer.parseInt(ds.getKey()), ds.getValue().toString());
         }
     }
 }

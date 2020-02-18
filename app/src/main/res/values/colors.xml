@@ -8,4 +8,5 @@
     <color name="mainBlue">#3A8BD8</color>
     <color name="background">#E4F8FF</color>
     <color name="ourGame">#FFE200</color>
+    <color name="highlightedTeam">#D594FA25</color>
 </resources>

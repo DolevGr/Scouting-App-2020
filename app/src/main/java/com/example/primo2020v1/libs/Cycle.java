@@ -9,6 +9,9 @@ public class Cycle implements Parcelable {
     public int pcMissed, pcLower, pcOuter, pcInner;
     public boolean phase;
 
+    public Cycle() {
+    }
+
     public Cycle(int pcMissed, int pcLower, int pcOuter, int pcInner, boolean phase) {
         this.phase = phase;
 
@@ -18,7 +21,7 @@ public class Cycle implements Parcelable {
         this.pcInner = pcInner;
     }
 
-    public int[] getCycle() {
+    public int[] toArray() {
         return new int[]{pcMissed, pcLower, pcOuter, pcInner};
     }
 

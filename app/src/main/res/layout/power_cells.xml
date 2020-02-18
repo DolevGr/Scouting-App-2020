@@ -203,4 +203,15 @@
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnCycle" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You Are Now In"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTeleAuto"
+        app:layout_constraintEnd_toEndOf="@+id/btnTeleAuto"
+        app:layout_constraintStart_toStartOf="@+id/btnTeleAuto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

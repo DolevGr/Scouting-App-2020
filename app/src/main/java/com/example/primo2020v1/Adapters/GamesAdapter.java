@@ -58,18 +58,34 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         tvGame.setText(Integer.toString(match.getGameNum()));
         img.setImageResource(R.drawable.red_blue);
 
-        if (tvR1.getText().toString().equals(this.highlightedTeam)) {
+        if (tvR1.getText().toString().equals("4586")) {
             tvR1.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvR2.getText().toString().equals(this.highlightedTeam)) {
+        } else if (tvR2.getText().toString().equals("4586")) {
             tvR2.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvR3.getText().toString().equals(this.highlightedTeam)) {
+        } else if (tvR3.getText().toString().equals("4586")) {
             tvR3.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvB1.getText().toString().equals(this.highlightedTeam)) {
+        } else if (tvB1.getText().toString().equals("4586")) {
             tvB1.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvB2.getText().toString().equals(this.highlightedTeam)) {
+        } else if (tvB2.getText().toString().equals("4586")) {
             tvB2.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
-        } else if (tvB3.getText().toString().equals(this.highlightedTeam)) {
+        } else if (tvB3.getText().toString().equals("4586")) {
             tvB3.setBackgroundColor(context.getResources().getColor(R.color.ourGame));
+        }
+
+        if (!highlightedTeam.equals("4586")) {
+            if (tvR1.getText().toString().equals(this.highlightedTeam)) {
+                tvR1.setBackgroundColor(context.getResources().getColor(R.color.highlightedTeam));
+            } else if (tvR2.getText().toString().equals(this.highlightedTeam)) {
+                tvR2.setBackgroundColor(context.getResources().getColor(R.color.highlightedTeam));
+            } else if (tvR3.getText().toString().equals(this.highlightedTeam)) {
+                tvR3.setBackgroundColor(context.getResources().getColor(R.color.highlightedTeam));
+            } else if (tvB1.getText().toString().equals(this.highlightedTeam)) {
+                tvB1.setBackgroundColor(context.getResources().getColor(R.color.highlightedTeam));
+            } else if (tvB2.getText().toString().equals(this.highlightedTeam)) {
+                tvB2.setBackgroundColor(context.getResources().getColor(R.color.highlightedTeam));
+            } else if (tvB3.getText().toString().equals(this.highlightedTeam)) {
+                tvB3.setBackgroundColor(context.getResources().getColor(R.color.highlightedTeam));
+            }
         }
 
         return view;

@@ -3,6 +3,7 @@ package com.example.primo2020v1.GameFormFragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,6 +26,8 @@ import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class MatchSettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public interface MatchSettingsListener {
@@ -42,6 +45,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
 
     public static int gameNumber, spnIndex;
     public static String teamNumber;
+    public static boolean isFromUser;
     public boolean swichFields;
     private ArrayAdapter<CharSequence> teamAdapter;
 
@@ -69,12 +73,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         edGameNumber.setText(Integer.toString(gameNumber));
         spnTeam.setSelection(spnIndex == -1 ? 0 : spnIndex);
 
-        imgbtnSwitchFields.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchFields();
-            }
-        });
+        imgbtnSwitchFields.setOnClickListener(view -> switchFields());
         edGameNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -114,6 +113,8 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         });
 
         msIntent = new Intent(getContext(), GameFormActivity.class);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> isFromUser = true, 200);
         return v;
     }
 
@@ -128,15 +129,12 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void onSelection(int i) {
-        if (isValid()) {
+        if (isValid() && (isFromUser || teamNumber.equals(""))) {
             teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber - 1), i);
             spnIndex = i;
         }
 
-        Log.d("game", String.valueOf(gameNumber));
-        Log.d("team", String.valueOf(teamNumber));
         edTeamNumber.setText(teamNumber);
-
     }
 
     @Override
@@ -173,6 +171,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         super.onDetach();
 
         placeInfo();
+        isFromUser = false;
         listener = null;
     }
 

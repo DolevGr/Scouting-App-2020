@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="@+id/tvMuchSettings"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="@+id/tvMuchSettings"
         app:layout_constraintTop_toBottomOf="@+id/tvMuchSettings" />
 
@@ -72,7 +72,6 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginEnd="4dp"
         android:text="Team Number"
         app:layout_constraintBottom_toBottomOf="@+id/edTeamNumber"
@@ -85,7 +84,6 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginEnd="4dp"
         android:text="Game Number"
         app:layout_constraintBottom_toBottomOf="@+id/edGameNumber"

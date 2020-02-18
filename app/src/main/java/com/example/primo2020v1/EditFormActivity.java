@@ -1,11 +1,9 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +22,7 @@ import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
 import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,7 +41,6 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     private ImageView imgFinish, imgTicket, imgCrash, imgDefence, imgEndGame, imgCPRC, imgCPPC;
     private EditText edComment;
     private ListView lvCycles;
-    private TextView tvTicket, tvCrash, tvDefence;
 
     private DatabaseReference dbRef;
     private ArrayList<Cycle> cycles;
@@ -64,11 +61,8 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
         imgFinish = findViewById(R.id.imgFinish);
         imgTicket = findViewById(R.id.imgCard);
-        tvTicket = findViewById(R.id.tvTicket);
         imgCrash = findViewById(R.id.imgDidCrash);
-        tvCrash = findViewById(R.id.tvCrash);
         imgDefence = findViewById(R.id.imgDefence);
-        tvDefence = findViewById(R.id.tvDefence);
         imgEndGame = findViewById(R.id.imgEndGame);
         imgCPRC = findViewById(R.id.imgCPnormal);
         imgCPPC = findViewById(R.id.imgCPcolor);
@@ -86,8 +80,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         teamAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spnTeam.setAdapter(teamAdapter);
 
-        setViewsInvisible(View.INVISIBLE);
-        edGameNumber.setText(teamNumber);
+        setViewsVisibility(View.INVISIBLE);
         edGameNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -118,8 +111,9 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!edTeamNumber.getText().toString().trim().equals("") && isValidTeamNumber())
+                if (!edTeamNumber.getText().toString().trim().equals("") && isValidTeamNumber()) {
                     teamNumber = edTeamNumber.getText().toString().trim();
+                }
             }
         });
 
@@ -139,17 +133,18 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSearch:
-                if (!edGameNumber.getText().toString().trim().equals("") && !edTeamNumber.getText().toString().trim().equals("")) {
+                if (!edGameNumber.getText().toString().trim().equals("") &&
+                        !edTeamNumber.getText().toString().trim().equals("")) {
                     gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
                     teamNumber = edTeamNumber.getText().toString().trim();
 
                     if (isValidGameNumber() && isValidTeamNumber()) {
-                        if (User.matches.get(Integer.parseInt(edGameNumber.getText().toString().trim()))
-                                .hasTeam(edTeamNumber.getText().toString().trim())) {
-                            showResults();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Team does not play in this match", Toast.LENGTH_SHORT).show();
-                        }
+                        showResults();
+
+//                        if (User.matches.get(gameNumber-1).hasTeam(teamNumber)) {
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Team does not play in this match", Toast.LENGTH_SHORT).show();
+//                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Invalid team or Match", Toast.LENGTH_SHORT).show();
                     }
@@ -190,20 +185,17 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.imgDidCrash:
                 formInfo.setCrash((formInfo.getCrash() + 1) % User.finishCrash.length);
-                imgCrash.setColorFilter(User.finishCrash[formInfo.getCrash()]);
-                tvCrash.setTextColor(formInfo.getCrash() == 1 ? Color.BLACK : Color.WHITE);
+                imgCrash.setImageResource(User.finishCrash[formInfo.getCrash()]);
                 break;
 
             case R.id.imgCard:
                 formInfo.setTicket((formInfo.getTicket() + 1) % User.finishTickets.length);
-                imgTicket.setColorFilter(User.finishTickets[formInfo.getTicket()]);
-                tvTicket.setTextColor(formInfo.getTicket() == 1 ? Color.BLACK : Color.WHITE);
+                imgTicket.setImageResource(User.finishTickets[formInfo.getTicket()]);
                 break;
 
             case R.id.imgDefence:
                 formInfo.setDefence((formInfo.getDefence() + 1) % User.finishDefence.length);
-                imgDefence.setColorFilter(User.finishDefence[formInfo.getDefence()]);
-                tvDefence.setTextColor(formInfo.getDefence() == 1 ? Color.BLACK : Color.WHITE);
+                imgDefence.setImageResource(User.finishDefence[formInfo.getDefence()]);
                 break;
 
             default:
@@ -217,30 +209,28 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void showResults() {
-        dbRef = User.databaseReference.child("Teams").child(teamNumber);
+        dbRef = User.databaseReference.child(Keys.TEAMS);
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSnapshot = dataSnapshot.child(Integer.toString(formInfo.getMatchNumber()));
+                if (dataSnapshot.hasChild(teamNumber)) {
+                    dataSnapshot = dataSnapshot.child(teamNumber);
 
-                if (cyclesAdapter != null && !cyclesAdapter.isEmpty())
-                    cyclesAdapter.clear();
+                    if (cyclesAdapter != null && !cyclesAdapter.isEmpty())
+                        cyclesAdapter.clear();
 
-                try {
-                    getFormInfo(dataSnapshot);
+                    getFormInfo(dataSnapshot.child(Integer.toString(gameNumber)));
                     getCycles(dataSnapshot);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(EditFormActivity.this, "Team was not found or hasn't played yet", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onDataChange: ");
-                }
 
-                if (cycles != null && !cycles.isEmpty()) {
-                    cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_submission_form, cycles);
-                    lvCycles.setAdapter(cyclesAdapter);
+                    if (cycles != null && !cycles.isEmpty()) {
+                        cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_cycles_adapter, cycles);
+                        lvCycles.setAdapter(cyclesAdapter);
+                    }
+                    placeInFormInfo();
+                } else {
+                    Toast.makeText(EditFormActivity.this, "Team was not found or hasn't played yet", Toast.LENGTH_SHORT).show();
                 }
-                placeInFormInfo();
             }
 
             @Override
@@ -254,7 +244,9 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         if (spnIndex != i) {
             onSelection(i);
         }
-        edGameNumber.setText(Integer.toString(gameNumber));
+
+        if (isValidGameNumber())
+            edGameNumber.setText(Integer.toString(gameNumber));
     }
 
     @Override
@@ -262,10 +254,11 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onSelection(int i) {
-        if (isValidGameNumber()) {
+        if (isValidGameNumber() ) {
             teamNumber = GeneralFunctions.convertTeamFromSpinnerTODB(User.matches.get(gameNumber - 1), i);
             spnIndex = i;
         }
+
         edTeamNumber.setText(teamNumber);
     }
 
@@ -274,15 +267,17 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean isValidTeamNumber() {
-        return User.teams.containsKey(Integer.parseInt(edTeamNumber.getText().toString().trim()));
+        return User.participants.containsKey(Integer.parseInt(teamNumber));
     }
 
     private void getCycles(DataSnapshot dataSnapshot) {
-        int numberOfCycles = Integer.parseInt(dataSnapshot.child("TotalCycles").getValue().toString());
+        int numberOfCycles = Integer.parseInt(dataSnapshot.child(Keys.STATS)
+                .child(Integer.toString(gameNumber)).child("totalCycles").getValue().toString());
+        DataSnapshot dsCycles = dataSnapshot.child(Integer.toString(gameNumber));
 
         for (int i = 0; i < numberOfCycles; i++) {
             String stringCycle = "Cycle " + (i + 1);
-            Cycle c = dataSnapshot.child(stringCycle).getValue(Cycle.class).copy();
+            Cycle c = dsCycles.child(stringCycle).getValue(Cycle.class);
             cycles.add(c);
         }
     }
@@ -301,18 +296,15 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void placeInFormInfo() {
-        setViewsInvisible(View.VISIBLE);
+        setViewsVisibility(View.VISIBLE);
 
         imgCPRC.setImageResource(User.controlPanelRotation[formInfo.getCpRotation()]);
         imgCPPC.setImageResource(User.controlPanelPosition[formInfo.getCpPosition()]);
         imgEndGame.setImageResource(User.endGameImages[formInfo.getEndGame()]);
         imgFinish.setImageResource(User.finishImages[formInfo.getFinish()]);
-        imgTicket.setColorFilter(User.finishTickets[formInfo.getTicket()]);
-        tvTicket.setTextColor(formInfo.getTicket() == 1 ? Color.BLACK : Color.WHITE);
-        imgCrash.setColorFilter(User.finishCrash[formInfo.getCrash()]);
-        tvCrash.setTextColor(formInfo.getCrash() == 1 ? Color.BLACK : Color.WHITE);
-        imgDefence.setColorFilter(User.finishDefence[formInfo.getDefence()]);
-        tvDefence.setTextColor(formInfo.getDefence() == 1 ? Color.BLACK : Color.WHITE);
+        imgTicket.setImageResource(User.finishTickets[formInfo.getTicket()]);
+        imgCrash.setImageResource(User.finishCrash[formInfo.getCrash()]);
+        imgDefence.setImageResource(User.finishDefence[formInfo.getDefence()]);
 
         if (!formInfo.getUserComment().equals("Empty Comment"))
             edComment.setText(formInfo.getUserComment());
@@ -320,14 +312,11 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
             edComment.setHint(formInfo.getUserComment());
     }
 
-    private void setViewsInvisible(int visibility) {
+    private void setViewsVisibility(int visibility) {
         imgFinish.setVisibility(visibility);
         imgTicket.setVisibility(visibility);
-        tvTicket.setVisibility(visibility);
         imgCrash.setVisibility(visibility);
-        tvCrash.setVisibility(visibility);
         imgDefence.setVisibility(visibility);
-        tvDefence.setVisibility(visibility);
         imgEndGame.setVisibility(visibility);
         imgCPRC.setVisibility(visibility);
         imgCPPC.setVisibility(visibility);

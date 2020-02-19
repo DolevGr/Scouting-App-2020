@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.Adapters.CyclesAdapter;
 import com.example.primo2020v1.AlertDialogs.MissingTeamNumberAlertDialog;
+import com.example.primo2020v1.AlertDialogs.OverrideExistingMatchAlertDialog;
 import com.example.primo2020v1.libs.Cycle;
 import com.example.primo2020v1.libs.FormInfo;
 import com.example.primo2020v1.libs.GeneralFunctions;
@@ -106,23 +107,10 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSubmit:
+                btnSubmit.setEnabled(false);
                 if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
                     dbRef = dbRef.child(teamNumber);
                     onSubmit();
-
-                    if (isValid) {
-                        finishedForm = new Intent(SubmissionActivity.this, DrawerActivity.class);
-                        if (this.c != null && !this.c.isEmpty()) {
-                            if (adapter.getCycles() != null && !adapter.getCycles().isEmpty()) {
-                                c = adapter.getCycles();
-                            } else {
-                                MissingTeamNumberAlertDialog alertDialog = new MissingTeamNumberAlertDialog();
-                                alertDialog.show(getSupportFragmentManager(), "Missing Team Number");
-                            }
-                        }
-                        finish();
-                        startActivity(finishedForm);
-                    }
                 }
                 break;
 
@@ -148,26 +136,34 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
                 GeneralFunctions.onSubmit(dbRef, fi, c);
                 User.currentGame = fi.getMatchNumber() + 1;
 
-                if (User.currentGame != dbGame) {
+                if (User.currentGame > dbGame) {
                     dbGame = User.currentGame;
                     User.databaseReference.child(Keys.CURRENT_GAME).setValue(dbGame);
 
+                } else if (dbGame - User.currentGame > 1) {
+                    OverrideExistingMatchAlertDialog dialog = new OverrideExistingMatchAlertDialog();
+                    dialog.show(getSupportFragmentManager(), "Override Form");
                 }
-//                else if (User.currentGame <= dbGame) {
-//                    Log.d(TAG, "onDataChange: " + dbGame);
-//                    OverrideExistingMatchAlertDialog alertDialog = new OverrideExistingMatchAlertDialog();
-//                    alertDialog.show(getSupportFragmentManager(), "override match");
-//                    if (isValid) {
-//                        GeneralFunctions.onSubmit(dbRef, fi, c, dbRefStats);
-//                        User.currentGame = fi.getMatchNumber() + 1;
-//                    }
-//                }
 
+                if (isValid) {
+                    if (c != null && !c.isEmpty()) {
+                        if (adapter.getCycles() != null && !adapter.getCycles().isEmpty()) {
+                            c = adapter.getCycles();
+                        } else {
+                            MissingTeamNumberAlertDialog alertDialog = new MissingTeamNumberAlertDialog();
+                            alertDialog.show(getSupportFragmentManager(), "Missing Team Number");
+                        }
+                    }
+                    finishedForm = new Intent(SubmissionActivity.this, DrawerActivity.class);
+                    finish();
+                    startActivity(finishedForm);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+        btnSubmit.setEnabled(true);
     }
 }

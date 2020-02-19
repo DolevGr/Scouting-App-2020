@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.primo2020v1.R;
+import com.example.primo2020v1.libs.User;
 
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,14 @@ public class AbilityRatingAdapter extends ArrayAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(res, null);
 
-        final TextView tvTeamNumber = view.findViewById(R.id.tvTeamNumberAbility);
+        TextView tvTeamName = view.findViewById(R.id.tvTeamNameAbility);
+        TextView tvTeamNumber = view.findViewById(R.id.tvTeamNumberAbility);
         TextView tvRating = view.findViewById(R.id.tvRating);
+        TextView tvNumber = view.findViewById(R.id.tvRatingNumberAbility);
 
+        tvTeamName.setText(User.participants.get(ranking.get(position).getKey()));
+        tvTeamName.setTextColor(context.getResources().getColor(R.color.mainBlue));
+        tvNumber.setText(Integer.toString(position + 1));
         tvTeamNumber.setText(ranking.get(position).getKey().toString());
         tvRating.setText(ranking.get(position).getValue().toString());
 

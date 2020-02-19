@@ -61,11 +61,11 @@ public class CyclesAdapter extends ArrayAdapter<Cycle> {
 
         if (cycles.get(position).getPhase()){
             phase = "TeleOp";
-            tvPhase.setHintTextColor(R.color.mainOrange);
+            tvPhase.setHintTextColor(R.color.mainBlue);
         }
         tvPhase.setText(phase);
 
-        if (context instanceof SubmissionActivity || context.getApplicationContext() instanceof EditFormActivity) {
+        if (context instanceof SubmissionActivity || context instanceof EditFormActivity) {
             imgDelete.setImageResource(R.drawable.ic_delete_black_24dp);
             imgDelete.setOnClickListener(view -> {
                 cycles.remove(position);

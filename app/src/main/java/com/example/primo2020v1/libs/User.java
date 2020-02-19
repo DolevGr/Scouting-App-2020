@@ -13,9 +13,10 @@ public class User {
     public static HashMap<Integer, String> participants = new HashMap<>();
     public static ArrayList<Match> matches = new ArrayList<>();
     public static ArrayList<String> members = new ArrayList<>();
+    public static ArrayList<String> masterRanks = new ArrayList<>();
     public static int currentGame = 1;
-    public static ArrayList<String> admins = new ArrayList<>();
     public static String username = "Scouter";
+    public static String userRank = "Scouter";
 
     public static final int[] controlPanelRotation = {R.drawable.ic_cprc, R.drawable.ic_cprc_selected};
     public static final int[] controlPanelPosition= {R.drawable.ic_cppc, R.drawable.ic_cppc_selected};
@@ -26,13 +27,12 @@ public class User {
     public static final int[] finishDefence = {R.drawable.ic_no_defence, R.drawable.ic_defence};
 
 
-    public String name, password;
-    public boolean privilege;
+    public String name, password, rank;
 
     public User(String name, String pass){
         this.name = name;
         this.password = pass;
-        this.privilege = false;
+        this.rank = "Scouter";
     }
 
     public User() { }
@@ -53,11 +53,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isPrivilege() {
-        return privilege;
+    public String getRank() {
+        return rank;
     }
 
-    public void setPrivilege(boolean b) {
-        this.privilege = b;
+    public void setRank(String rank) {
+        this.rank = rank;
     }
 }

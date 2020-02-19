@@ -93,7 +93,7 @@ public class AbilityRatingFragment extends Fragment implements AdapterView.OnIte
         empty = true;
         if (allStatistics.isEmpty()) {
             empty = false;
-            dbRefSumStats.addListenerForSingleValueEvent(new ValueEventListener() {
+                    dbRefSumStats.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot team : dataSnapshot.getChildren()) {

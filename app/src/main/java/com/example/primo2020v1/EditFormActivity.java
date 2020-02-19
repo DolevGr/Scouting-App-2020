@@ -1,5 +1,6 @@
 package com.example.primo2020v1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -48,6 +49,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     private CyclesAdapter cyclesAdapter;
     private String teamNumber;
     private int spnIndex, gameNumber;
+    private Context context;
 
 
     @Override
@@ -55,9 +57,11 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_form);
 
+        context = this;
         spnIndex = -1;
         teamNumber = "";
         cycles = new ArrayList<>();
+        dbRef = User.databaseReference.child(Keys.TEAMS);
 
         imgFinish = findViewById(R.id.imgFinish);
         imgTicket = findViewById(R.id.imgCard);
@@ -209,8 +213,6 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void showResults() {
-        dbRef = User.databaseReference.child(Keys.TEAMS);
-
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -224,7 +226,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                     getCycles(dataSnapshot);
 
                     if (cycles != null && !cycles.isEmpty()) {
-                        cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_cycles_adapter, cycles);
+                        cyclesAdapter = new CyclesAdapter(context, R.layout.custom_cycles_adapter, cycles);
                         lvCycles.setAdapter(cyclesAdapter);
                     }
                     placeInFormInfo();

@@ -1,6 +1,7 @@
 package com.example.primo2020v1.ui.teamOverview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.User;
 
 import java.util.ArrayList;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class PitAdapter extends ArrayAdapter {
     private Context context;
@@ -36,32 +39,37 @@ public class PitAdapter extends ArrayAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(res, null);
 
-        if (position == 0) {
-            tvs = new ArrayList<>();
-            tvs.add((TextView) view.findViewById(R.id.tvHeight));
-            tvs.add((TextView) view.findViewById(R.id.tvMass));
-            tvs.add((TextView) view.findViewById(R.id.tvWheels));
-            tvs.add((TextView) view.findViewById(R.id.tv1));
-            Switch s = view.findViewById(R.id.swtch1);
-            ImageView img1 = view.findViewById(R.id.img1);
-            ImageView img2 = view.findViewById(R.id.img2);
-            ImageView img3 = view.findViewById(R.id.img3);
+        tvs = new ArrayList<>();
+        tvs.add(view.findViewById(R.id.tvMass));
+        tvs.add(view.findViewById(R.id.tvWheels));
+        tvs.add(view.findViewById(R.id.tvIntakePit));
+        tvs.add(view.findViewById(R.id.tvCarryPit));
+        tvs.add(view.findViewById(R.id.tvShootPit));
+        tvs.add(view.findViewById(R.id.tvCommentPit));
+        Switch switchAuto = view.findViewById(R.id.switchAutoPit);
+        Switch switchTrench = view.findViewById(R.id.switchTrenchPit);
+        Switch switchBumpers = view.findViewById(R.id.switchBumpersPit);
+        ImageView img1 = view.findViewById(R.id.imgEndGamePit);
+        ImageView img2 = view.findViewById(R.id.imgPCPit);
+        ImageView img3 = view.findViewById(R.id.imgRCPit);
 
-            int i;
-            for (i = 0; i < tvs.size(); i++) {
-                tvs.get(i).setText(values.get(i));
-            }
-            s.setChecked(Boolean.parseBoolean(values.get(i++)));
-            s.setEnabled(false);
-            img1.setImageResource(User.endGameImages[Integer.parseInt(values.get(i++))]);
-            img2.setImageResource(User.controlPanelRotation[Integer.parseInt(values.get(i++))]);
-            img3.setImageResource(User.controlPanelPosition[Integer.parseInt(values.get(i))]);
-
-            return view;
+        int i;
+        for (i = 0; i < tvs.size(); i++) {
+            tvs.get(i).setText(values.get(i));
         }
 
-        view = new View(getContext());
-        view.setVisibility(View.INVISIBLE);
+        switchAuto.setChecked(Boolean.parseBoolean(values.get(i++)));
+        switchAuto.setEnabled(false);
+        switchTrench.setChecked(Boolean.parseBoolean(values.get(i++)));
+        switchTrench.setEnabled(false);
+        switchBumpers.setChecked(Boolean.parseBoolean(values.get(i++)));
+        switchBumpers.setEnabled(false);
+
+        img1.setImageResource(User.endGameImages[Integer.parseInt(values.get(i++))]);
+        Log.d(TAG, "getView: " + Integer.parseInt(values.get(i)));
+        img2.setImageResource(User.controlPanelRotation[Integer.parseInt(values.get(i++))]);
+        img3.setImageResource(User.controlPanelPosition[Integer.parseInt(values.get(i))]);
+
         return view;
     }
 }

@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imgDidCrash2"
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash2"
         app:layout_constraintStart_toStartOf="@+id/imgDidCrash2"
-        app:srcCompat="@color/defaultColor" />
+        app:srcCompat="@drawable/ic_no_foul" />
 
     <ImageView
         android:id="@+id/imgDidCrash2"
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imgFinishInfo"
         app:layout_constraintStart_toEndOf="@+id/imgFinishInfo"
         app:layout_constraintTop_toTopOf="@+id/imgFinishInfo"
-        app:srcCompat="@android:color/holo_red_dark" />
+        app:srcCompat="@drawable/ic_no_crash" />
 
     <ImageView
         android:id="@+id/imgDefence2"
@@ -43,44 +43,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imgDidCrash2"
         app:layout_constraintStart_toStartOf="@+id/imgDidCrash2"
         app:layout_constraintTop_toBottomOf="@+id/imgDidCrash2"
-        app:srcCompat="@android:color/holo_red_dark" />
-
-    <TextView
-        android:id="@+id/tvCrash2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crash"
-        android:textColor="@android:color/white"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgDidCrash2"
-        app:layout_constraintEnd_toEndOf="@+id/imgDidCrash2"
-        app:layout_constraintStart_toStartOf="@+id/imgDidCrash2"
-        app:layout_constraintTop_toTopOf="@+id/imgDidCrash2" />
-
-    <TextView
-        android:id="@+id/tvTicket2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Card"
-        android:textColor="@android:color/white"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgCard2"
-        app:layout_constraintEnd_toEndOf="@+id/imgCard2"
-        app:layout_constraintStart_toStartOf="@+id/imgCard2"
-        app:layout_constraintTop_toTopOf="@+id/imgCard2" />
-
-    <TextView
-        android:id="@+id/tvDefence2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Defence"
-        android:textColor="@android:color/white"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgDefence2"
-        app:layout_constraintEnd_toEndOf="@+id/imgDefence2"
-        app:layout_constraintStart_toStartOf="@+id/imgDefence2"
-        app:layout_constraintTop_toTopOf="@+id/imgDefence2" />
-
+        app:srcCompat="@drawable/ic_no_defence" />
 
 
     <TextView

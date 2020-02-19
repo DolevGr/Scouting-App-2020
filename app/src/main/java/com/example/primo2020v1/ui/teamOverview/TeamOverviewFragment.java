@@ -169,11 +169,19 @@ public class TeamOverviewFragment extends Fragment {
                         if (dataSnapshot.hasChild(Keys.PIT)) {
                             DataSnapshot ds = dataSnapshot.child(Keys.PIT);
 
-                            valuesPit.add(ds.child("RobotHeight").getValue().toString());
                             valuesPit.add(ds.child("RobotMass").getValue().toString());
-                            valuesPit.add(ds.child("RobotChassie").getValue().toString());
+                            valuesPit.add(ds.child("Wheels").getValue().toString());
+                            valuesPit.add(ds.child("Intake").getValue().toString());
+                            valuesPit.add(ds.child("Carry").getValue().toString());
+                            String shoot = ds.child("Shoot").getValue().toString();
+                            if (shoot.equals("Both"))
+                                shoot = "Lower and Higher";
+
+                            valuesPit.add(shoot);
                             valuesPit.add(ds.child("Comment").getValue().toString());
                             valuesPit.add(ds.child("HasAuto").getValue().toString());
+                            valuesPit.add(ds.child("Trench").getValue().toString());
+                            valuesPit.add(ds.child("Bumpers").getValue().toString());
                             valuesPit.add(ds.child("EndGame").getValue().toString());
                             valuesPit.add(ds.child("CPRC").getValue().toString());
                             valuesPit.add(ds.child("CPPC").getValue().toString());
@@ -211,7 +219,7 @@ public class TeamOverviewFragment extends Fragment {
                         valuesMatch.add(match);
                 }
 
-                matchesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, valuesMatch, teamNumber);
+                matchesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, valuesMatch, teamNumber, false);
                 lvTeamOverview.setAdapter(matchesAdapter);
                 btnMatches.setClickable(true);
 

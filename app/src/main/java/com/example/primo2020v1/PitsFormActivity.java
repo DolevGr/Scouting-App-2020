@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +23,14 @@ import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DatabaseReference;
 
 public class PitsFormActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText edRobotHeight, edRobotChassie, edRobotMass, edTeamNumber, edComment;
+    private EditText edRobotMass, edTeamNumber, edComment, edWheelsOther;
     private TextView tvTeamName;
     private ImageView imgCPPC, imgCPRC, imgEndGame;
-    private Switch switchAuto;
+    private Switch switchAuto, switchTrench, switchBumpers;
     private Button btnSubmit, btnBack;
+    private Spinner spnWheels, spnIntake, spnPCCarry, spnShoot;
     private int cpIndex, rcIndex, endgameIndex;
+    private String selectedWheels, selectedIntake, selectedCarry, selectedShoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +41,46 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         btnSubmit = findViewById(R.id.btnSubmit);
         tvTeamName = findViewById(R.id.tvTeamName);
         edTeamNumber = findViewById(R.id.edTeamNumber);
-        edRobotHeight = findViewById(R.id.edRobotHeight);
-        edRobotChassie = findViewById(R.id.edRobotChassie);
         edRobotMass = findViewById(R.id.edRobotMass);
         edComment = findViewById(R.id.edComment);
+
+        spnWheels = findViewById(R.id.spnWheels);
+        edWheelsOther = findViewById(R.id.edWheelsOther);
+        spnIntake = findViewById(R.id.spnIntake);
+        spnPCCarry = findViewById(R.id.spnPCCarry);
+        spnShoot = findViewById(R.id.spnShoot);
+
         imgCPPC = findViewById(R.id.imgCPPC);
         imgCPRC = findViewById(R.id.imgCPRC);
         imgEndGame = findViewById(R.id.imgEndGame);
-        switchAuto = findViewById(R.id.switchAuto);
 
+        switchAuto = findViewById(R.id.switchAuto);
+        switchTrench = findViewById(R.id.switchTrench);
+        switchBumpers = findViewById(R.id.switchBumpers);
+
+        selectedWheels = "";
+        selectedIntake = "";
+        selectedCarry = "";
+        selectedShoot = "";
         cpIndex = 0;
         rcIndex = 0;
         endgameIndex = 1;
+
+        ArrayAdapter wheelsAdapter = ArrayAdapter.createFromResource(this, R.array.wheels, R.layout.support_simple_spinner_dropdown_item);
+        wheelsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnWheels.setAdapter(wheelsAdapter);
+
+        ArrayAdapter intakeAdapter = ArrayAdapter.createFromResource(this, R.array.intake, R.layout.support_simple_spinner_dropdown_item);
+        intakeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnIntake.setAdapter(intakeAdapter);
+
+        ArrayAdapter carryAdapter = ArrayAdapter.createFromResource(this, R.array.PCCarry, R.layout.support_simple_spinner_dropdown_item);
+        carryAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnPCCarry.setAdapter(carryAdapter);
+
+        ArrayAdapter shootAdapter = ArrayAdapter.createFromResource(this, R.array.shoot, R.layout.support_simple_spinner_dropdown_item);
+        shootAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnShoot.setAdapter(shootAdapter);
 
         btnSubmit.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -74,6 +107,61 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                         tvTeamName.setText(User.participants.get(Integer.parseInt(number)).replaceAll(" ", "\n"));
                     }
                 }
+            }
+        });
+
+        spnWheels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedWheels = (String) spnWheels.getSelectedItem();
+
+                if (position == 2) {
+                    edWheelsOther.setVisibility(View.VISIBLE);
+                }
+                else {
+                    edWheelsOther.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedWheels = (String) spnWheels.getSelectedItem();
+            }
+        });
+
+        spnIntake.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedIntake = (String) spnIntake.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedIntake = (String) spnIntake.getSelectedItem();
+            }
+        });
+
+        spnPCCarry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCarry = (String) spnPCCarry.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedCarry = (String) spnPCCarry.getSelectedItem();
+            }
+        });
+
+        spnShoot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedShoot = (String) spnShoot.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedShoot = (String) spnShoot.getSelectedItem();
             }
         });
     }
@@ -115,25 +203,36 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
     private boolean isValid() {
         String name = edTeamNumber.getText().toString().trim();
-        return !edRobotChassie.getText().toString().trim().equals("") &&
-                !edTeamNumber.getText().toString().trim().equals("") &&
-                !edRobotHeight.getText().toString().trim().equals("") &&
+        boolean valid = !edTeamNumber.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("") &&
                 !edComment.getText().toString().trim().equals("") &&
                 User.participants.containsKey(Integer.parseInt(name));
+
+        if (selectedWheels.equals("Other"))
+            valid = valid && !edWheelsOther.getText().toString().trim().equals("");
+
+        return valid;
     }
 
     private void onSubmit() {
         DatabaseReference dbRef = User.databaseReference.child(Keys.TEAMS).child(edTeamNumber.getText().toString().trim()).child(Keys.PIT);
 
-        dbRef.child("RobotHeight").setValue(edRobotHeight.getText().toString().trim());
-        dbRef.child("RobotChassie").setValue(edRobotChassie.getText().toString().trim());
         dbRef.child("RobotMass").setValue(edRobotMass.getText().toString().trim());
+        dbRef.child("Intake").setValue(selectedIntake);
+        dbRef.child("Carry").setValue(selectedCarry);
+        dbRef.child("Shoot").setValue(selectedShoot);
         dbRef.child("Comment").setValue(edComment.getText().toString().trim());
         dbRef.child("HasAuto").setValue(switchAuto.isActivated());
+        dbRef.child("Trench").setValue(switchTrench.isActivated());
+        dbRef.child("Bumpers").setValue(switchBumpers.isActivated());
+        dbRef.child("EndGame").setValue(endgameIndex);
         dbRef.child("CPRC").setValue(rcIndex);
         dbRef.child("CPPC").setValue(cpIndex);
-        dbRef.child("EndGame").setValue(endgameIndex);
+
+        if (!selectedWheels.equals("Other"))
+            dbRef.child("Wheels").setValue(spnWheels.getSelectedItem());
+        else
+            dbRef.child("Wheels").setValue(edWheelsOther.getText().toString().trim());
     }
 
     private void openDialog() {

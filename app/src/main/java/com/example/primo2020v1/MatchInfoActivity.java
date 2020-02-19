@@ -1,10 +1,8 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,7 +20,7 @@ import java.util.Map;
 
 public class MatchInfoActivity extends AppCompatActivity {
     private static final String TAG = "MatchInfoActivity";
-    private TextView tvCrash, tvCard, tvDefence, tvComment, tvSubmitted;
+    private TextView tvComment, tvSubmitted;
     private ImageView imgCrash, imgCard, imgDefence,
             imgCPRC, imgCPPC, imgEndGame, imgFinish;
     private ListView lvCycles;
@@ -38,11 +36,8 @@ public class MatchInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Map<String, Object> info = (HashMap<String, Object>) intent.getSerializableExtra("Info");
 
-        tvCrash = findViewById(R.id.tvCrash2);
         imgCrash = findViewById(R.id.imgDidCrash2);
-        tvCard = findViewById(R.id.tvTicket2);
         imgCard = findViewById(R.id.imgCard2);
-        tvDefence = findViewById(R.id.tvDefence2);
         imgDefence = findViewById(R.id.imgDefence2);
         tvComment = findViewById(R.id.tvComment2);
         tvSubmitted = findViewById(R.id.tvSubmittedInfo);
@@ -56,12 +51,9 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         tvSubmitted.setText("Submitted by: " + info.get("CommittedBy").toString());
         tvComment.setText(info.get("comment").toString());
-        imgCard.setColorFilter(User.finishTickets[Integer.parseInt(info.get("ticket").toString())]);
-        tvCard.setTextColor(Integer.parseInt(info.get("ticket").toString()) == 1 ? Color.BLACK : Color.WHITE);
-        imgCrash.setColorFilter(User.finishCrash[Integer.parseInt(info.get("crash").toString())]);
-        tvCrash.setTextColor(Integer.parseInt(info.get("crash").toString()) == 1 ? Color.BLACK : Color.WHITE);
-        imgDefence.setColorFilter(User.finishDefence[Integer.parseInt(info.get("defence").toString())]);
-        tvDefence.setTextColor(Integer.parseInt(info.get("defence").toString()) == 1 ? Color.BLACK : Color.WHITE);
+        imgCard.setImageResource(User.finishTickets[Integer.parseInt(info.get("ticket").toString())]);
+        imgCrash.setImageResource(User.finishCrash[Integer.parseInt(info.get("crash").toString())]);
+        imgDefence.setImageResource(User.finishDefence[Integer.parseInt(info.get("defence").toString())]);
 
         imgCPRC.setImageResource(User.controlPanelRotation[Integer.parseInt(info.get("cpRotation").toString())]);
         imgCPPC.setImageResource(User.controlPanelPosition[Integer.parseInt(info.get("cpPosition").toString())]);
@@ -94,14 +86,11 @@ public class MatchInfoActivity extends AppCompatActivity {
         CyclesAdapter cyclesAdapter = new CyclesAdapter(getApplicationContext(), R.layout.custom_cycles_adapter, cycles);
         lvCycles.setAdapter(cyclesAdapter);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                Intent i = new Intent(MatchInfoActivity.this, DrawerActivity.class);
-                i.putExtra("Navigation", R.id.navTeamOverview);
-                startActivity(i);
-            }
+        btnBack.setOnClickListener(v -> {
+            finish();
+            Intent i1 = new Intent(MatchInfoActivity.this, DrawerActivity.class);
+            i1.putExtra("Navigation", R.id.navTeamOverview);
+            startActivity(i1);
         });
     }
 

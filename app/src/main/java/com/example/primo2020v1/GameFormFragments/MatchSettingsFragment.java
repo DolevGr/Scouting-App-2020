@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,6 @@ import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.GeneralFunctions;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MatchSettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -89,7 +86,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
                 if (!edGameNumber.getText().toString().trim().equals("")) {
                     gameNumber = Integer.parseInt(edGameNumber.getText().toString().trim());
                     spnIndex = spnTeam.getSelectedItemPosition();
-                    User.currentGame = gameNumber;
                     onSelection(spnIndex);
                 }
             }

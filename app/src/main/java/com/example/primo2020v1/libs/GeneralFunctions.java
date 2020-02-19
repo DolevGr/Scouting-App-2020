@@ -115,9 +115,10 @@ public class GeneralFunctions {
         dbRedCard = fi.getTicket() == 2 ? 1 : 0;
         dbTimesDefended = fi.getDefence();
 
-        final Statistics thisMatch = new Statistics(1, totalCycles, totalScore, totalShots, totalPCmissed, totalPClower, totalPCouter, totalPCinner,
-        dbCPRC, dbCPPC, dbBalanced, dbClimb,
-        dbTimesCrashed, dbTimesDefended, dbYellowCard, dbRedCard);
+        Statistics thisMatch = new Statistics(1, totalCycles, totalScore, totalShots,
+                totalPCmissed, totalPClower, totalPCouter, totalPCinner,
+                dbCPRC, dbCPPC, dbBalanced, dbClimb,
+                dbTimesCrashed, dbTimesDefended, dbYellowCard, dbRedCard);
         dbRefStats.child(Integer.toString(fi.getMatchNumber())).setValue(thisMatch);
 
         dbRefStats.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,13 +127,8 @@ public class GeneralFunctions {
                 Statistics statsSum;
                 if (dataSnapshot.hasChild(Keys.STATS_SUM)) {
                     dataSnapshot = dataSnapshot.child(Keys.STATS_SUM);
-
-                    try {
-                        statsSum = (Statistics) dataSnapshot.getValue(Statistics.class).clone();
-                        thisMatch.addAll(statsSum);
-                    } catch (CloneNotSupportedException e) {
-                        e.printStackTrace();
-                    }
+                    statsSum = dataSnapshot.getValue(Statistics.class);
+                    thisMatch.addAll(statsSum);
                 }
                 dbRefStats.child(Keys.STATS_SUM).setValue(thisMatch);
             }

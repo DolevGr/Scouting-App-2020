@@ -45,7 +45,7 @@
     <SeekBar
         android:id="@+id/sbPowerCellsMissed"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="4dp"
@@ -88,7 +88,7 @@
     <SeekBar
         android:id="@+id/sbPowerCellsLower"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:max="5"
@@ -128,7 +128,7 @@
     <SeekBar
         android:id="@+id/sbPowerCellsOuter"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:max="5"
@@ -157,7 +157,7 @@
     <SeekBar
         android:id="@+id/sbPowerCellsInner"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:max="5"

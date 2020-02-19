@@ -1,28 +1,39 @@
 package com.example.primo2020v1;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.User;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Map;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class DrawerActivity extends AppCompatActivity {
+    private static final String CHANNEL_ID_1 = "channel1";
+    private static final String TAG = "DrawerActivity";
+
+    private DatabaseReference dbRef = User.databaseReference;
+    private NotificationManagerCompat managerCompat;
     private Intent intent;
-    private String username;
-    private static boolean priv;
+    private String username, rank;
     private AppBarConfiguration mAppBarConfiguration;
-    private Map<String, Integer> navs;
     private int res;
 
     @Override
@@ -34,11 +45,24 @@ public class DrawerActivity extends AppCompatActivity {
         if (intent.hasExtra("Username")) {
             username = intent.getStringExtra("Username");
             User.username = username;
-            priv = intent.getBooleanExtra("Privilege", false);
+            rank = intent.getStringExtra("Rank");
+            User.userRank = rank;
 //            TextView tvHeader = findViewById(R.id.tvHeader);
 //            String info = "Hello " + username;
 //            tvHeader.setText(info);
         }
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         res = R.id.navMatches;
         if (intent.hasExtra("Navigation")) {
@@ -49,7 +73,7 @@ public class DrawerActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        if (priv) {
+        if (User.masterRanks.contains(User.userRank)) {
             setSupportActionBar(toolbar);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.navMatches, R.id.navTeamOverview, R.id.navAbilityRating,
@@ -62,6 +86,22 @@ public class DrawerActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(navigationView, navController);
         } else {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+
+        if (User.userRank.equals("Pit")) {
+            managerCompat = NotificationManagerCompat.from(this);
+            Log.d(TAG, "onCreate: " + User.currentGame);
+            if (User.matches.get(User.currentGame + 3).hasTeam("4585")) {
+                Log.d(TAG, "123 ");
+                Notification notification = new NotificationCompat.Builder(this, Notifications.CHANNEL_ID_1)
+//                        .setSmallIcon()
+                        .setContentTitle("Title")
+                        .setContentText("Channel 1")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                        .build();
+                managerCompat.notify(1, notification);
+            }
         }
     }
 

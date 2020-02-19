@@ -100,13 +100,11 @@ public class FinishFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnToSubmission:
-                Log.d(TAG, "onClick: Submission!");
                 placeInfo();
 
                 intent = new Intent(getContext(), SubmissionActivity.class);
                 FormInfo formInfo = listener.getFormInfo();
                 ArrayList<Cycle> cycles = listener.getCyclesFinish();
-                Log.d(TAG, "onClick: FinishFragment" + formInfo.toString());
 
                 intent.putExtra(Keys.FORM_INFO, formInfo);
                 intent.putExtra(Keys.FINISH_PC, cycles);

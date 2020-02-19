@@ -1,7 +1,6 @@
 package com.example.primo2020v1.AlertDialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -13,10 +12,7 @@ public class MissingTeamNumberAlertDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Missing Team Number")
                 .setTitle("Error TeamNumberMissing")
-                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
+                .setNegativeButton("Ok", (dialogInterface, i) -> {
                 });
 
         return builder.create();

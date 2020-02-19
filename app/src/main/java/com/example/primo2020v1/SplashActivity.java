@@ -1,6 +1,5 @@
 package com.example.primo2020v1;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +25,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference(Keys.TEAMS);
+//        scoresRef.keepSynced(true);
+        User.masterRanks.add("Couch");
+        User.masterRanks.add("Dolev");
+
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -45,22 +50,13 @@ public class SplashActivity extends AppCompatActivity {
                 alertDialog.setTitle("No Internet");
                 alertDialog.setMessage("Trying to connect");
 
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", (dialog, which) -> {
                 });
 
                 alertDialog.show();
             }
         });
 
-        User.admins.add("Dolev");
-        User.admins.add("Iair");
-        User.admins.add("Shoshana");
-        User.admins.add("Tohar");
-        User.admins.add("Samuel");
-        User.admins.add("Mor");
-        User.admins.add("Tal");
     }
 
     private void setMatches(DataSnapshot dataSnapshot) {

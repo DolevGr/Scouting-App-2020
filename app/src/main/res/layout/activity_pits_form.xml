@@ -25,79 +25,54 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Back"
         android:minWidth="70dp"
         android:minHeight="40dp"
+        android:text="Back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edRobotHeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:hint="Robot's Height (cm)"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
-        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
-        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
-
-    <EditText
-        android:id="@+id/edRobotChassie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:hint="Robot's Wheels Config"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/edRobotMass"
-        app:layout_constraintStart_toStartOf="@+id/edRobotMass"
-        app:layout_constraintTop_toBottomOf="@+id/edRobotMass" />
 
     <EditText
         android:id="@+id/edRobotMass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Robot's Mass (kg)"
         android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="@+id/edRobotHeight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edRobotHeight"
-        app:layout_constraintTop_toBottomOf="@+id/edRobotHeight" />
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
 
     <Switch
         android:id="@+id/switchAuto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         android:text="Autonomous"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        android:thumbTint="@color/mainOrange"
+        app:layout_constraintEnd_toEndOf="@+id/imgCPRC"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgCPPC"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imgCPPC" />
 
     <ImageView
         android:id="@+id/imgCPPC"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edComment"
+        app:layout_constraintTop_toBottomOf="@+id/edWheelsOther"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_cppc" />
 
     <ImageView
         android:id="@+id/imgCPRC"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgCPPC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -107,10 +82,11 @@
 
     <ImageView
         android:id="@+id/imgEndGame"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgCPPC"
         app:layout_constraintEnd_toStartOf="@+id/imgCPPC"
+        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgCPPC"
         app:srcCompat="@drawable/ic_park" />
@@ -133,6 +109,7 @@
         android:ems="10"
         android:hint="Team Number"
         android:inputType="number"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/tvPitsForm"
         app:layout_constraintStart_toStartOf="@+id/tvPitsForm"
         app:layout_constraintTop_toBottomOf="@+id/tvPitsForm" />
@@ -151,12 +128,85 @@
         android:id="@+id/edComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="Comment"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/edRobotChassie"
-        app:layout_constraintStart_toStartOf="@+id/edRobotChassie"
-        app:layout_constraintTop_toBottomOf="@+id/edRobotChassie" />
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchBumpers" />
+
+    <Spinner
+        android:id="@+id/spnWheels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/spnPCCarry"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/spnShoot"
+        app:layout_constraintTop_toBottomOf="@+id/spnShoot" />
+
+    <EditText
+        android:id="@+id/edWheelsOther"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/spnWheels"
+        app:layout_constraintTop_toTopOf="@+id/spnWheels" />
+
+    <Switch
+        android:id="@+id/switchTrench"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Can Go Under the Trench"
+        android:thumbTint="@color/mainOrange"
+        app:layout_constraintBottom_toBottomOf="@+id/switchAuto"
+        app:layout_constraintEnd_toStartOf="@+id/switchAuto"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/switchAuto" />
+
+    <Spinner
+        android:id="@+id/spnIntake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/spnPCCarry"
+        app:layout_constraintStart_toEndOf="@+id/spnPCCarry"
+        app:layout_constraintTop_toTopOf="@+id/spnPCCarry" />
+
+    <Spinner
+        android:id="@+id/spnPCCarry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/edRobotMass"
+        app:layout_constraintStart_toStartOf="@+id/edRobotMass"
+        app:layout_constraintTop_toBottomOf="@+id/edRobotMass" />
+
+    <Spinner
+        android:id="@+id/spnShoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/spnPCCarry"
+        app:layout_constraintEnd_toStartOf="@+id/spnPCCarry"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spnPCCarry" />
+
+    <Switch
+        android:id="@+id/switchBumpers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Can Go Over Bumpers"
+        android:thumbTint="@color/mainOrange"
+        app:layout_constraintEnd_toEndOf="@+id/switchAuto"
+        app:layout_constraintTop_toBottomOf="@+id/switchAuto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

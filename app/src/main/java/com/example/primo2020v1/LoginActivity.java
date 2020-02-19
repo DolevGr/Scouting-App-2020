@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     Intent in;
     Context context;
 
-    String name, password, nameFromDB, passFromDB, privillegeFromDB = "", privillege = "false";
-    boolean priv = false, debug = false;
+    String name, password, nameFromDB, passFromDB, rankFromDB = "", rank;
+    boolean debug = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,62 +45,58 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         context = getApplicationContext();
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name = edName.getText().toString().trim();
-                password = edPass.getText().toString().trim();
+        btnLogin.setOnClickListener(view -> {
+            name = edName.getText().toString().trim();
+            password = edPass.getText().toString().trim();
+            rank = "Scouter";
 
-                if (User.members.contains(name) && !password.equals("")) {
-                    DatabaseReference dbRef = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
-                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (User.members.contains(name) && !password.equals("")) {
+                DatabaseReference dbRef = User.databaseReference.child(Keys.USERS).child(Integer.toString(User.members.indexOf(name)));
+                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            nameFromDB = dataSnapshot.child("name").getValue().toString().trim();
+                            passFromDB = dataSnapshot.child("password").getValue().toString().trim();
+                            rankFromDB = dataSnapshot.child("rank").getValue().toString().trim();
+                            rank = rank.equals(rankFromDB) ? "Scouter" : rankFromDB;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (isValidName() && isValidPassword()) {
                             try {
-                                nameFromDB = dataSnapshot.child("name").getValue().toString();
-                                passFromDB = dataSnapshot.child("password").getValue().toString();
-                                privillegeFromDB = dataSnapshot.child("privilege").getValue().toString();
-                                priv = !privillege.equals(privillegeFromDB) && User.admins.contains(name);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.d("Exception", "onDataChange: Data went missing :-(");
-                            }
-
-                            if (isValidName() && isValidPassword()) {
-                                try {
 //                                    String path = Environment.getDataDirectory().getPath();
 //                                    FileWriter loginFileWriter = new FileWriter(path + "/LoginInfo.txt");
-//                                    loginFileWriter.write(name + '\n' + password + '\n' + priv + '\n');
+//                                    loginFileWriter.write(name + '\n' + password + '\n' + rank + '\n');
 //                                    loginFileWriter.close();
 
-                                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("LoginInfo.txt", Context.MODE_PRIVATE));
-                                    outputStreamWriter.write(name + '\n' + password + '\n' + priv + '\n');
-                                    outputStreamWriter.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                in = new Intent(LoginActivity.this, DrawerActivity.class);
-                                in.putExtra("Username", edName.getText().toString());
-                                in.putExtra("Privilege", priv);
-                                startActivity(in);
-
-                            } else if (!isValidPassword()) {
-                                Toast.makeText(context.getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
+                                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("LoginInfo.txt", Context.MODE_PRIVATE));
+                                outputStreamWriter.write(name + '\n' + password + '\n' + rank + '\n');
+                                outputStreamWriter.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
 
+                            in = new Intent(LoginActivity.this, DrawerActivity.class);
+                            in.putExtra("Username", edName.getText().toString());
+                            in.putExtra("Rank", rank);
+                            startActivity(in);
+
+                        } else if (!isValidPassword()) {
+                            Toast.makeText(context.getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
+                    }
 
-                } else {
-                    enterOnDebug();
-                    checkPassAndUsername();
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+            } else {
+                enterOnDebug();
+                checkPassAndUsername();
             }
         });
 
@@ -121,10 +116,10 @@ public class LoginActivity extends AppCompatActivity {
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 name = bufferedReader.readLine();
                 password = bufferedReader.readLine();
-                privillege = bufferedReader.readLine();
+                rank = bufferedReader.readLine();
                 inputStream.close();
 
-                if (name != null && password != null && privillege != null) {
+                if (name != null && password != null && rank != null) {
                     edName.setText(name);
                     edPass.setText(password);
                     edName.setEnabled(false);
@@ -133,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     in = new Intent(LoginActivity.this, DrawerActivity.class);
                     in.putExtra("Username", edName.getText().toString());
-                    in.putExtra("Privilege", Boolean.parseBoolean(privillege));
+                    in.putExtra("Rank", rank);
                     startActivity(in);
                     finish();
                 }
@@ -165,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
             in = new Intent(LoginActivity.this, DrawerActivity.class);
 
             in.putExtra("Username", edName.getText().toString());
-            in.putExtra("Privilege", priv);
+            in.putExtra("Rank", rank);
             startActivity(in);
 
         }

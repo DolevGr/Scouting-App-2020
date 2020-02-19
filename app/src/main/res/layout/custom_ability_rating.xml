@@ -43,4 +43,25 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvTeamNumberAbility"
         app:layout_constraintStart_toEndOf="@+id/tvTeamNumberAbility"
         app:layout_constraintTop_toTopOf="@+id/tvTeamNumberAbility" />
+
+    <TextView
+        android:id="@+id/tvRatingNumberAbility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTeamNumberAbility"
+        app:layout_constraintEnd_toStartOf="@+id/tvTeamNumberAbility"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTeamNumberAbility" />
+
+    <TextView
+        android:id="@+id/tvTeamNameAbility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/tvTeamNumberAbility"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvTeamNumberAbility"
+        app:layout_constraintTop_toBottomOf="@+id/tvTeamNumberAbility" />
 </androidx.constraintlayout.widget.ConstraintLayout>

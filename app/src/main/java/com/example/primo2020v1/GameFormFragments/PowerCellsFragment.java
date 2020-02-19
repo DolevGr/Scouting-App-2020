@@ -34,6 +34,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
 
     private int pcInner, pcOuter, pcLower, pcMissed;
     public static int[] positions = new int[4];
+    private int[] resColors = {R.color.mainOrange, R.color.mainBlue};
 
     //Tele: true; Auto: false
     public static boolean phase;
@@ -53,7 +54,7 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         tvPowerCellsOuter = v.findViewById(R.id.tvPowerCellsOuter);
         tvPowerCellsInner = v.findViewById(R.id.tvPowerCellsInner);
 
-        sbPowerCellsMissed =  v.findViewById(R.id.sbPowerCellsMissed);
+        sbPowerCellsMissed = v.findViewById(R.id.sbPowerCellsMissed);
         sbPowerCellsLower = v.findViewById(R.id.sbPowerCellsLower);
         sbPowerCellsOuter = v.findViewById(R.id.sbPowerCellsOuter);
         sbPowerCellsInner = v.findViewById(R.id.sbPowerCellsInner);
@@ -70,11 +71,13 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
         btnTeleAuto.setOnClickListener(this);
         btnCycle.setOnClickListener(this);
 
-        if (phase)
-            btnTeleAuto.setText("Tele");
-        else
+        if (!phase) {
             btnTeleAuto.setText("Auto");
-
+            btnTeleAuto.setBackgroundResource(resColors[0]);
+        } else {
+            btnTeleAuto.setText("Tele");
+            btnTeleAuto.setBackgroundResource(resColors[1]);
+        }
         pcIntent = new Intent(getContext(), GameFormActivity.class);
         cycles = new ArrayList<>();
 
@@ -88,7 +91,6 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
             if (progress > getMax(seekBar))
                 seekBar.setProgress(getMax(seekBar));
         }
-
         updateSeekBarsText();
     }
 
@@ -110,13 +112,15 @@ public class PowerCellsFragment extends Fragment implements SeekBar.OnSeekBarCha
                 break;
 
             case R.id.btnTeleAuto:
-                if (phase) {
+                phase = !phase;
+
+                if (!phase) {
                     btnTeleAuto.setText("Auto");
+                    btnTeleAuto.setBackgroundResource(resColors[0]);
                 } else {
                     btnTeleAuto.setText("Tele");
+                    btnTeleAuto.setBackgroundResource(resColors[1]);
                 }
-
-                phase = !phase;
                 break;
 
             default:

@@ -23,6 +23,35 @@
         <item>Balance</item>
     </string-array>
 
+    <string-array name="wheels">
+        <item>6x6</item>
+        <item>8x8</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="intake">
+        <item>Floor</item>
+        <item>Feeder</item>
+        <item>Both</item>
+        <item>None</item>
+    </string-array>
+
+    <string-array name="PCCarry">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="shoot">
+        <item>Lower</item>
+        <item>Higher</item>
+        <item>Both</item>
+        <item>None</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_message">Are you sure you want to cancel?</string>

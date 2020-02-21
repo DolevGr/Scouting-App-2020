@@ -84,7 +84,9 @@ public class GeneralFunctions {
 
     public static void onSubmit(DatabaseReference dbRef, final FormInfo fi, ArrayList<Cycle> c) {
         final DatabaseReference dbRefMatch = dbRef.child(Integer.toString(fi.getMatchNumber())),
-                dbRefStats = dbRef.child(Keys.STATS);
+                dbRefStats = dbRef.child(Keys.STATS),
+                dbRefComments = User.databaseReference.child(Keys.COMMENTS)
+                        .child(fi.getTeamNumber()).child(Integer.toString(fi.getMatchNumber()));
         resetSubmission();
 
         if (fi.getUserComment().toString().trim().equals(""))
@@ -92,6 +94,9 @@ public class GeneralFunctions {
         final Map<String, Object> formInfo = getMap(fi);
         dbRefMatch.setValue(formInfo);
         dbRefMatch.child("CommittedBy").setValue(User.username);
+
+        String newComment = fi.getUserComment().toString();
+        dbRefComments.setValue(newComment);
 
         if (c != null && !c.isEmpty()) {
             totalCycles = c.size();

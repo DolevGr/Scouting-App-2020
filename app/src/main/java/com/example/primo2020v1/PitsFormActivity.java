@@ -19,16 +19,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
 import com.example.primo2020v1.libs.Keys;
+import com.example.primo2020v1.libs.Pit;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DatabaseReference;
 
 public class PitsFormActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText edRobotMass, edTeamNumber, edComment, edWheelsOther;
+    private EditText edRobotMass, edProgLanguage, edTeamNumber, edComment, edWheelsOther;
     private TextView tvTeamName;
     private ImageView imgCPPC, imgCPRC, imgEndGame;
     private Switch switchAuto, switchTrench, switchBumpers;
     private Button btnSubmit, btnBack;
-    private Spinner spnWheels, spnIntake, spnPCCarry, spnShoot;
+    private Spinner spnLanguage, spnWheels, spnIntake, spnPCCarry, spnShoot;
     private int cpIndex, rcIndex, endgameIndex;
     private String selectedWheels, selectedIntake, selectedCarry, selectedShoot;
 
@@ -44,6 +45,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         edRobotMass = findViewById(R.id.edRobotMass);
         edComment = findViewById(R.id.edComment);
 
+        spnLanguage = findViewById(R.id.spnLanguage);
         spnWheels = findViewById(R.id.spnWheels);
         edWheelsOther = findViewById(R.id.edWheelsOther);
         spnIntake = findViewById(R.id.spnIntake);
@@ -65,6 +67,10 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         cpIndex = 0;
         rcIndex = 0;
         endgameIndex = 1;
+
+        ArrayAdapter languageAdapter = ArrayAdapter.createFromResource(this, R.array.languages, R.layout.support_simple_spinner_dropdown_item);
+        languageAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spnLanguage.setAdapter(languageAdapter);
 
         ArrayAdapter wheelsAdapter = ArrayAdapter.createFromResource(this, R.array.wheels, R.layout.support_simple_spinner_dropdown_item);
         wheelsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -206,6 +212,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         boolean valid = !edTeamNumber.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("") &&
                 !edComment.getText().toString().trim().equals("") &&
+                !edProgLanguage.getText().toString().trim().equals("") &&
                 User.participants.containsKey(Integer.parseInt(name));
 
         if (selectedWheels.equals("Other"))
@@ -216,23 +223,20 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
     private void onSubmit() {
         DatabaseReference dbRef = User.databaseReference.child(Keys.TEAMS).child(edTeamNumber.getText().toString().trim()).child(Keys.PIT);
-
-        dbRef.child("RobotMass").setValue(edRobotMass.getText().toString().trim());
-        dbRef.child("Intake").setValue(selectedIntake);
-        dbRef.child("Carry").setValue(selectedCarry);
-        dbRef.child("Shoot").setValue(selectedShoot);
-        dbRef.child("Comment").setValue(edComment.getText().toString().trim());
-        dbRef.child("HasAuto").setValue(switchAuto.isActivated());
-        dbRef.child("Trench").setValue(switchTrench.isActivated());
-        dbRef.child("Bumpers").setValue(switchBumpers.isActivated());
-        dbRef.child("EndGame").setValue(endgameIndex);
-        dbRef.child("CPRC").setValue(rcIndex);
-        dbRef.child("CPPC").setValue(cpIndex);
-
+        String wheels = "";
         if (!selectedWheels.equals("Other"))
-            dbRef.child("Wheels").setValue(spnWheels.getSelectedItem());
+            wheels = (String) spnWheels.getSelectedItem();
         else
-            dbRef.child("Wheels").setValue(edWheelsOther.getText().toString().trim());
+            wheels = edWheelsOther.getText().toString().trim();
+
+        Pit pit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), edProgLanguage.getText().toString().trim(),
+                wheels, selectedIntake, selectedCarry, selectedShoot,
+                switchAuto.isActivated(), switchTrench.isActivated(), switchBumpers.isActivated(),
+                endgameIndex, rcIndex, cpIndex);
+
+        dbRef.setValue(pit);
+
+
     }
 
     private void openDialog() {

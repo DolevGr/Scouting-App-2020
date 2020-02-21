@@ -29,4 +29,7 @@ public class Keys {
     public static final String PIT = "Pit";
     public static final String STATS = "Stats";
     public static final String STATS_SUM = "Sum";
+    public static final String COMMENTS = "Comments";
+
+    public static final String INPUT_PIT = "InputPit";
 }

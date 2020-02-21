@@ -41,6 +41,7 @@ public class PitAdapter extends ArrayAdapter {
 
         tvs = new ArrayList<>();
         tvs.add(view.findViewById(R.id.tvMass));
+        tvs.add(view.findViewById(R.id.tvProgLanguagePit));
         tvs.add(view.findViewById(R.id.tvWheels));
         tvs.add(view.findViewById(R.id.tvIntakePit));
         tvs.add(view.findViewById(R.id.tvCarryPit));
@@ -67,8 +68,19 @@ public class PitAdapter extends ArrayAdapter {
 
         img1.setImageResource(User.endGameImages[Integer.parseInt(values.get(i++))]);
         Log.d(TAG, "getView: " + Integer.parseInt(values.get(i)));
-        img2.setImageResource(User.controlPanelRotation[Integer.parseInt(values.get(i++))]);
-        img3.setImageResource(User.controlPanelPosition[Integer.parseInt(values.get(i))]);
+
+        if (Integer.parseInt(values.get(i)) == 1) {
+            img2.setImageResource(User.controlPanelRotation[Integer.parseInt(values.get(i++))]);
+        } else {
+            i++;
+            img2.setVisibility(View.INVISIBLE);
+        }
+
+        if (Integer.parseInt(values.get(i)) == 1) {
+            img3.setImageResource(User.controlPanelPosition[Integer.parseInt(values.get(i))]);
+        } else {
+            img3.setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }

@@ -23,6 +23,12 @@
         <item>Balance</item>
     </string-array>
 
+    <string-array name="languages">
+        <item>Java</item>
+        <item>C++</item>
+        <item>LabView</item>
+    </string-array>
+
     <string-array name="wheels">
         <item>6x6</item>
         <item>8x8</item>

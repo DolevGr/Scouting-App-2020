@@ -52,6 +52,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Programming Language "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="0dp"/>
+
+            <TextView
+                android:id="@+id/tvProgLanguagePit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Wheels: "
                 android:textColor="@color/defaultColor"
                 android:textSize="16sp" />

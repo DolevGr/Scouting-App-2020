@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/layoutComp">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/edFirstTeamComp"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="@+id/btnCompareComp"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/edSecondTeamComp"
         android:layout_width="140dp"
         android:layout_height="wrap_content"

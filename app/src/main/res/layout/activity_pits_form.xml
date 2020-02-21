@@ -40,15 +40,15 @@
         android:hint="Robot's Mass (kg)"
         android:inputType="numberDecimal"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
-        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintEnd_toStartOf="@+id/space2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
 
     <Switch
         android:id="@+id/switchAuto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="7dp"
         android:text="Autonomous"
         android:thumbTint="@color/mainOrange"
         app:layout_constraintEnd_toEndOf="@+id/imgCPRC"
@@ -186,8 +186,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/edRobotMass"
-        app:layout_constraintStart_toStartOf="@+id/edRobotMass"
+        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
         app:layout_constraintTop_toBottomOf="@+id/edRobotMass" />
 
     <Spinner
@@ -208,5 +208,23 @@
         android:thumbTint="@color/mainOrange"
         app:layout_constraintEnd_toEndOf="@+id/switchAuto"
         app:layout_constraintTop_toBottomOf="@+id/switchAuto" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
+
+    <Spinner
+        android:id="@+id/spnLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/edRobotMass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/space2"
+        app:layout_constraintTop_toTopOf="@+id/edRobotMass" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

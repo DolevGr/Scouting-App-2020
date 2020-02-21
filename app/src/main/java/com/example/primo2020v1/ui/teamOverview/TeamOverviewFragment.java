@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +22,7 @@ import com.example.primo2020v1.MatchInfoActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.libs.Keys;
 import com.example.primo2020v1.libs.Match;
+import com.example.primo2020v1.libs.Pit;
 import com.example.primo2020v1.libs.Statistics;
 import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DataSnapshot;
@@ -36,16 +37,15 @@ import java.util.Map;
 
 public class TeamOverviewFragment extends Fragment {
     private Button btnStats, btnPit, btnMatches;
-    private EditText edTeamNumber;
+    private AutoCompleteTextView edTeamNumber;
     private TeamOverviewViewModel teamOverviewViewModel;
     private ListView lvTeamOverview;
     private TextView tvTeamName;
 
-    private static String teamNumber;
-    private double totalShots, totalLower, totalOuter, totalInner, totalRC, totalPC, totalBalanced, totalClimb, totalMissed,
-                    timesDefended, yellowCards, redCards, timesCrashed;
+    private static boolean showMatches = false;
+    private static String teamNumber, comments;
     private ArrayAdapter statsAdapter, pitAdapter, matchesAdapter;
-    private DatabaseReference dbRef, dbRefStats, dbRefPit, dbRefMatch;
+    private DatabaseReference dbRef, dbRefStats, dbRefComments, dbRefPit, dbRefMatch;
     private ArrayList<Double> valuesStats;
     private ArrayList<String> valuesPit;
     private ArrayList<Match> valuesMatch;
@@ -63,6 +63,7 @@ public class TeamOverviewFragment extends Fragment {
         lvTeamOverview = root.findViewById(R.id.lvTeamOverview);
         tvTeamName = root.findViewById(R.id.tvTeamName);
 
+
         ArrayList<Integer> temp = new ArrayList<>(1);
         temp.add(1);
 
@@ -70,7 +71,19 @@ public class TeamOverviewFragment extends Fragment {
         valuesPit = new ArrayList<>();
         valuesMatch = new ArrayList<>();
         dbRef = User.databaseReference.child(Keys.TEAMS);
+        dbRefComments = User.databaseReference.child(Keys.COMMENTS);
         edTeamNumber.setText(teamNumber);
+
+        if (showMatches) {
+            showMatches();
+            setListAction();
+            showMatches = false;
+        }
+
+        ArrayAdapter<Object> adapter;
+        adapter = new ArrayAdapter<Object>(getContext(), android.R.layout.simple_dropdown_item_1line, User.participants.keySet().toArray());
+        edTeamNumber.setAdapter(adapter);
+        edTeamNumber.setThreshold(1);
 
         edTeamNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -95,18 +108,41 @@ public class TeamOverviewFragment extends Fragment {
 
         btnStats.setOnClickListener(v -> {
             btnStats.setClickable(false);
-            lvTeamOverview.setOnItemClickListener((parent, view, position, id) -> { });
+            lvTeamOverview.setOnItemClickListener((parent, view, position, id) -> {
+            });
 
             teamNumber = edTeamNumber.getText().toString().trim();
             if (isValid()) {
-                resetStats();
                 valuesStats.clear();
                 statsAdapter = null;
+                comments = "";
                 dbRefStats = dbRef.child(teamNumber);
+
+                dbRefComments.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(teamNumber)) {
+                            dataSnapshot = dataSnapshot.child(teamNumber);
+
+                            for (DataSnapshot d : dataSnapshot.getChildren()){
+                                comments += "Match " + d.getKey() + ": " + d.getValue().toString() + '\n';
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Comments were not found", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
 
                 dbRefStats.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        Log.d(TAG, "onDataChange: " + dataSnapshot.hasChild(Keys.STATS));
+
                         if (dataSnapshot.hasChild(Keys.STATS)) {
                             DataSnapshot ds = dataSnapshot.child(Keys.STATS);
                             Statistics sumStats = null;
@@ -132,10 +168,12 @@ public class TeamOverviewFragment extends Fragment {
                                 valuesStats.add((double) sumStats.getDbCPPC());
                                 valuesStats.add((double) sumStats.getDbClimb());
                                 valuesStats.add((double) sumStats.getDbBalanced());
+
+                                statsAdapter = new StatsAdapter(getContext(), R.layout.custom_teamoverview_stats,
+                                        valuesStats, comments, temp);
+                                lvTeamOverview.setAdapter(statsAdapter);
                             }
 
-                            statsAdapter = new StatsAdapter(getContext(), R.layout.custom_teamoverview_stats, valuesStats, temp);
-                            lvTeamOverview.setAdapter(statsAdapter);
                         } else {
                             Toast.makeText(getContext(), "Stats were not found", Toast.LENGTH_SHORT).show();
                         }
@@ -146,9 +184,17 @@ public class TeamOverviewFragment extends Fragment {
                         btnStats.setClickable(true);
                     }
                 });
+
             } else {
                 Toast.makeText(getContext(), "Invalid team number", Toast.LENGTH_SHORT).show();
             }
+
+//            while (!hasStats && !hasComments){
+//                if (hasComments && hasStats)
+//                    break;
+//            }
+
+
             btnStats.setClickable(true);
         });
 
@@ -168,23 +214,29 @@ public class TeamOverviewFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild(Keys.PIT)) {
                             DataSnapshot ds = dataSnapshot.child(Keys.PIT);
+                            Pit pit = ds.getValue(Pit.class);
 
-                            valuesPit.add(ds.child("RobotMass").getValue().toString());
-                            valuesPit.add(ds.child("Wheels").getValue().toString());
-                            valuesPit.add(ds.child("Intake").getValue().toString());
-                            valuesPit.add(ds.child("Carry").getValue().toString());
-                            String shoot = ds.child("Shoot").getValue().toString();
+                            valuesPit.add(pit.getMass());
+                            valuesPit.add(pit.getLanguage());
+                            valuesPit.add(pit.getWheels());
+
+                            String intake = pit.getIntake();
+                            if (intake.equals("Both"))
+                                intake = "Floor & Feeder";
+                            valuesPit.add(intake);
+                            valuesPit.add(pit.getCarry());
+
+                            String shoot = pit.getShoot();
                             if (shoot.equals("Both"))
-                                shoot = "Lower and Higher";
-
+                                shoot = "Lowe & High";
                             valuesPit.add(shoot);
-                            valuesPit.add(ds.child("Comment").getValue().toString());
-                            valuesPit.add(ds.child("HasAuto").getValue().toString());
-                            valuesPit.add(ds.child("Trench").getValue().toString());
-                            valuesPit.add(ds.child("Bumpers").getValue().toString());
-                            valuesPit.add(ds.child("EndGame").getValue().toString());
-                            valuesPit.add(ds.child("CPRC").getValue().toString());
-                            valuesPit.add(ds.child("CPPC").getValue().toString());
+                            valuesPit.add(pit.getComment());
+                            valuesPit.add(Boolean.toString(pit.isHasAuto()));
+                            valuesPit.add(Boolean.toString(pit.isCanTrench()));
+                            valuesPit.add(Boolean.toString(pit.isCanBumpers()));
+                            valuesPit.add(Integer.toString(pit.getEndGame()));
+                            valuesPit.add(Integer.toString(pit.getCprc()));
+                            valuesPit.add(Integer.toString(pit.getCppc()));
 
                             pitAdapter = new PitAdapter(getContext(), R.layout.custom_teamoverview_pits, valuesPit, temp);
                             lvTeamOverview.setAdapter(pitAdapter);
@@ -211,48 +263,10 @@ public class TeamOverviewFragment extends Fragment {
             teamNumber = edTeamNumber.getText().toString().trim();
 
             if (isValid()) {
-                if (matchesAdapter != null)
-                    matchesAdapter.clear();
+                showMatches();
+                setListAction();
 
-                for (Match match : User.matches) {
-                    if (match.hasTeam(teamNumber))
-                        valuesMatch.add(match);
-                }
-
-                matchesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, valuesMatch, teamNumber, false);
-                lvTeamOverview.setAdapter(matchesAdapter);
                 btnMatches.setClickable(true);
-
-                lvTeamOverview.setOnItemClickListener((parent, view, position, id) -> {
-                    view.setClickable(false);
-                    final int match = valuesMatch.get(position).getGameNum();
-                    info = new HashMap<>();
-                    dbRefMatch = User.databaseReference.child("Teams").child(teamNumber);
-                    dbRefMatch.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild(Integer.toString(match))) {
-                                dataSnapshot = dataSnapshot.child(Integer.toString(match));
-                                Intent intent = new Intent(getContext(), MatchInfoActivity.class);
-
-                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                    info.put(ds.getKey(), ds.getValue());
-                                }
-                                intent.putExtra("Info", (Serializable) info);
-                                startActivity(intent);
-                                view.setClickable(true);
-                            } else {
-                                view.setClickable(true);
-                                Toast.makeText(getContext(), "Match was not found", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            view.setClickable(true);
-                        }
-                    });
-                });
             } else {
                 Toast.makeText(getContext(), "Invalid team number", Toast.LENGTH_SHORT).show();
             }
@@ -262,20 +276,48 @@ public class TeamOverviewFragment extends Fragment {
         return root;
     }
 
-    private void resetStats() {
-        timesDefended = 0;
-        timesCrashed = 0;
-        yellowCards = 0;
-        redCards = 0;
-        totalShots = 0;
-        totalMissed = 0;
-        totalLower = 0;
-        totalOuter = 0;
-        totalInner = 0;
-        totalRC = 0;
-        totalPC = 0;
-        totalClimb = 0;
-        totalBalanced = 0;
+    private void setListAction() {
+        lvTeamOverview.setOnItemClickListener((parent, view, position, id) -> {
+            view.setClickable(false);
+            final int match = valuesMatch.get(position).getGameNum();
+            info = new HashMap<>();
+            dbRefMatch = User.databaseReference.child(Keys.TEAMS).child(teamNumber);
+            dbRefMatch.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(Integer.toString(match))) {
+                        dataSnapshot = dataSnapshot.child(Integer.toString(match));
+                        Intent intent = new Intent(getContext(), MatchInfoActivity.class);
+
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            info.put(ds.getKey(), ds.getValue());
+                        }
+                        showMatches = true;
+                        intent.putExtra("Info", (Serializable) info);
+                        startActivity(intent);
+                        view.setClickable(true);
+                    } else {
+                        view.setClickable(true);
+                        Toast.makeText(getContext(), "Match was not found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    view.setClickable(true);
+                }
+            });
+        });
+    }
+
+    private void showMatches() {
+        for (Match match : User.matches) {
+            if (match.hasTeam(teamNumber))
+                valuesMatch.add(match);
+        }
+
+        matchesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, valuesMatch, teamNumber, false);
+        lvTeamOverview.setAdapter(matchesAdapter);
     }
 
     private boolean isValid() {

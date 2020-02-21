@@ -49,6 +49,13 @@ public class MatchInfoActivity extends AppCompatActivity {
         lvCycles = findViewById(R.id.lvCyclesInfo);
         btnBack = findViewById(R.id.btnBackInfo);
 
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                finish();
+//            }
+//        };
+
         tvSubmitted.setText("Submitted by: " + info.get("CommittedBy").toString());
         tvComment.setText(info.get("comment").toString());
         imgCard.setImageResource(User.finishTickets[Integer.parseInt(info.get("ticket").toString())]);

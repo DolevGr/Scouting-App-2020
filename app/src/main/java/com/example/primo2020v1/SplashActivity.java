@@ -2,6 +2,7 @@ package com.example.primo2020v1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
-
     Intent in;
+    String lastUpdated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +34,23 @@ public class SplashActivity extends AppCompatActivity {
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 //        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference(Keys.TEAMS);
 //        scoresRef.keepSynced(true);
-        User.masterRanks.add("Couch");
+
+        try {
+            File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "LastUpdated.txt");
+            file.createNewFile();
+            InputStream inputStream = getApplicationContext().openFileInput("LastUpdated.txt");
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                lastUpdated = bufferedReader.readLine();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        User.masterRanks.add("Coach");
         User.masterRanks.add("Dolev");
 
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

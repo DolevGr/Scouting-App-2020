@@ -1,16 +1,14 @@
 package com.example.primo2020v1;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,7 +30,7 @@ public class DrawerActivity extends AppCompatActivity {
     private DatabaseReference dbRef = User.databaseReference;
     private NotificationManagerCompat managerCompat;
     private Intent intent;
-    private String username, rank;
+    private static String username, rank;
     private AppBarConfiguration mAppBarConfiguration;
     private int res;
 
@@ -47,9 +45,6 @@ public class DrawerActivity extends AppCompatActivity {
             User.username = username;
             rank = intent.getStringExtra("Rank");
             User.userRank = rank;
-//            TextView tvHeader = findViewById(R.id.tvHeader);
-//            String info = "Hello " + username;
-//            tvHeader.setText(info);
         }
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -73,6 +68,7 @@ public class DrawerActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
+        //Navigation view config
         if (User.masterRanks.contains(User.userRank)) {
             setSupportActionBar(toolbar);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -88,21 +84,25 @@ public class DrawerActivity extends AppCompatActivity {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
 
-        if (User.userRank.equals("Pit")) {
-            managerCompat = NotificationManagerCompat.from(this);
-            Log.d(TAG, "onCreate: " + User.currentGame);
-            if (User.matches.get(User.currentGame + 3).hasTeam("4585")) {
-                Log.d(TAG, "123 ");
-                Notification notification = new NotificationCompat.Builder(this, Notifications.CHANNEL_ID_1)
-//                        .setSmallIcon()
-                        .setContentTitle("Title")
-                        .setContentText("Channel 1")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                        .build();
-                managerCompat.notify(1, notification);
-            }
+
+        //Notifications config
+        if (User.userRank.equals("Pit") || User.masterRanks.contains(User.userRank)) {
+            //startService();
         }
+    }
+
+
+    private void startService() {
+        Intent serviceIntent = new Intent(this, DrawerActivity.class);
+        String input = "this is input";
+        serviceIntent.putExtra(Keys.INPUT_PIT, input);
+
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, DrawerActivity.class);
+        stopService(serviceIntent);
     }
 
     @Override

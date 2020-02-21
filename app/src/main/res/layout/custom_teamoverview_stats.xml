@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,10 +35,10 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            android:layout_weight="1" />
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="7dp"-->
+        <!--            android:layout_weight="1" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,9 +60,9 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="7dp" />
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="7dp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,9 +84,9 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="7dp" />
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="7dp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,9 +108,9 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="7dp" />
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="7dp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,7 +134,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="7dp"
+            android:layout_height="5dp"
             android:layout_weight="1" />
 
         <LinearLayout
@@ -198,7 +197,8 @@
                     android:layout_marginStart="30dp"
                     android:layout_weight="1"
                     android:src="@drawable/ic_defence"
-                    app:layout_constraintStart_toEndOf="@+id/tvYellowCardsInfo" />
+                    app:layout_constraintStart_toEndOf="@+id/tvYellowCardsInfo"
+                    app:layout_constraintTop_toTopOf="@+id/textView11" />
 
                 <ImageView
                     android:id="@+id/textView18"
@@ -240,10 +240,10 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_weight="1" />
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="5dp"-->
+        <!--            android:layout_weight="1" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -252,8 +252,8 @@
 
             <ImageView
                 android:id="@+id/imgRC"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 android:textColor="@color/defaultColor"
                 android:textSize="16sp"
@@ -275,25 +275,25 @@
 
             <ImageView
                 android:id="@+id/imgPC"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_cppc" />
 
             <TextView
-                android:textAlignment="center"
                 android:id="@+id/tvPCComp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:textColor="@color/defaultColor"
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_weight="1" />
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="5dp"-->
+        <!--            android:layout_weight="1" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -302,17 +302,17 @@
 
             <ImageView
                 android:id="@+id/imgClimb"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_climb" />
 
             <TextView
-                android:textAlignment="center"
                 android:id="@+id/tvClimbInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:textColor="@color/defaultColor"
                 android:textSize="16sp" />
 
@@ -323,17 +323,30 @@
 
             <ImageView
                 android:id="@+id/imgBalanced"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_balanced" />
 
             <TextView
-                android:textAlignment="center"
                 android:id="@+id/tvBalancedInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCommentsInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/defaultColor"
                 android:textSize="16sp" />
         </LinearLayout>

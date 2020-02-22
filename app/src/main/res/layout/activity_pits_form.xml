@@ -35,12 +35,13 @@
         android:id="@+id/edRobotMass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Robot's Mass (kg)"
         android:inputType="numberDecimal"
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/space2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
 
@@ -101,7 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/edTeamNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -223,8 +224,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/edRobotMass"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.305"
         app:layout_constraintStart_toEndOf="@+id/space2"
-        app:layout_constraintTop_toTopOf="@+id/edRobotMass" />
+        app:layout_constraintTop_toTopOf="@+id/edRobotMass"
+        app:layout_constraintVertical_bias="0.52" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

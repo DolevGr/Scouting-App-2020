@@ -20,16 +20,18 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class TeamComparisionAdapter extends ArrayAdapter {
     private int res;
-    private double avrgShots;
     private Context context;
     private ArrayList<Double> values;
     private ArrayList<TextView> tvs;
+    private String comments;
 
-    public TeamComparisionAdapter(@NonNull Context context, int resource, ArrayList<Double> values, ArrayList<Integer> single) {
+    public TeamComparisionAdapter(@NonNull Context context, int resource, ArrayList<Double> values,
+                                  String comments, ArrayList<Integer> single) {
         super(context, resource, single);
         this.values = values;
         this.res = resource;
         this.context = context;
+        this.comments = comments;
     }
 
     @NonNull
@@ -38,34 +40,32 @@ public class TeamComparisionAdapter extends ArrayAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(res, null);
 
-        if (position == 0) {
-            tvs = new ArrayList<>();
-            tvs.add(view.findViewById(R.id.tvCrashesComp));
-            tvs.add(view.findViewById(R.id.tvDefendedComp));
-            tvs.add(view.findViewById(R.id.tvYellowCardsComp));
-            tvs.add(view.findViewById(R.id.tvRedCardsComp));
-            tvs.add(view.findViewById(R.id.tvShotsComp));
-            tvs.add(view.findViewById(R.id.tvSuccessRateComp));
-            tvs.add(view.findViewById(R.id.tvLowerComp));
-            tvs.add(view.findViewById(R.id.tvOuterComp));
-            tvs.add(view.findViewById(R.id.tvInnerComp));
-            tvs.add(view.findViewById(R.id.tvRCComp));
-            tvs.add(view.findViewById(R.id.tvPCComp));
-            tvs.add(view.findViewById(R.id.tvClimbComp));
-            tvs.add(view.findViewById(R.id.tvBalancedComp));
+        tvs = new ArrayList<>();
+        tvs.add(view.findViewById(R.id.tvCrashesComp));
+        tvs.add(view.findViewById(R.id.tvDefendedComp));
+        tvs.add(view.findViewById(R.id.tvYellowCardsComp));
+        tvs.add(view.findViewById(R.id.tvRedCardsComp));
+        tvs.add(view.findViewById(R.id.tvShotsComp));
+        tvs.add(view.findViewById(R.id.tvSuccessRateComp));
+        tvs.add(view.findViewById(R.id.tvLowerComp));
+        tvs.add(view.findViewById(R.id.tvOuterComp));
+        tvs.add(view.findViewById(R.id.tvInnerComp));
+        tvs.add(view.findViewById(R.id.tvRCComp));
+        tvs.add(view.findViewById(R.id.tvPCComp));
+        tvs.add(view.findViewById(R.id.tvClimbComp));
+        tvs.add(view.findViewById(R.id.tvBalancedComp));
 
-            DecimalFormat df = new DecimalFormat("#.##");
-            for (int i = 0; i < tvs.size(); i++) {
-                Log.d(TAG, "getView: " + i);
-                tvs.get(i).setText(df.format(values.get(i)));
-                if (i == 5)
-                    tvs.get(i).setText(df.format(values.get(i) * 100) + "%");
-            }
-            return view;
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (int i = 0; i < tvs.size(); i++) {
+            Log.d(TAG, "getView: " + i);
+            tvs.get(i).setText(df.format(values.get(i)));
+            if (i == 5)
+                tvs.get(i).setText(df.format(values.get(i) * 100) + "%");
         }
 
-        view = new View(getContext());
-        view.setVisibility(View.INVISIBLE);
+        TextView tvComments = view.findViewById(R.id.tvCommentsComp);
+        tvComments.setText(comments);
+
         return view;
     }
 }

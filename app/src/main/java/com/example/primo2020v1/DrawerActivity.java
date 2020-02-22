@@ -1,15 +1,19 @@
 package com.example.primo2020v1;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -33,6 +37,8 @@ public class DrawerActivity extends AppCompatActivity {
     private static String username, rank;
     private AppBarConfiguration mAppBarConfiguration;
     private int res;
+
+    private BroadcastReceiver reciver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,25 +90,20 @@ public class DrawerActivity extends AppCompatActivity {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
 
-
         //Notifications config
         if (User.userRank.equals("Pit") || User.masterRanks.contains(User.userRank)) {
             //startService();
+            stopService(new Intent(this, ScoutingService.class));
+            startService(new Intent(this, ScoutingService.class));
         }
-    }
 
-
-    private void startService() {
-        Intent serviceIntent = new Intent(this, DrawerActivity.class);
-        String input = "this is input";
-        serviceIntent.putExtra(Keys.INPUT_PIT, input);
-
-        ContextCompat.startForegroundService(this, serviceIntent);
-    }
-
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, DrawerActivity.class);
-        stopService(serviceIntent);
+        reciver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("tag", "onReceive: received");
+                String s = intent.getStringExtra(ScoutingService.COPA_MESSAGE);
+            }
+        };
     }
 
     @Override
@@ -116,5 +117,21 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((reciver),
+                new IntentFilter(ScoutingService.COPA_RESULT)
+        );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).registerReceiver((reciver),
+                new IntentFilter(ScoutingService.COPA_RESULT)
+        );
     }
 }

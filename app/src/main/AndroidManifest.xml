@@ -44,7 +44,15 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".ScoutingService"/>
+        <service
+            android:name=".ScoutingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name=".ScoutingService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -80,8 +80,8 @@ public class TeamOverviewFragment extends Fragment {
             showMatches = false;
         }
 
-        ArrayAdapter<Object> adapter;
-        adapter = new ArrayAdapter<Object>(getContext(), android.R.layout.simple_dropdown_item_1line, User.participants.keySet().toArray());
+        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(getContext(), android.R.layout.simple_dropdown_item_1line,
+                User.participants.keySet().toArray());
         edTeamNumber.setAdapter(adapter);
         edTeamNumber.setThreshold(1);
 

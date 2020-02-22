@@ -60,7 +60,7 @@ public class GeneralFunctions {
     public static void resetForm() {
         MatchSettingsFragment.isFromUser = true;
         MatchSettingsFragment.teamNumber = "";
-        MatchSettingsFragment.spnIndex = -1;
+//        MatchSettingsFragment.spnIndex = -1;
         MatchSettingsFragment.gameNumber = User.currentGame;
 
         PowerCellsFragment.phase = false;

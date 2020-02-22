@@ -1,8 +1,10 @@
 package com.example.primo2020v1;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,39 +18,44 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
     Intent in;
     String lastUpdated;
+
+    public static Intent gameService;
+    private boolean mIsBound = false;
+    private ScoutingService gServ;
+    private ServiceConnection Scon = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            gServ = ((ScoutingService.ServiceBinder) binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            gServ = null;
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-//        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference(Keys.TEAMS);
-//        scoresRef.keepSynced(true);
-
-        try {
-            File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "LastUpdated.txt");
-            file.createNewFile();
-            InputStream inputStream = getApplicationContext().openFileInput("LastUpdated.txt");
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                lastUpdated = bufferedReader.readLine();
-                inputStream.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "LastUpdated.txt");
+//            file.createNewFile();
+//            InputStream inputStream = getApplicationContext().openFileInput("LastUpdated.txt");
+//
+//            if (inputStream != null) {
+//                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+//                lastUpdated = bufferedReader.readLine();
+//                inputStream.close();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         User.masterRanks.add("Coach");
         User.masterRanks.add("Dolev");
@@ -61,6 +68,12 @@ public class SplashActivity extends AppCompatActivity {
                 setMatches(dataSnapshot);
                 setAllTeams(dataSnapshot);
 
+                gameService = new Intent();
+                gServ = new ScoutingService();
+                gameService.setClass(SplashActivity.this, ScoutingService.class);
+                startService(gameService);
+
+
                 in = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(in);
                 finish();
@@ -70,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
                 alertDialog.setTitle("No Internet");
-                alertDialog.setMessage("Trying to connect");
+                alertDialog.setMessage("Trying to connect...");
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", (dialog, which) -> {
                 });

@@ -40,7 +40,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
     private String[] positions;
     private int[] locks = {R.drawable.ic_closed, R.drawable.ic_opened};
 
-    public static int gameNumber, spnIndex;
+    public static int gameNumber, spnIndex = -1;
     public static String teamNumber;
     public static boolean isFromUser;
     public boolean swichFields;

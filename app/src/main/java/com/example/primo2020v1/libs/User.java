@@ -15,6 +15,7 @@ public class User {
     public static ArrayList<String> members = new ArrayList<>();
     public static ArrayList<String> masterRanks = new ArrayList<>();
     public static int currentGame = 1;
+    public static int liveMatch = 1;
     public static String username = "Scouter";
     public static String userRank = "Scouter";
 

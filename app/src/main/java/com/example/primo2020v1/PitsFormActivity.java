@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,14 +25,15 @@ import com.example.primo2020v1.libs.User;
 import com.google.firebase.database.DatabaseReference;
 
 public class PitsFormActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText edRobotMass, edProgLanguage, edTeamNumber, edComment, edWheelsOther;
+    private EditText edRobotMass, edComment, edWheelsOther;
+    private AutoCompleteTextView edTeamNumber;
     private TextView tvTeamName;
     private ImageView imgCPPC, imgCPRC, imgEndGame;
     private Switch switchAuto, switchTrench, switchBumpers;
     private Button btnSubmit, btnBack;
     private Spinner spnLanguage, spnWheels, spnIntake, spnPCCarry, spnShoot;
     private int cpIndex, rcIndex, endgameIndex;
-    private String selectedWheels, selectedIntake, selectedCarry, selectedShoot;
+    private String selectedWheels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,6 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         switchBumpers = findViewById(R.id.switchBumpers);
 
         selectedWheels = "";
-        selectedIntake = "";
-        selectedCarry = "";
-        selectedShoot = "";
         cpIndex = 0;
         rcIndex = 0;
         endgameIndex = 1;
@@ -93,6 +92,10 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         imgCPPC.setOnClickListener(this);
         imgCPRC.setOnClickListener(this);
         imgEndGame.setOnClickListener(this);
+
+        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this, android.R.layout.simple_dropdown_item_1line, User.participants.keySet().toArray());
+        edTeamNumber.setAdapter(adapter);
+        edTeamNumber.setThreshold(1);
 
         edTeamNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -132,42 +135,6 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 selectedWheels = (String) spnWheels.getSelectedItem();
-            }
-        });
-
-        spnIntake.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedIntake = (String) spnIntake.getSelectedItem();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedIntake = (String) spnIntake.getSelectedItem();
-            }
-        });
-
-        spnPCCarry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedCarry = (String) spnPCCarry.getSelectedItem();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedCarry = (String) spnPCCarry.getSelectedItem();
-            }
-        });
-
-        spnShoot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedShoot = (String) spnShoot.getSelectedItem();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedShoot = (String) spnShoot.getSelectedItem();
             }
         });
     }
@@ -212,7 +179,6 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         boolean valid = !edTeamNumber.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("") &&
                 !edComment.getText().toString().trim().equals("") &&
-                !edProgLanguage.getText().toString().trim().equals("") &&
                 User.participants.containsKey(Integer.parseInt(name));
 
         if (selectedWheels.equals("Other"))
@@ -229,14 +195,12 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         else
             wheels = edWheelsOther.getText().toString().trim();
 
-        Pit pit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), edProgLanguage.getText().toString().trim(),
-                wheels, selectedIntake, selectedCarry, selectedShoot,
+        Pit pit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), spnLanguage.getSelectedItem().toString(),
+                wheels, spnIntake.getSelectedItem().toString(), spnPCCarry.getSelectedItem().toString(), spnShoot.getSelectedItem().toString(),
                 switchAuto.isActivated(), switchTrench.isActivated(), switchBumpers.isActivated(),
                 endgameIndex, rcIndex, cpIndex);
 
         dbRef.setValue(pit);
-
-
     }
 
     private void openDialog() {

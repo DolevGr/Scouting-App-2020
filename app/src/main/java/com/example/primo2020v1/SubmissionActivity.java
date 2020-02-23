@@ -14,11 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.primo2020v1.Adapters.CyclesAdapter;
 import com.example.primo2020v1.AlertDialogs.MissingTeamNumberAlertDialog;
 import com.example.primo2020v1.AlertDialogs.OverrideExistingMatchAlertDialog;
-import com.example.primo2020v1.libs.Cycle;
-import com.example.primo2020v1.libs.FormInfo;
-import com.example.primo2020v1.libs.GeneralFunctions;
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Cycle;
+import com.example.primo2020v1.utils.FormInfo;
+import com.example.primo2020v1.utils.GeneralFunctions;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -108,6 +108,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.btnSubmit:
                 btnSubmit.setEnabled(false);
+                btnBack.setEnabled(false);
                 if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
                     dbRef = dbRef.child(teamNumber);
                     onSubmit();

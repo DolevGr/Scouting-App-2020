@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.primo2020v1.R;
-import com.example.primo2020v1.libs.Match;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Match;
+import com.example.primo2020v1.utils.User;
 
 import java.util.ArrayList;
 
@@ -104,6 +104,13 @@ public class GamesAdapter extends ArrayAdapter<Match> {
                 tvB2.setTextColor(context.getResources().getColor(R.color.highlightedTeam));
             } else if (tvB3.getText().toString().equals(this.highlightedTeam)) {
                 tvB3.setTextColor(context.getResources().getColor(R.color.highlightedTeam));
+            }
+        }
+
+        if (!enable) {
+            if (match.getGameNum() <= User.liveMatch) {
+                ImageView imgMarked = view.findViewById(R.id.imgMarked);
+                imgMarked.setImageResource(R.drawable.ic_check);
             }
         }
 

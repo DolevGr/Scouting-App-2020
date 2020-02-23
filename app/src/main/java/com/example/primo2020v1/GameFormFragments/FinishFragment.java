@@ -3,7 +3,6 @@ package com.example.primo2020v1.GameFormFragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +17,12 @@ import androidx.fragment.app.Fragment;
 import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.SubmissionActivity;
-import com.example.primo2020v1.libs.Cycle;
-import com.example.primo2020v1.libs.FormInfo;
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Cycle;
+import com.example.primo2020v1.utils.FormInfo;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.User;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 public class FinishFragment extends Fragment implements View.OnClickListener {
     public interface FinishListener{

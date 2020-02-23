@@ -57,7 +57,6 @@ public class StatsAdapter extends ArrayAdapter {
 
         DecimalFormat df = new DecimalFormat("#.##");
         for (int i = 0; i < tvs.size(); i++) {
-            Log.d(TAG, "getView: " + i);
             tvs.get(i).setText(df.format(values.get(i)));
             if (i == 5)
                 tvs.get(i).setText(df.format(values.get(i) * 100) + "%");

@@ -19,9 +19,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.Pit;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.Pit;
+import com.example.primo2020v1.utils.User;
 import com.google.firebase.database.DatabaseReference;
 
 public class PitsFormActivity extends AppCompatActivity implements View.OnClickListener {
@@ -164,7 +164,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                     finish();
                     startActivity(new Intent(PitsFormActivity.this, DrawerActivity.class));
                 } else {
-                    Toast.makeText(this, "Field is missing", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Fields are missing", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -178,7 +178,6 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         String name = edTeamNumber.getText().toString().trim();
         boolean valid = !edTeamNumber.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("") &&
-                !edComment.getText().toString().trim().equals("") &&
                 User.participants.containsKey(Integer.parseInt(name));
 
         if (selectedWheels.equals("Other"))
@@ -189,11 +188,9 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
     private void onSubmit() {
         DatabaseReference dbRef = User.databaseReference.child(Keys.TEAMS).child(edTeamNumber.getText().toString().trim()).child(Keys.PIT);
-        String wheels = "";
+        String wheels = edWheelsOther.getText().toString().trim();
         if (!selectedWheels.equals("Other"))
             wheels = (String) spnWheels.getSelectedItem();
-        else
-            wheels = edWheelsOther.getText().toString().trim();
 
         Pit pit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), spnLanguage.getSelectedItem().toString(),
                 wheels, spnIntake.getSelectedItem().toString(), spnPCCarry.getSelectedItem().toString(), spnShoot.getSelectedItem().toString(),

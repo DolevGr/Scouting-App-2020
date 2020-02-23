@@ -16,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.primo2020v1.R;
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.Statistics;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.Statistics;
+import com.example.primo2020v1.utils.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,11 +71,11 @@ public class AbilityRatingFragment extends Fragment implements AdapterView.OnIte
     }
 
     private void setListViewAdapter() {
+        double rating;
         teamsRating.clear();
 
         for (Integer team : allStatistics.keySet()) {
             Statistics statistics = allStatistics.get(team);
-            double rating;
             if (category.equals(categories[0]) || category.equals(categories[1]) || category.equals(categories[2]))
                 rating = statistics.getCategory(category) / statistics.getNumberOfMatches();
             else
@@ -111,13 +111,10 @@ public class AbilityRatingFragment extends Fragment implements AdapterView.OnIte
         }
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (empty)
-                    Toast.makeText(getContext(), "Stats were not found", Toast.LENGTH_SHORT).show();
-            }
-        }, 500);
+        handler.postDelayed(() -> {
+            if (empty)
+                Toast.makeText(getContext(), "Stats were not found", Toast.LENGTH_SHORT).show();
+        }, 10000);
 
     }
 
@@ -125,7 +122,7 @@ public class AbilityRatingFragment extends Fragment implements AdapterView.OnIte
         team = team.child(Keys.STATS);
         for (DataSnapshot ds : team.getChildren()) {
             if (ds.getKey().equals(Keys.STATS_SUM)) {
-                Statistics statistics = ds.getValue(Statistics.class).copy();
+                Statistics statistics = ds.getValue(Statistics.class);
                 allStatistics.put(teamNumber, statistics);
             }
 

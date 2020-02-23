@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -66,11 +65,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (isValidName() && isValidPassword()) {
                             try {
-//                                    String path = Environment.getDataDirectory().getPath();
-//                                    FileWriter loginFileWriter = new FileWriter(path + "/LoginInfo.txt");
-//                                    loginFileWriter.write(name + '\n' + password + '\n' + rank + '\n');
-//                                    loginFileWriter.close();
-
                                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("LoginInfo.txt", Context.MODE_PRIVATE));
                                 outputStreamWriter.write(name + '\n' + password + '\n' + rank + '\n');
                                 outputStreamWriter.close();
@@ -100,24 +94,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        String path = Environment.getDataDirectory().getPath();
         try {
-//            BufferedReader loginFileReader = new BufferedReader(new FileReader(path + "/LoginInfo.txt"));
-//            String name = loginFileReader.readLine();
-//            String pass = loginFileReader.readLine();
-//            String privString = loginFileReader.readLine();
-//            loginFileReader.close();
-//            edName.setText(name);
-//            edPass.setText(pass);
-            InputStream inputStream = context.openFileInput("LoginInfo.txt");
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(context.openFileInput("LoginInfo.txt")));
+            if (bufferedReader != null) {
                 name = bufferedReader.readLine();
                 password = bufferedReader.readLine();
                 rank = bufferedReader.readLine();
-                inputStream.close();
+                bufferedReader.close();
 
                 if (name != null && password != null && rank != null) {
                     edName.setText(name);

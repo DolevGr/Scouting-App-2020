@@ -17,7 +17,7 @@ import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.LoginActivity;
 import com.example.primo2020v1.PitsFormActivity;
 import com.example.primo2020v1.R;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.User;
 
 public class MatchesFragment extends Fragment implements View.OnClickListener {
     private ListView lvGames;

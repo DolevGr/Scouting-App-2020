@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of Shots: "
+                android:text="Average Number of Shots: "
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -77,7 +77,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lower: "
+                android:text="Average Lower: "
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -102,7 +102,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Outer: "
+                android:text="Average Outer: "
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -127,7 +127,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Inner: "
+                android:text="Average Inner: "
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 

@@ -20,18 +20,6 @@
         app:layout_constraintVertical_bias="0.15" />
 
     <EditText
-        android:id="@+id/edTeamNumber"
-        android:layout_width="190dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Team Number"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="@+id/spnTeam"
-        app:layout_constraintStart_toStartOf="@+id/spnTeam"
-        app:layout_constraintTop_toBottomOf="@+id/spnTeam" />
-
-    <EditText
         android:id="@+id/edGameNumber"
         android:layout_width="190dp"
         android:layout_height="50dp"
@@ -39,11 +27,24 @@
         android:ems="10"
         android:hint="Game Number"
         android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/spnTeam"
+        app:layout_constraintStart_toStartOf="@+id/spnTeam"
+        app:layout_constraintTop_toBottomOf="@+id/spnTeam" />
+
+    <EditText
+        android:id="@+id/edTeamNumber"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Team Number"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
-        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
-        app:layout_constraintTop_toBottomOf="@+id/edTeamNumber"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/edGameNumber"
+        app:layout_constraintStart_toStartOf="@+id/edGameNumber"
+        app:layout_constraintTop_toBottomOf="@+id/edGameNumber"
+        app:layout_constraintVertical_bias="0.0"/>
+
 
 
     <Spinner

@@ -1,4 +1,4 @@
-package com.example.primo2020v1.libs;
+package com.example.primo2020v1.utils;
 
 public class Keys {
     public static final String FORM_INFO = "FormInfo";
@@ -30,6 +30,7 @@ public class Keys {
     public static final String STATS = "Stats";
     public static final String STATS_SUM = "Sum";
     public static final String COMMENTS = "Comments";
+    public static final String LAST_UPDATED = "LastUpdated";
 
     public static final String INPUT_PIT = "InputPit";
 }

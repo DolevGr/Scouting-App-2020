@@ -1,4 +1,4 @@
-package com.example.primo2020v1.libs;
+package com.example.primo2020v1.utils;
 
 import com.example.primo2020v1.R;
 import com.google.firebase.database.DatabaseReference;
@@ -16,6 +16,7 @@ public class User {
     public static ArrayList<String> masterRanks = new ArrayList<>();
     public static int currentGame = 1;
     public static int liveMatch = 1;
+    public static boolean hasAlerted = false;
     public static String username = "Scouter";
     public static String userRank = "Scouter";
 

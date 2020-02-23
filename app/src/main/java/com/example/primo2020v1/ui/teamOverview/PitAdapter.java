@@ -7,14 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.primo2020v1.R;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.User;
 
 import java.util.ArrayList;
 
@@ -47,9 +46,9 @@ public class PitAdapter extends ArrayAdapter {
         tvs.add(view.findViewById(R.id.tvCarryPit));
         tvs.add(view.findViewById(R.id.tvShootPit));
         tvs.add(view.findViewById(R.id.tvCommentPit));
-        Switch switchAuto = view.findViewById(R.id.switchAutoPit);
-        Switch switchTrench = view.findViewById(R.id.switchTrenchPit);
-        Switch switchBumpers = view.findViewById(R.id.switchBumpersPit);
+        tvs.add(view.findViewById(R.id.tvAutoPit));
+        tvs.add(view.findViewById(R.id.tvTrenchPit));
+        tvs.add(view.findViewById(R.id.tvBumpersPit));
         ImageView img1 = view.findViewById(R.id.imgEndGamePit);
         ImageView img2 = view.findViewById(R.id.imgPCPit);
         ImageView img3 = view.findViewById(R.id.imgRCPit);
@@ -58,13 +57,6 @@ public class PitAdapter extends ArrayAdapter {
         for (i = 0; i < tvs.size(); i++) {
             tvs.get(i).setText(values.get(i));
         }
-
-        switchAuto.setChecked(Boolean.parseBoolean(values.get(i++)));
-        switchAuto.setEnabled(false);
-        switchTrench.setChecked(Boolean.parseBoolean(values.get(i++)));
-        switchTrench.setEnabled(false);
-        switchBumpers.setChecked(Boolean.parseBoolean(values.get(i++)));
-        switchBumpers.setEnabled(false);
 
         img1.setImageResource(User.endGameImages[Integer.parseInt(values.get(i++))]);
         Log.d(TAG, "getView: " + Integer.parseInt(values.get(i)));

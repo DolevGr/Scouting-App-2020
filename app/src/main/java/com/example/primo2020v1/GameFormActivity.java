@@ -15,11 +15,11 @@ import com.example.primo2020v1.GameFormFragments.EndGameFragment;
 import com.example.primo2020v1.GameFormFragments.FinishFragment;
 import com.example.primo2020v1.GameFormFragments.MatchSettingsFragment;
 import com.example.primo2020v1.GameFormFragments.PowerCellsFragment;
-import com.example.primo2020v1.libs.Cycle;
-import com.example.primo2020v1.libs.FormInfo;
-import com.example.primo2020v1.libs.GeneralFunctions;
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Cycle;
+import com.example.primo2020v1.utils.FormInfo;
+import com.example.primo2020v1.utils.GeneralFunctions;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;

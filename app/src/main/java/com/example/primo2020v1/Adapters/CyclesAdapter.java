@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import com.example.primo2020v1.EditFormActivity;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.SubmissionActivity;
-import com.example.primo2020v1.libs.Cycle;
+import com.example.primo2020v1.utils.Cycle;
 
 import java.util.ArrayList;
 

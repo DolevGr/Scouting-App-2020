@@ -46,7 +46,7 @@
 
         <service
             android:name=".ScoutingService"
-            android:stopWithTask="false">
+            android:stopWithTask="true">
             <intent-filter>
                 <action android:name=".ScoutingService" />
                 <category android:name="android.intent.category.DEFAULT" />

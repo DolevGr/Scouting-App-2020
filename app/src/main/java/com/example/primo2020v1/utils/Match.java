@@ -1,6 +1,10 @@
-package com.example.primo2020v1.libs;
+package com.example.primo2020v1.utils;
 
-public class Match {
+import android.graphics.Color;
+
+import java.io.Serializable;
+
+public class Match implements Serializable {
     public String fRed, mRed, cRed,
             fBlue, mBlue, cBlue;
     private int gameNum;
@@ -59,6 +63,14 @@ public class Match {
     public boolean hasTeam(String teamNumber) {
         return cRed.equals(teamNumber) || mRed.equals(teamNumber) || fRed.equals(teamNumber) ||
                 cBlue.equals(teamNumber) || mBlue.equals(teamNumber) || fBlue.equals(teamNumber);
+    }
+
+    public int teamColor(String team) {
+        if (cRed.equals(team) || mRed.equals(team) || fRed.equals(team))
+            return Color.RED;
+        else if (cBlue.equals(team) || mBlue.equals(team) || fBlue.equals(team))
+            return Color.BLUE;
+        return Color.BLACK;
     }
 
     @Override

@@ -11,17 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.Match;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.Match;
+import com.example.primo2020v1.utils.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
-    Intent in;
-    String lastUpdated;
+    private Intent in;
+    private String lastUpdated, lastUpdatedDB;
 
     public static Intent gameService;
     private boolean mIsBound = false;
@@ -36,34 +36,20 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-//        try {
-//            File file = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "LastUpdated.txt");
-//            file.createNewFile();
-//            InputStream inputStream = getApplicationContext().openFileInput("LastUpdated.txt");
-//
-//            if (inputStream != null) {
-//                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//                lastUpdated = bufferedReader.readLine();
-//                inputStream.close();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         User.masterRanks.add("Coach");
         User.masterRanks.add("Dolev");
 
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString().trim());
+
+                lastUpdatedDB = dataSnapshot.child(Keys.LAST_UPDATED).getValue().toString().trim();
+
                 setUsersNames(dataSnapshot);
                 setMatches(dataSnapshot);
                 setAllTeams(dataSnapshot);

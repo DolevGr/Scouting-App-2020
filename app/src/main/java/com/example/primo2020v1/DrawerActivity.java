@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.User;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,7 +77,7 @@ public class DrawerActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         //Navigation view config
-        if (User.masterRanks.contains(User.userRank)) {
+        if (User.masterRanks.contains(User.userRank) || User.userRank.contains("++")) {
             setSupportActionBar(toolbar);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.navMatches, R.id.navTeamOverview, R.id.navAbilityRating,
@@ -86,12 +88,16 @@ public class DrawerActivity extends AppCompatActivity {
             navController.navigate(res);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
+
+            View headerView = navigationView.getHeaderView(0);
+            TextView tvHeader = headerView.findViewById(R.id.tvHeader);
+            tvHeader.setText("Hello " + User.username);
         } else {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
 
         //Notifications config
-        if (User.userRank.equals("Pit") || User.masterRanks.contains(User.userRank)) {
+        if (User.userRank.contains("Pit") || User.masterRanks.contains(User.userRank)) {
             //startService();
             stopService(new Intent(this, ScoutingService.class));
             startService(new Intent(this, ScoutingService.class));

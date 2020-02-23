@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.primo2020v1.DrawerActivity;
-import com.example.primo2020v1.libs.GeneralFunctions;
+import com.example.primo2020v1.utils.GeneralFunctions;
 
 public class CancelFormAlertDialog extends AppCompatDialogFragment {
 

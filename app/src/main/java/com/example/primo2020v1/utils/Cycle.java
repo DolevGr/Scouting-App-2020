@@ -1,4 +1,4 @@
-package com.example.primo2020v1.libs;
+package com.example.primo2020v1.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;

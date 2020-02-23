@@ -1,4 +1,4 @@
-package com.example.primo2020v1.libs;
+package com.example.primo2020v1.utils;
 
 public class Statistics {
     private int numberOfMatches, totalCycles, totalScore, totalShots, totalPCmissed, totalPClower, totalPCouter, totalPCinner,
@@ -228,6 +228,6 @@ public class Statistics {
         else
             totalRating = this.dbBalanced;
 
-        return totalRating / numberOfMatches;
+        return totalRating;
     }
 }

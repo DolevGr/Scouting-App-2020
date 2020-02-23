@@ -207,35 +207,87 @@
 
         </LinearLayout>
 
-        <Switch
-            android:id="@+id/switchAutoPit"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Has Autonomous"
-            android:textColor="@color/defaultColor"
-            android:textSize="16sp"
-            android:thumbTint="@color/mainOrange" />
+            android:orientation="horizontal">
 
-        <Switch
-            android:id="@+id/switchTrenchPit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Under Trench"
-            android:textColor="@color/defaultColor"
-            android:textSize="16sp"
-            android:thumbTint="@color/mainOrange" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Has Autonomous: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
 
-        <Switch
-            android:id="@+id/switchBumpersPit"
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="0dp"/>
+
+            <TextView
+                android:id="@+id/tvAutoPit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Over Bumpers"
-            android:textColor="@color/defaultColor"
-            android:textSize="16sp"
-            android:thumbTint="@color/mainOrange" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Can Go Under the Trench: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="0dp"/>
+
+            <TextView
+                android:id="@+id/tvTrenchPit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Can Go Over Bumpers: "
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="0dp"/>
+
+            <TextView
+                android:id="@+id/tvBumpersPit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/defaultColor"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="wrap_content"

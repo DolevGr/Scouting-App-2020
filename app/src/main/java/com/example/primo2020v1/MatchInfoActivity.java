@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.Adapters.CyclesAdapter;
-import com.example.primo2020v1.libs.Cycle;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Cycle;
+import com.example.primo2020v1.utils.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

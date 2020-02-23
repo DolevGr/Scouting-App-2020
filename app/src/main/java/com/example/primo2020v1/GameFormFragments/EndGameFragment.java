@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.R;
-import com.example.primo2020v1.libs.Keys;
-import com.example.primo2020v1.libs.User;
+import com.example.primo2020v1.utils.Keys;
+import com.example.primo2020v1.utils.User;
 
 public class EndGameFragment extends Fragment implements View.OnClickListener {
     private Intent egIntent;

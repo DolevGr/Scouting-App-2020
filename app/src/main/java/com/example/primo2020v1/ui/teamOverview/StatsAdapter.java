@@ -1,7 +1,6 @@
 package com.example.primo2020v1.ui.teamOverview;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import com.example.primo2020v1.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StatsAdapter extends ArrayAdapter {
     private int res;

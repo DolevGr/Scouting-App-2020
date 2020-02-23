@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
     private Intent in;
-    private String lastUpdated, lastUpdatedDB;
+    private String lastUpdated, lastUpdatedDB, appVersion, versionDB;
 
     public static Intent gameService;
     private boolean mIsBound = false;
@@ -47,34 +47,36 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString().trim());
-
                 lastUpdatedDB = dataSnapshot.child(Keys.LAST_UPDATED).getValue().toString().trim();
+                versionDB = dataSnapshot.child("Version").getValue().toString().trim();
 
-                setUsersNames(dataSnapshot);
-                setMatches(dataSnapshot);
-                setAllTeams(dataSnapshot);
+                appVersion = getResources().getString(R.string.app_name);
+                Log.d(TAG, "onDataChange: " + versionDB + " : " + getResources().getString(R.string.app_name));
+                if (!appVersion.contains(versionDB)) {
+                    new AlertDialog.Builder(SplashActivity.this)
+                            .setTitle("Wrong Version")
+                            .setMessage("Must Update App")
+                            .setPositiveButton("Ok", (dialog, which) -> finish())
+                            .show();
+                } else {
+                    setUsersNames(dataSnapshot);
+                    setMatches(dataSnapshot);
+                    setAllTeams(dataSnapshot);
 
-                gameService = new Intent();
-                gServ = new ScoutingService();
-                gameService.setClass(SplashActivity.this, ScoutingService.class);
-                startService(gameService);
+                    gameService = new Intent();
+                    gServ = new ScoutingService();
+                    gameService.setClass(SplashActivity.this, ScoutingService.class);
+                    startService(gameService);
 
 
-                in = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(in);
-                finish();
+                    in = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(in);
+                    finish();
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                alertDialog.setTitle("No Internet");
-                alertDialog.setMessage("Trying to connect...");
-
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", (dialog, which) -> {
-                });
-
-                alertDialog.show();
             }
         });
 

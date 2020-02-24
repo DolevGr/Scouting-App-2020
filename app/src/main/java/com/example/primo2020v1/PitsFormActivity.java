@@ -177,8 +177,8 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
     private boolean isValid() {
         String name = edTeamNumber.getText().toString().trim();
         boolean valid = !edTeamNumber.getText().toString().trim().equals("") &&
-                !edRobotMass.getText().toString().trim().equals("") &&
-                User.participants.containsKey(Integer.parseInt(name));
+                !edRobotMass.getText().toString().trim().equals("");
+//        && User.participants.containsKey(Integer.parseInt(name));
 
         if (selectedWheels.equals("Other"))
             valid = valid && !edWheelsOther.getText().toString().trim().equals("");
@@ -194,7 +194,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
         Pit pit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), spnLanguage.getSelectedItem().toString(),
                 wheels, spnIntake.getSelectedItem().toString(), spnPCCarry.getSelectedItem().toString(), spnShoot.getSelectedItem().toString(),
-                switchAuto.isActivated(), switchTrench.isActivated(), switchBumpers.isActivated(),
+                switchAuto.isChecked(), switchTrench.isChecked(), switchBumpers.isChecked(),
                 endgameIndex, rcIndex, cpIndex);
 
         dbRef.setValue(pit);

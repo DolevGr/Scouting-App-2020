@@ -54,8 +54,8 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d(TAG, "onDataChange: " + versionDB + " : " + getResources().getString(R.string.app_name));
                 if (!appVersion.contains(versionDB)) {
                     new AlertDialog.Builder(SplashActivity.this)
-                            .setTitle("Wrong Version")
-                            .setMessage("Must Update App")
+                            .setTitle("Version " + appVersion + " Is Incorrect")
+                            .setMessage("The current version of the app is " + versionDB + ".\nPlease update your application to continue.")
                             .setPositiveButton("Ok", (dialog, which) -> finish())
                             .show();
                 } else {

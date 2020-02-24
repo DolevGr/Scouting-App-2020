@@ -64,7 +64,7 @@ public class GamesAdapter extends ArrayAdapter<Match> {
         tvGame.setText(Integer.toString(match.getGameNum()));
         int colorOurMatch = context.getResources().getColor(R.color.ourGame),
                 backgroundColorOurMatch = context.getResources().getColor(R.color.mainBlue);
-        if (enable && position == User.currentGame - 1) {
+        if (enable && position == User.liveMatch - 1) {
             tvGame.setTextColor(Color.parseColor("#f37743"));
             colorOurMatch = context.getResources().getColor(R.color.mainBlue);
             backgroundColorOurMatch = context.getResources().getColor(R.color.currentMatch);

@@ -150,7 +150,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 //                            Toast.makeText(getApplicationContext(), "Team does not play in this match", Toast.LENGTH_SHORT).show();
 //                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Invalid team or Match", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Form was not found", Toast.LENGTH_SHORT).show();
                     }
                     btnSubmit.setOnClickListener(this);
                 }
@@ -219,7 +219,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 if (dataSnapshot.hasChild(teamNumber)) {
                     dataSnapshot = dataSnapshot.child(teamNumber);
 
-                    if (cyclesAdapter != null && !cyclesAdapter.isEmpty())
+                    if (cyclesAdapter != null)
                         cyclesAdapter.clear();
 
                     getFormInfo(dataSnapshot.child(Integer.toString(gameNumber)));
@@ -265,7 +265,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean isValidGameNumber() {
-        return gameNumber > 0 && gameNumber < User.matches.size();
+        return gameNumber > 0 && gameNumber < User.currentGame;
     }
 
     private boolean isValidTeamNumber() {

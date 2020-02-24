@@ -35,8 +35,10 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
         btnExit = (Button) v.findViewById(R.id.btnExit);
         btnPitsForm = v.findViewById(R.id.btnPits);
 
-        gamesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, User.matches, "4586", true);
-        lvGames.setAdapter(gamesAdapter);
+        if (gamesAdapter == null) {
+            gamesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, User.matches, "4586", true);
+            lvGames.setAdapter(gamesAdapter);
+        }
 
         btnNewForm.setOnClickListener(this);
         btnEditForm.setOnClickListener(this);

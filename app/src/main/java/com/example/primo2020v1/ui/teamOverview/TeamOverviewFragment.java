@@ -263,6 +263,7 @@ public class TeamOverviewFragment extends Fragment {
             teamNumber = edTeamNumber.getText().toString().trim();
 
             if (isValid()) {
+                valuesMatch.clear();
                 showMatches();
                 setListAction();
 

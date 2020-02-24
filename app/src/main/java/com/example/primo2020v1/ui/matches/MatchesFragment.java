@@ -52,6 +52,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNewForm:
+                User.currentGame = User.liveMatch;
                 next = new Intent(getContext(), GameFormActivity.class);
                 break;
 

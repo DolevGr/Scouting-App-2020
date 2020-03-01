@@ -11,12 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.primo2020v1.utils.GeneralFunctions;
 import com.example.primo2020v1.utils.Keys;
 import com.example.primo2020v1.utils.Match;
 import com.example.primo2020v1.utils.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
@@ -46,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
         User.databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString().trim());
+                User.formMatch = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString().trim());
                 lastUpdatedDB = dataSnapshot.child(Keys.LAST_UPDATED).getValue().toString().trim();
                 versionDB = dataSnapshot.child("Version").getValue().toString().trim();
 
@@ -59,17 +63,67 @@ public class SplashActivity extends AppCompatActivity {
                             .setPositiveButton("Ok", (dialog, which) -> finish())
                             .show();
                 } else {
-                    setUsersNames(dataSnapshot);
-                    setMatches(dataSnapshot);
-                    setAllTeams(dataSnapshot);
+//                    setUsersNames(dataSnapshot);
+//                    setMatches(dataSnapshot);
+//                    setParticipants(dataSnapshot);
 
                     gameService = new Intent();
                     gServ = new ScoutingService();
                     gameService.setClass(SplashActivity.this, ScoutingService.class);
                     startService(gameService);
 
-
                     in = new Intent(SplashActivity.this, LoginActivity.class);
+
+                    Map<String, String> infoMap = GeneralFunctions.readFromFile("Info.txt", getApplicationContext());
+
+                    String name = infoMap.get("Name");
+                    String password = infoMap.get("Password");
+                    String rank = infoMap.get("Rank");
+                    String lastUpdated = infoMap.get("Date");
+
+                    if (lastUpdated == null || !lastUpdated.equals(lastUpdatedDB)) {
+
+                        infoMap.put("Date", lastUpdatedDB);
+                        GeneralFunctions.writeToFile("Info.txt", getApplicationContext(), infoMap);
+
+                        setParticipants(dataSnapshot);
+                        GeneralFunctions.writeToFile("Participants.txt", getApplicationContext(), User.participants);
+
+                        setMatches(dataSnapshot);
+                        GeneralFunctions.writeObjectToFile("Matches.ser", getApplicationContext(), User.matches);
+
+                    } else {
+                        Map<String, String> map = GeneralFunctions.readFromFile("Participants.txt", getApplicationContext());
+                        if (map.isEmpty()) {
+                            setParticipants(dataSnapshot);
+                        } else {
+                            for (Map.Entry<String, String> ent : map.entrySet()) {
+                                User.participants.put(Integer.parseInt(ent.getKey()), ent.getValue());
+                            }
+                        }
+
+                        User.matches = (ArrayList<Match>) GeneralFunctions.readObjectFromFile("Matches.ser", getApplicationContext());
+                    }
+
+                    if (User.participants.isEmpty()) {
+                        setParticipants(dataSnapshot);
+                    }
+
+//                    setUsersNames(dataSnapshot);
+
+                    if (User.matches == null || User.matches.isEmpty()) {
+                        setMatches(dataSnapshot);
+                        Log.d(TAG, "onDataChange: Dead");
+                    }
+
+                    if (name != null && password != null && rank != null) {
+
+                        in = new Intent(SplashActivity.this, DrawerActivity.class);
+                        in.putExtra("Username", name);
+                        in.putExtra("Rank", rank);
+                    }
+
+
                     startActivity(in);
                     finish();
                 }
@@ -92,16 +146,7 @@ public class SplashActivity extends AppCompatActivity {
         Log.d(TAG, "setMatches: " + User.matches.toString());
     }
 
-    private void setUsersNames(DataSnapshot dataSnapshot) {
-        DataSnapshot dsUsers = dataSnapshot.child(Keys.USERS);
-        for (DataSnapshot ds : dsUsers.getChildren()) {
-            User u = ds.getValue(User.class);
-            User.members.add(u.getName());
-        }
-        Log.d(TAG, "setUsersNames: " + User.members.toString());
-    }
-
-    private void setAllTeams(DataSnapshot dataSnapshot) {
+    private void setParticipants(DataSnapshot dataSnapshot) {
         DataSnapshot dsParticipants = dataSnapshot.child("Participants");
 
         for (DataSnapshot ds : dsParticipants.getChildren()) {

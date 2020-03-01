@@ -39,7 +39,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     private ArrayList<Cycle> cycles;
     private FormInfo formInfo;
     public String teamNumber = "";
-    int spnOptionSelectedIndex = 0, gameNumber = User.currentGame,
+    int spnOptionSelectedIndex = 0, gameNumber = User.formMatch,
             cpRotation, cpPosition,
             endGameImageId = 0, finishImgId = 0, finishTicket = 0,
             finishDidCrash = 0, finishDefence;
@@ -128,7 +128,7 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
     @Override
     public void setDataMatchSettings(Intent msIntent) {
         teamNumber = msIntent.getStringExtra(Keys.MS_TEAM);
-        gameNumber = msIntent.getIntExtra(Keys.MS_NUMBER, User.currentGame);
+        gameNumber = msIntent.getIntExtra(Keys.MS_NUMBER, User.formMatch);
         spnOptionSelectedIndex = msIntent.getIntExtra(Keys.MS_TEAM_INDEX, 0);
     }
 

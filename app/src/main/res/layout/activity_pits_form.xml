@@ -35,21 +35,21 @@
         android:id="@+id/edRobotMass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
+        android:width="130dp"
         android:ems="10"
         android:hint="Robot's Mass (kg)"
         android:inputType="numberDecimal"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/space2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
+        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
         app:layout_constraintTop_toBottomOf="@+id/edTeamNumber" />
 
     <Switch
         android:id="@+id/switchAuto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="10dp"
         android:text="Autonomous"
         android:thumbTint="@color/mainOrange"
         app:layout_constraintEnd_toEndOf="@+id/imgCPRC"
@@ -107,18 +107,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:width="130dp"
         android:ems="10"
         android:hint="Team Number"
         android:inputType="number"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvPitsForm"
-        app:layout_constraintStart_toStartOf="@+id/tvPitsForm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPitsForm" />
 
     <TextView
         android:id="@+id/tvTeamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/edTeamNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -127,15 +130,16 @@
 
     <EditText
         android:id="@+id/edComment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:ems="10"
         android:hint="Comment"
         android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchBumpers" />
 
@@ -187,8 +191,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/edTeamNumber"
-        app:layout_constraintStart_toStartOf="@+id/edTeamNumber"
+        app:layout_constraintEnd_toEndOf="@+id/tvPitsForm"
+        app:layout_constraintStart_toStartOf="@+id/tvPitsForm"
         app:layout_constraintTop_toBottomOf="@+id/edRobotMass" />
 
     <Spinner
@@ -224,10 +228,25 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/edRobotMass"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.305"
-        app:layout_constraintStart_toEndOf="@+id/space2"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/edRobotMass"
         app:layout_constraintTop_toTopOf="@+id/edRobotMass"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.47" />
+
+    <Button
+        android:id="@+id/btnSearchPit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:minWidth="60dp"
+        android:minHeight="40dp"
+        android:text="Search"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/space2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvTeamName"
+        app:layout_constraintTop_toTopOf="@+id/edTeamNumber" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

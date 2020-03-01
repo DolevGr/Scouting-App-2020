@@ -17,7 +17,10 @@ import com.example.primo2020v1.GameFormActivity;
 import com.example.primo2020v1.LoginActivity;
 import com.example.primo2020v1.PitsFormActivity;
 import com.example.primo2020v1.R;
+import com.example.primo2020v1.utils.GeneralFunctions;
 import com.example.primo2020v1.utils.User;
+
+import java.util.Map;
 
 public class MatchesFragment extends Fragment implements View.OnClickListener {
     private ListView lvGames;
@@ -29,13 +32,13 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
                              ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        lvGames = (ListView) v.findViewById(R.id.lvGames);
-        btnNewForm = (Button) v.findViewById(R.id.btnNewForm);
-        btnEditForm = (Button) v.findViewById(R.id.btnEditForm);
-        btnExit = (Button) v.findViewById(R.id.btnExit);
+        lvGames = v.findViewById(R.id.lvGames);
+        btnNewForm = v.findViewById(R.id.btnNewForm);
+        btnEditForm = v.findViewById(R.id.btnEditForm);
+        btnExit = v.findViewById(R.id.btnExit);
         btnPitsForm = v.findViewById(R.id.btnPits);
 
-        if (gamesAdapter == null) {
+        if (lvGames.getAdapter() == null && gamesAdapter == null) {
             gamesAdapter = new GamesAdapter(getContext(), R.layout.custom_games_layout, User.matches, "4586", true);
             lvGames.setAdapter(gamesAdapter);
         }
@@ -52,7 +55,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNewForm:
-                User.currentGame = User.liveMatch;
+                User.formMatch = User.liveMatch;
                 next = new Intent(getContext(), GameFormActivity.class);
                 break;
 
@@ -65,11 +68,13 @@ public class MatchesFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnExit:
-                try {
-                    getActivity().getApplicationContext().deleteFile("LoginInfo.txt");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Map<String, String> map = GeneralFunctions.readFromFile("Info.txt", getContext());
+
+                map.remove("Name");
+                map.remove("Password");
+                map.remove("Rank");
+                GeneralFunctions.writeToFile("Info.txt", getContext(), map);
+
                 next = new Intent(getContext(), LoginActivity.class);
                 getActivity().finish();
                 break;

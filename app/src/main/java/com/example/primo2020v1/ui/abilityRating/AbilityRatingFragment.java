@@ -2,6 +2,7 @@ package com.example.primo2020v1.ui.abilityRating;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class AbilityRatingFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private AbilityRatingViewModel slideshowViewModel;
@@ -93,10 +96,11 @@ public class AbilityRatingFragment extends Fragment implements AdapterView.OnIte
         empty = true;
         if (allStatistics.isEmpty()) {
             empty = false;
-                    dbRefSumStats.addListenerForSingleValueEvent(new ValueEventListener() {
+            dbRefSumStats.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot team : dataSnapshot.getChildren()) {
+                        Log.d(TAG, "onDataChange: " + team.getKey());
                         int teamNumber = Integer.parseInt(team.getKey());
                         setAllStatistics(team, teamNumber);
                     }

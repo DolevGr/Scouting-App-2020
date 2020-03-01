@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.example.primo2020v1.R;
 import com.example.primo2020v1.utils.User;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +41,12 @@ public class AbilityRatingAdapter extends ArrayAdapter {
         TextView tvRating = view.findViewById(R.id.tvRating);
         TextView tvNumber = view.findViewById(R.id.tvRatingNumberAbility);
 
+        DecimalFormat df = new DecimalFormat("#.##");
         tvTeamName.setText(User.participants.get(ranking.get(position).getKey()));
         tvTeamName.setTextColor(context.getResources().getColor(R.color.mainBlue));
         tvNumber.setText(Integer.toString(position + 1));
         tvTeamNumber.setText(ranking.get(position).getKey().toString());
-        tvRating.setText(ranking.get(position).getValue().toString());
+        tvRating.setText(df.format(ranking.get(position).getValue()));
 
         return view;
     }

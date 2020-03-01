@@ -1,5 +1,8 @@
 package com.example.primo2020v1.utils;
 
+import android.content.Context;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.primo2020v1.GameFormFragments.ControlPanelFragment;
@@ -12,10 +15,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class GeneralFunctions {
 
@@ -61,7 +73,7 @@ public class GeneralFunctions {
         MatchSettingsFragment.isFromUser = true;
         MatchSettingsFragment.teamNumber = "";
 //        MatchSettingsFragment.spnIndex = -1;
-        MatchSettingsFragment.gameNumber = User.currentGame;
+        MatchSettingsFragment.gameNumber = User.formMatch;
 
         PowerCellsFragment.phase = false;
         for (int i = 0; i < PowerCellsFragment.positions.length; i++) {
@@ -83,6 +95,7 @@ public class GeneralFunctions {
             dbCPRC, dbCPPC, dbBalanced, dbClimb, dbTimesCrashed, dbTimesDefended, dbYellowCard, dbRedCard;
 
     public static void onSubmit(DatabaseReference dbRef, final FormInfo fi, ArrayList<Cycle> c) {
+        Log.d(TAG, "onSubmit: " + fi.getMatchNumber());
         final DatabaseReference dbRefMatch = dbRef.child(Integer.toString(fi.getMatchNumber())),
                 dbRefStats = dbRef.child(Keys.STATS),
                 dbRefComments = User.databaseReference.child(Keys.COMMENTS)
@@ -160,5 +173,61 @@ public class GeneralFunctions {
         dbTimesDefended = 0;
         dbYellowCard = 0;
         dbRedCard = 0;
+    }
+
+
+    public static void writeObjectToFile(String filename, Context context, Serializable ser) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(context.openFileOutput(filename, Context.MODE_PRIVATE));
+            outputStream.writeObject(ser);
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object readObjectFromFile(String filename, Context context) {
+        try {
+            ObjectInputStream objectReader = new ObjectInputStream(context.openFileInput(filename));
+            Object obj = objectReader.readObject();
+            objectReader.close();
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static <K, V> void writeToFile(String filename, Context context, Map<K, V> map) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
+            for (Map.Entry<K, V> entry : map.entrySet()) {
+                outputStreamWriter.write(entry.getKey().toString() + "=" + entry.getValue().toString() + System.lineSeparator());
+            }
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Map<String, String> readFromFile(String filename, Context context) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(context.openFileInput(filename)));
+            if (bufferedReader.ready()) {
+                Map<String, String> map = new HashMap<>();
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    String[] split = line.split("=", 2);
+                    map.put(split[0], split[1]);
+                }
+
+                bufferedReader.close();
+                return map;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new HashMap<>();
     }
 }

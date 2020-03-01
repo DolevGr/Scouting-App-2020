@@ -1,8 +1,10 @@
 package com.example.primo2020v1.utils;
 
+import androidx.annotation.Nullable;
+
 public class Pit {
-    private String mass, comment, language,
-            wheels, intake, carry, shoot;
+    private String mass, comment,
+            wheels, language, intake, carry, shoot;
     private boolean hasAuto, canTrench, canBumpers;
     private int endGame, cprc, cppc;
 
@@ -130,5 +132,79 @@ public class Pit {
 
     public void setCppc(int cppc) {
         this.cppc = cppc;
+    }
+
+    public int getWheelsIndex() {
+        if (wheels.equals("6x6"))
+            return 0;
+        if (wheels.equals("8x8"))
+            return 1;
+        return 2;
+    }
+
+    public int getLanguageIndex() {
+        if (language.equals("Java"))
+            return 0;
+        if (language.equals("C++"))
+            return 1;
+        return 2;
+    }
+
+    public int getIntakeIndex() {
+        if (intake.equals("Floor"))
+            return 0;
+        if (intake.equals("Feeder"))
+            return 1;
+        if (intake.equals("Both"))
+            return 2;
+        return 3;
+    }
+
+    public int getCarryIndex() {
+        if (carry.equals("0"))
+            return 0;
+        if (carry.equals("1"))
+            return 1;
+        if (carry.equals("2"))
+            return 2;
+        if (carry.equals("3"))
+            return 3;
+        if (carry.equals("4"))
+            return 4;
+        return 5;
+    }
+
+    public int getShootIndex() {
+        if (shoot.equals("Lower"))
+            return 0;
+        if (shoot.equals("Higher"))
+            return 1;
+        if (shoot.equals("Both"))
+            return 2;
+        return 3;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return "Pit{" +
+                "mass='" + mass + '\'' +
+                ", comment='" + comment + '\'' +
+                ", language='" + language + '\'' +
+                ", wheels='" + wheels + '\'' +
+                ", intake='" + intake + '\'' +
+                ", carry='" + carry + '\'' +
+                ", shoot='" + shoot + '\'' +
+                ", hasAuto=" + hasAuto +
+                ", canTrench=" + canTrench +
+                ", canBumpers=" + canBumpers +
+                ", endGame=" + endGame +
+                ", cprc=" + cprc +
+                ", cppc=" + cppc +
+                '}';
     }
 }

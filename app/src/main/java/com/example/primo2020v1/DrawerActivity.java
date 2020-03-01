@@ -58,7 +58,7 @@ public class DrawerActivity extends AppCompatActivity {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User.currentGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
+                User.formMatch = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
             }
 
             @Override

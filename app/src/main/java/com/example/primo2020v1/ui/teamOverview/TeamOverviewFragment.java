@@ -159,7 +159,7 @@ public class TeamOverviewFragment extends Fragment {
                                 valuesStats.add((double) sumStats.getDbTimesDefended());
                                 valuesStats.add((double) sumStats.getDbYellowCard());
                                 valuesStats.add((double) sumStats.getDbRedCard());
-                                valuesStats.add((double) sumStats.getTotalShots() / sumStats.getNumberOfMatches());
+                                valuesStats.add((double) sumStats.getTotalCycles() / sumStats.getNumberOfMatches());
                                 valuesStats.add((double) sumStats.getTotalShots() / (sumStats.getTotalPCmissed() + sumStats.getTotalShots()));
                                 valuesStats.add((double) sumStats.getTotalPClower() / sumStats.getNumberOfMatches());
                                 valuesStats.add((double) sumStats.getTotalPCouter() / sumStats.getNumberOfMatches());

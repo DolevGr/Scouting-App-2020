@@ -135,13 +135,13 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int dbGame = Integer.parseInt(dataSnapshot.child(Keys.CURRENT_GAME).getValue().toString());
                 GeneralFunctions.onSubmit(dbRef, fi, c);
-                User.currentGame = fi.getMatchNumber() + 1;
+                User.formMatch = fi.getMatchNumber() + 1;
 
-                if (User.currentGame > dbGame) {
-                    dbGame = User.currentGame;
+                if (User.formMatch > dbGame) {
+                    dbGame = User.formMatch;
                     User.databaseReference.child(Keys.CURRENT_GAME).setValue(dbGame);
 
-                } else if (dbGame - User.currentGame > 1) {
+                } else if (dbGame - User.formMatch > 1) {
                     OverrideExistingMatchAlertDialog dialog = new OverrideExistingMatchAlertDialog();
                     dialog.show(getSupportFragmentManager(), "Override Form");
                 }
@@ -165,6 +165,5 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        btnSubmit.setEnabled(true);
     }
 }

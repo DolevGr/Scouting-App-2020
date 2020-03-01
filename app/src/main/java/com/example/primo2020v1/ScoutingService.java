@@ -52,12 +52,6 @@ public class ScoutingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-
-//        Log.d("Tag Service is in???", "" + User.matches.get(User.liveMatch + 3).hasTeam("4586"));
-//        Log.d("Tag Service is in???", "onStartCommand: " + User.liveMatch + "\n" +
-//                User.matches.get(User.liveMatch + i));
-
 //        startForeground(12345, notiBuilder);
         User.databaseReference.child(Keys.CURRENT_GAME).addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,62 +69,63 @@ public class ScoutingService extends Service {
             }
         });
 
-        notifyMatch();
+//        notifyMatch();
         return START_STICKY;
     }
 
     private void notifyMatch() {
-        int color = User.matches.get(User.liveMatch + i).teamColor("4586");
-        String input = "Match starting in 4 games";
+        if (User.matches.size() > User.liveMatch + i) {
+            int color = User.matches.get(User.liveMatch + i).teamColor("4586");
+            String input = "Current Match: " + User.liveMatch + "\nMatch starting in 4 games";
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
-            String description = getString(R.string.common_google_play_services_notification_channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("M_CH_ID", name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);
+                String description = getString(R.string.common_google_play_services_notification_channel_name);
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel("M_CH_ID", name, importance);
+                channel.setDescription(description);
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            }
 
-        Intent notificationsIntent = new Intent(this, SplashActivity.class);
-        notificationsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent notificationsIntent = new Intent(this, this.getClass());
+//            notificationsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    0, notificationsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder notiBuilder;
-        notiBuilder = new NotificationCompat.Builder(this, Scouting.CHANNEL_PIT)
-                .setContentTitle("Scouter")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(input))
+            NotificationCompat.Builder notiBuilder;
+            notiBuilder = new NotificationCompat.Builder(this, Scouting.CHANNEL_PIT)
+                    .setContentTitle("Scouter")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(input))
 //                .setContentText(input)
-                .setColor(color)
-                .setSmallIcon(R.mipmap.ic_app)
-                .setContentIntent(pendingIntent)
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setAutoCancel(true);
+                    .setColor(color)
+                    .setSmallIcon(R.mipmap.ic_app)
+                    .setContentIntent(pendingIntent)
+                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setAutoCancel(true);
 
-        notiBuilder.setContentIntent(pendingIntent);
+            notiBuilder.setContentIntent(pendingIntent);
 
-        //TODO: add pattern of allstar to vibrator effect
-        if (User.matches.get(User.liveMatch + i) != null
-                && User.matches.get(User.liveMatch + i).hasTeam("4586")
-                && (User.masterRanks.contains(User.userRank) || User.userRank.equals("Pit"))
-                && !User.hasAlerted) {
-            Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-            long[] allPattern = {0,500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500};
-                    //{0, 134, 169, 230, 412, 62, 89, 52, 80, 80, 237, 278, 314, 56, 88, 54, 61, 72, 247, 263, 372, 296, 325, 477, 424, 107, 189, 315, 285, 45, 78, 56, 68, 83, 253, 288, 297, 54, 97, 45, 70, 97, 226, 326, 324, 328, 244, 447, 463, 346, 226, 365, 267, 134, 162, 197, 127, 150, 151, 408, 141, 524, 329, 71, 195, 89, 186, 142, 135, 95, 187, 122, 182, 470, 320, 129, 167, 310, 209, 396, 156, 163, 162, 767, 0};
-            //{0,64,194,88,420,32,133,13,76,60,235,65,437,31,97,39,78,61,230,46,504,68,492,86,702,51,219,55,471,31,108,33,50,58,271,45,461,39,98,37,60,67,246,48,505,66,438,79,690,137,388,214,322,78,198,54,206,59,225,58,187,83,932,59,201,56,211,71,195,54,215,80,193,66,493,50,204,61,204,48,437,76,372,65,297,279,0};
-            v.vibrate(allPattern, -1);
+            if (User.matches.get(User.liveMatch + i) != null
+                    && User.matches.get(User.liveMatch + i).hasTeam("4586")
+                    && (User.masterRanks.contains(User.userRank) || User.userRank.equals("Pit"))
+                    && !User.hasAlerted) {
+                Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+                long[] allPattern = {0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500};
+                //{0, 134, 169, 230, 412, 62, 89, 52, 80, 80, 237, 278, 314, 56, 88, 54, 61, 72, 247, 263, 372, 296, 325, 477, 424, 107, 189, 315, 285, 45, 78, 56, 68, 83, 253, 288, 297, 54, 97, 45, 70, 97, 226, 326, 324, 328, 244, 447, 463, 346, 226, 365, 267, 134, 162, 197, 127, 150, 151, 408, 141, 524, 329, 71, 195, 89, 186, 142, 135, 95, 187, 122, 182, 470, 320, 129, 167, 310, 209, 396, 156, 163, 162, 767, 0};
+                //{0,64,194,88,420,32,133,13,76,60,235,65,437,31,97,39,78,61,230,46,504,68,492,86,702,51,219,55,471,31,108,33,50,58,271,45,461,39,98,37,60,67,246,48,505,66,438,79,690,137,388,214,322,78,198,54,206,59,225,58,187,83,932,59,201,56,211,71,195,54,215,80,193,66,493,50,204,61,204,48,437,76,372,65,297,279,0};
+                v.vibrate(allPattern, -1);
 
-            Log.d(TAG, "onStartCommand: prepush");
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                Log.d(TAG, "onStartCommand: prepush");
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 //            NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-            Log.d(TAG, "onStartCommand: postpush");
-            notificationManager.notify("notification", 0, notiBuilder.build());
-            Log.d(TAG, "onStartCommand: post notify");
-            User.hasAlerted = true;
+                Log.d(TAG, "onStartCommand: postpush");
+                notificationManager.notify("notification", 0, notiBuilder.build());
+                Log.d(TAG, "onStartCommand: post notify");
+                User.hasAlerted = true;
+            }
         }
 
     }

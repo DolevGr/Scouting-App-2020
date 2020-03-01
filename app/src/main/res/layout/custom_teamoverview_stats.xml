@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Average Number of Shots: "
+                android:text="Average Number of PC Cycles: "
                 android:textColor="@color/defaultColor"
                 android:textSize="16sp" />
 

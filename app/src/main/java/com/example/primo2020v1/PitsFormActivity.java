@@ -1,9 +1,11 @@
 package com.example.primo2020v1;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,30 +18,41 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.primo2020v1.AlertDialogs.CancelFormAlertDialog;
 import com.example.primo2020v1.utils.Keys;
 import com.example.primo2020v1.utils.Pit;
 import com.example.primo2020v1.utils.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class PitsFormActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "PitsFormActivity";
     private EditText edRobotMass, edComment, edWheelsOther;
     private AutoCompleteTextView edTeamNumber;
     private TextView tvTeamName;
     private ImageView imgCPPC, imgCPRC, imgEndGame;
     private Switch switchAuto, switchTrench, switchBumpers;
-    private Button btnSubmit, btnBack;
+    private Button btnSubmit, btnBack, btnSearch;
     private Spinner spnLanguage, spnWheels, spnIntake, spnPCCarry, spnShoot;
-    private int cpIndex, rcIndex, endgameIndex;
-    private String selectedWheels;
+
+    private DatabaseReference dbRefPit = User.databaseReference.child(Keys.TEAMS);
+    private int cpIndex = 0, rcIndex = 0, endgameIndex = 1, teamNumber = 0;
+    private String selectedWheels = "";
+    private boolean isUnlocked = false;
+    private Pit pitDB, thisPit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pits_form);
 
+        btnSearch = findViewById(R.id.btnSearchPit);
         btnBack = findViewById(R.id.btnBack);
         btnSubmit = findViewById(R.id.btnSubmit);
         tvTeamName = findViewById(R.id.tvTeamName);
@@ -61,11 +74,8 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         switchAuto = findViewById(R.id.switchAuto);
         switchTrench = findViewById(R.id.switchTrench);
         switchBumpers = findViewById(R.id.switchBumpers);
+        changeState();
 
-        selectedWheels = "";
-        cpIndex = 0;
-        rcIndex = 0;
-        endgameIndex = 1;
 
         ArrayAdapter languageAdapter = ArrayAdapter.createFromResource(this, R.array.languages, R.layout.support_simple_spinner_dropdown_item);
         languageAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -87,11 +97,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         shootAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spnShoot.setAdapter(shootAdapter);
 
-        btnSubmit.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
-        imgCPPC.setOnClickListener(this);
-        imgCPRC.setOnClickListener(this);
-        imgEndGame.setOnClickListener(this);
+
 
         ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this, android.R.layout.simple_dropdown_item_1line, User.participants.keySet().toArray());
         edTeamNumber.setAdapter(adapter);
@@ -106,15 +112,18 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 tvTeamName.setText("");
+                tvTeamName.setTextColor(Color.DKGRAY);
+                isUnlocked = false;
+                changeState();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 String number = edTeamNumber.getText().toString().trim();
                 if (!number.equals("")) {
-                    if (User.participants.containsKey(Integer.parseInt(number))) {
-                        tvTeamName.setText(User.participants.get(Integer.parseInt(number)).replaceAll(" ", "\n"));
-                    }
+                    teamNumber = Integer.parseInt(number);
+                    if (User.participants.containsKey(teamNumber))
+                        tvTeamName.setText(User.participants.get(teamNumber).replaceAll(" ", "\n"));
                 }
             }
         });
@@ -137,6 +146,13 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                 selectedWheels = (String) spnWheels.getSelectedItem();
             }
         });
+
+        btnSearch.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+        imgCPPC.setOnClickListener(this);
+        imgCPRC.setOnClickListener(this);
+        imgEndGame.setOnClickListener(this);
     }
 
     @Override
@@ -160,9 +176,17 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.btnSubmit:
                 if (isValid()) {
-                    onSubmit();
-                    finish();
-                    startActivity(new Intent(PitsFormActivity.this, DrawerActivity.class));
+                    new AlertDialog.Builder(this)
+                            .setTitle("Change pit Info")
+                            .setMessage("There is an already existing pit form. Do you want to override it?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
+                                onSubmit();
+                                finish();
+                                startActivity(new Intent(PitsFormActivity.this, DrawerActivity.class));
+                            })
+                            .setNegativeButton("No", (dialog, which) -> { })
+                            .show();
+
                 } else {
                     Toast.makeText(this, "Fields are missing", Toast.LENGTH_SHORT).show();
                 }
@@ -171,19 +195,51 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btnBack:
                 openDialog();
                 break;
+
+            case R.id.btnSearchPit:
+                if (User.participants.containsKey(teamNumber)) {
+                    dbRefPit.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild(Integer.toString(teamNumber))) {
+                                DataSnapshot dsTeam = dataSnapshot.child(Integer.toString(teamNumber));
+                                if (dsTeam.hasChild(Keys.PIT)) {
+                                    DataSnapshot dsPit = dsTeam.child(Keys.PIT);
+                                    pitDB = dsPit.getValue(Pit.class);
+                                    setPitInfo();
+                                    tvTeamName.setTextColor(Color.RED);
+                                } else {
+                                    resetPitForm();
+                                    tvTeamName.setTextColor(Color.GREEN);
+                                }
+                            } else {
+                                resetPitForm();
+                                tvTeamName.setTextColor(Color.GREEN);
+                            }
+
+                            isUnlocked = true;
+                            changeState();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                } else {
+                    resetPitForm();
+                    isUnlocked = true;
+                    changeState();
+                }
+
         }
     }
 
     private boolean isValid() {
-        String name = edTeamNumber.getText().toString().trim();
         boolean valid = !edTeamNumber.getText().toString().trim().equals("") &&
                 !edRobotMass.getText().toString().trim().equals("");
-//        && User.participants.containsKey(Integer.parseInt(name));
 
-        if (selectedWheels.equals("Other"))
-            valid = valid && !edWheelsOther.getText().toString().trim().equals("");
-
-        return valid;
+        return selectedWheels.equals("Other") ? valid && !edWheelsOther.getText().toString().trim().equals("") : valid ;
     }
 
     private void onSubmit() {
@@ -192,16 +248,120 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         if (!selectedWheels.equals("Other"))
             wheels = (String) spnWheels.getSelectedItem();
 
-        Pit pit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), spnLanguage.getSelectedItem().toString(),
+        thisPit = new Pit(edRobotMass.getText().toString().trim(), edComment.getText().toString().trim(), spnLanguage.getSelectedItem().toString(),
                 wheels, spnIntake.getSelectedItem().toString(), spnPCCarry.getSelectedItem().toString(), spnShoot.getSelectedItem().toString(),
                 switchAuto.isChecked(), switchTrench.isChecked(), switchBumpers.isChecked(),
                 endgameIndex, rcIndex, cpIndex);
 
-        dbRef.setValue(pit);
+        if (pitDB != null && !thisPit.equals(pitDB))
+            dbRef.setValue(thisPit);
     }
 
     private void openDialog() {
         CancelFormAlertDialog dialog = new CancelFormAlertDialog();
         dialog.show(getSupportFragmentManager(), "cancel form dialog");
+    }
+
+    private void setPitInfo() {
+        cpIndex = pitDB.getCppc();
+        rcIndex = pitDB.getCprc();
+        endgameIndex = pitDB.getEndGame();
+        selectedWheels = pitDB.getWheels();
+
+        edRobotMass.setText(pitDB.getMass());
+        if (!selectedWheels.equals("Empty Comment")) {
+            edComment.setText(pitDB.getComment());
+        }
+
+        spnWheels.setSelection(pitDB.getWheelsIndex());
+        if (pitDB.getWheelsIndex() == 2) {
+            edWheelsOther.setText(pitDB.getWheels());
+        }
+        spnLanguage.setSelection(pitDB.getLanguageIndex());
+        spnIntake.setSelection(pitDB.getIntakeIndex());
+        spnPCCarry.setSelection(pitDB.getCarryIndex());
+        spnShoot.setSelection(pitDB.getShootIndex());
+
+        imgCPRC.setImageResource(User.controlPanelRotation[rcIndex]);
+        imgCPPC.setImageResource(User.controlPanelPosition[cpIndex]);
+        imgEndGame.setImageResource(User.endGameImages[endgameIndex]);
+
+        switchAuto.setChecked(pitDB.isHasAuto());
+        switchTrench.setChecked(pitDB.isCanTrench());
+        switchBumpers.setChecked(pitDB.isCanBumpers());
+
+    }
+
+    private void changeState() {
+        edRobotMass.setClickable(isUnlocked);
+        edRobotMass.setEnabled(isUnlocked);
+
+        edComment.setClickable(isUnlocked);
+        edComment.setEnabled(isUnlocked);
+
+        if (spnWheels.getSelectedItemPosition() == 2)
+            edWheelsOther.setVisibility(isUnlocked ? View.VISIBLE : View.INVISIBLE);
+        edWheelsOther.setClickable(isUnlocked);
+        edWheelsOther.setEnabled(isUnlocked);
+
+        spnLanguage.setEnabled(isUnlocked);
+        spnLanguage.setClickable(isUnlocked);
+
+        spnShoot.setEnabled(isUnlocked);
+        spnShoot.setClickable(isUnlocked);
+
+        spnPCCarry.setEnabled(isUnlocked);
+        spnPCCarry.setClickable(isUnlocked);
+
+        spnIntake.setEnabled(isUnlocked);
+        spnIntake.setClickable(isUnlocked);
+
+        spnWheels.setEnabled(isUnlocked);
+        spnWheels.setClickable(isUnlocked);
+
+        imgCPPC.setClickable(isUnlocked);
+        imgCPPC.setEnabled(isUnlocked);
+
+        imgCPRC.setClickable(isUnlocked);
+        imgCPRC.setEnabled(isUnlocked);
+
+        imgEndGame.setClickable(isUnlocked);
+        imgEndGame.setEnabled(isUnlocked);
+
+        switchAuto.setClickable(isUnlocked);
+        switchAuto.setEnabled(isUnlocked);
+
+        switchTrench.setClickable(isUnlocked);
+        switchTrench.setEnabled(isUnlocked);
+
+        switchBumpers.setClickable(isUnlocked);
+        switchBumpers.setEnabled(isUnlocked);
+    }
+
+    private void resetPitForm() {
+        Log.d(TAG, "resetPitForm: ");
+        cpIndex = 0;
+        rcIndex = 0;
+        endgameIndex = 1;
+        selectedWheels = "";
+
+        edRobotMass.setText("");
+        edWheelsOther.setText("");
+        edWheelsOther.setVisibility(View.INVISIBLE);
+        edComment.setText("");
+
+        spnWheels.setSelection(0);
+        spnLanguage.setSelection(0);
+        spnIntake.setSelection(0);
+        spnPCCarry.setSelection(0);
+        spnShoot.setSelection(0);
+
+        imgEndGame.setImageResource(User.endGameImages[endgameIndex]);
+        imgCPRC.setImageResource(User.controlPanelRotation[rcIndex]);
+        imgCPPC.setImageResource(User.controlPanelPosition[cpIndex]);
+
+        switchAuto.setChecked(false);
+        switchTrench.setChecked(false);
+        switchBumpers.setChecked(false);
     }
 }

@@ -265,7 +265,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean isValidGameNumber() {
-        return gameNumber > 0 && gameNumber < User.currentGame;
+        return gameNumber > 0 && gameNumber < User.formMatch;
     }
 
     private boolean isValidTeamNumber() {
@@ -295,6 +295,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         formInfo.setDefence(Integer.parseInt(dataSnapshot.child("defence").getValue().toString()));
         formInfo.setComment(dataSnapshot.child("comment").getValue().toString());
         formInfo.setGameNumber(gameNumber);
+        formInfo.setTeamNumber(teamNumber);
     }
 
     private void placeInFormInfo() {

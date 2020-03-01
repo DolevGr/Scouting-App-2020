@@ -12,9 +12,8 @@ public class User {
 
     public static HashMap<Integer, String> participants = new HashMap<>();
     public static ArrayList<Match> matches = new ArrayList<>();
-    public static ArrayList<String> members = new ArrayList<>();
     public static ArrayList<String> masterRanks = new ArrayList<>();
-    public static int currentGame = 1;
+    public static int formMatch = 1;
     public static int liveMatch = 1;
     public static boolean hasAlerted = false;
     public static String username = "Scouter";

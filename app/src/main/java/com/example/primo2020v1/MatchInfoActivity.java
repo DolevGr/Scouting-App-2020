@@ -113,4 +113,10 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         return info;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

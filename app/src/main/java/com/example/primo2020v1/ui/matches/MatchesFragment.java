@@ -1,4 +1,4 @@
-package com.example.primo2020v1.ui.matches;
+package com.example.primo2020v1.ui.Matches;
 
 import android.content.Intent;
 import android.os.Bundle;

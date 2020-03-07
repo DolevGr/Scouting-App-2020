@@ -54,7 +54,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
 
         btnSearch = findViewById(R.id.btnSearchPit);
         btnBack = findViewById(R.id.btnBack);
-        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit = findViewById(R.id.btnSubmitStrats);
         tvTeamName = findViewById(R.id.tvTeamName);
         edTeamNumber = findViewById(R.id.edTeamNumber);
         edRobotMass = findViewById(R.id.edRobotMass);
@@ -174,7 +174,7 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
                 imgEndGame.setImageResource(User.endGameImages[endgameIndex]);
                 break;
 
-            case R.id.btnSubmit:
+            case R.id.btnSubmitStrats:
                 if (isValid()) {
                     new AlertDialog.Builder(this)
                             .setTitle("Change pit Info")
@@ -363,5 +363,10 @@ public class PitsFormActivity extends AppCompatActivity implements View.OnClickL
         switchAuto.setChecked(false);
         switchTrench.setChecked(false);
         switchBumpers.setChecked(false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        openDialog();
     }
 }

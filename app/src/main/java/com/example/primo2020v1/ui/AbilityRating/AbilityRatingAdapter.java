@@ -1,4 +1,4 @@
-package com.example.primo2020v1.ui.abilityRating;
+package com.example.primo2020v1.ui.AbilityRating;
 
 import android.content.Context;
 import android.view.LayoutInflater;

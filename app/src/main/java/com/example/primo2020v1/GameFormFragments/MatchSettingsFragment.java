@@ -31,7 +31,6 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         void setDataMatchSettings(Intent msIntent);
     }
 
-
     private MatchSettingsListener listener;
     private Intent msIntent;
     private EditText edGameNumber, edTeamNumber;
@@ -58,7 +57,7 @@ public class MatchSettingsFragment extends Fragment implements AdapterView.OnIte
         imgbtnSwitchFields = v.findViewById(R.id.imgbtnSwitchFields);
 
         positions = new String[]{"R Close", "R Middle", "R Far", "B Close", "B Middle", "B Far"};
-        teamAdapter = new ArrayAdapter<CharSequence>(getActivity(), R.layout.spinner_item, positions);
+        teamAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, positions);
         teamAdapter.setDropDownViewResource(R.layout.spinner_item);
         spnTeam.setAdapter(teamAdapter);
 

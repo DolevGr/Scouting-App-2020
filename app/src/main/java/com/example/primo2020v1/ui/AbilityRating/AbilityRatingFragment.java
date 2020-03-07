@@ -1,4 +1,4 @@
-package com.example.primo2020v1.ui.abilityRating;
+package com.example.primo2020v1.ui.AbilityRating;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -1,4 +1,4 @@
-package com.example.primo2020v1.ui.teamOverview;
+package com.example.primo2020v1.ui.TeamOverview;
 
 import android.content.Intent;
 import android.os.Bundle;

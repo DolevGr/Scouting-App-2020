@@ -75,7 +75,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
 
         btnSearch = (Button) findViewById(R.id.btnSearch);
         btnBack = (Button) findViewById(R.id.btnBack);
-        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit = findViewById(R.id.btnSubmitStrats);
         edGameNumber = (EditText) findViewById(R.id.edGameNumberEdit);
         edTeamNumber = (EditText) findViewById(R.id.edTeamNumberEdit);
         spnTeam = (Spinner) findViewById(R.id.spnTeamEdit);
@@ -156,7 +156,7 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
 
-            case R.id.btnSubmit:
+            case R.id.btnSubmitStrats:
                 formInfo.setComment(edComment.getText().toString().trim());
                 GeneralFunctions.onSubmit(dbRef, formInfo, cycles);
                 finish();
@@ -324,5 +324,10 @@ public class EditFormActivity extends AppCompatActivity implements View.OnClickL
         imgCPRC.setVisibility(visibility);
         imgCPPC.setVisibility(visibility);
         edComment.setVisibility(visibility);
+    }
+
+    @Override
+    public void onBackPressed() {
+        openDialog();
     }
 }

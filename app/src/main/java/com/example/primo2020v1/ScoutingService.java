@@ -34,7 +34,7 @@ public class ScoutingService extends Service {
     static final public String COPA_RESULT = "com.controlj.copame.backend.COPAService.REQUEST_PROCESSED";
     static final public String COPA_MESSAGE = "com.controlj.copame.backend.COPAService.COPA_MSG";
     boolean ran = false; //spam controller
-    private int i = 3;
+    private int i = 4;
 
 
     @Override
@@ -76,7 +76,7 @@ public class ScoutingService extends Service {
     private void notifyMatch() {
         if (User.matches.size() > User.liveMatch + i) {
             int color = User.matches.get(User.liveMatch + i).teamColor("4586");
-            String input = "Current Match: " + User.liveMatch + "\nMatch starting in 4 games";
+            String input = "Current Match: " + User.liveMatch + "\nMatch starting in " + i + " games";
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 CharSequence name = getString(R.string.common_google_play_services_notification_channel_name);

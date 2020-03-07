@@ -174,4 +174,9 @@ public class GameFormActivity extends AppCompatActivity implements BottomNavigat
                 finishImgId, finishTicket, finishDidCrash, finishDefence, text);
         return formInfo;
     }
+
+    @Override
+    public void onBackPressed() {
+        openDialog();
+    }
 }

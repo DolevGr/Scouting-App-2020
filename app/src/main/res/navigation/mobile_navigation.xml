@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navMatches"
-        android:name="com.example.primo2020v1.ui.matches.MatchesFragment"
+        android:name="com.example.primo2020v1.ui.Matches.MatchesFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navTeamOverview"
-        android:name="com.example.primo2020v1.ui.teamOverview.TeamOverviewFragment"
+        android:name="com.example.primo2020v1.ui.TeamOverview.TeamOverviewFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_team_overview" />
 
     <fragment
         android:id="@+id/navAbilityRating"
-        android:name="com.example.primo2020v1.ui.abilityRating.AbilityRatingFragment"
+        android:name="com.example.primo2020v1.ui.AbilityRating.AbilityRatingFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_ability_rating"/>
 
@@ -28,6 +28,12 @@
         android:name="com.example.primo2020v1.ui.TeamComparision.TeamComparisionFragment"
         android:label="@string/menu_tools"
         tools:layout="@layout/fragment_team_comparision" />
+
+    <fragment
+        android:id="@+id/nav_stratScouter"
+        android:name="com.example.primo2020v1.ui.StratScouters.StratScoutersFragment"
+        android:label="Strategy Scouter"
+        tools:layout="@layout/fragment_strat_scouter" />
 
     <fragment
         android:id="@+id/nav_send"

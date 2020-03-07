@@ -104,29 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                 checkPassAndUsername();
             }
         });
-
-//        Map<String, String> map = GeneralFunctions.readFromFile("Info.txt", getApplicationContext());
-//
-//        if (map != null) {
-//            name = map.get("Name");
-//            password = map.get("Password");
-//            rank = map.get("Rank");
-//            String date = map.get("Date");
-//
-//            if (name != null && password != null && rank != null) {
-//                edName.setText(name);
-//                edPass.setText(password);
-//                edName.setEnabled(false);
-//                edPass.setEnabled(false);
-//                btnLogin.setEnabled(false);
-//
-//                in = new Intent(LoginActivity.this, DrawerActivity.class);
-//                in.putExtra("Username", name);
-//                in.putExtra("Rank", rank);
-//                startActivity(in);
-//                finish();
-//            }
-//        }
     }
 
     private void checkPassAndUsername() {
@@ -155,5 +132,11 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(in);
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

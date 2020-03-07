@@ -61,7 +61,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
         imgCPPC = findViewById(R.id.imgCPcolor);
 
         tvComment = findViewById(R.id.tvComment);
-        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit = findViewById(R.id.btnSubmitStrats);
         btnBack = findViewById(R.id.btnBack);
 
         intent = getIntent();
@@ -106,7 +106,7 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnSubmit:
+            case R.id.btnSubmitStrats:
                 btnSubmit.setEnabled(false);
                 btnBack.setEnabled(false);
                 if (fi.getTeamNumber() != null && !fi.getTeamNumber().equals("")) {
@@ -165,5 +165,11 @@ public class SubmissionActivity extends AppCompatActivity implements View.OnClic
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

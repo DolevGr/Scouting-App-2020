@@ -80,19 +80,33 @@ public class SplashActivity extends AppCompatActivity {
                     String password = infoMap.get("Password");
                     String rank = infoMap.get("Rank");
                     String lastUpdated = infoMap.get("Date");
+                    Thread t;
 
                     if (lastUpdated == null || !lastUpdated.equals(lastUpdatedDB)) {
 
                         infoMap.put("Date", lastUpdatedDB);
                         GeneralFunctions.writeToFile("Info.txt", getApplicationContext(), infoMap);
 
+                        t = new Thread(() -> {
+                            setMatches(dataSnapshot);
+                            GeneralFunctions.writeObjectToFile("Matches.ser", getApplicationContext(), User.matches);
+                        });
+                        t.start();
+
                         setParticipants(dataSnapshot);
                         GeneralFunctions.writeToFile("Participants.txt", getApplicationContext(), User.participants);
 
-                        setMatches(dataSnapshot);
-                        GeneralFunctions.writeObjectToFile("Matches.ser", getApplicationContext(), User.matches);
 
                     } else {
+
+                        t = new Thread(
+                                () -> User.matches = (ArrayList<Match>) GeneralFunctions.readObjectFromFile("Matches.ser",
+                                        getApplicationContext())
+                        );
+                        t.start();
+//                        User.matches = (ArrayList<Match>) GeneralFunctions.readObjectFromFile("Matches.ser", getApplicationContext());
+
+
                         Map<String, String> map = GeneralFunctions.readFromFile("Participants.txt", getApplicationContext());
                         if (map.isEmpty()) {
                             setParticipants(dataSnapshot);
@@ -101,8 +115,6 @@ public class SplashActivity extends AppCompatActivity {
                                 User.participants.put(Integer.parseInt(ent.getKey()), ent.getValue());
                             }
                         }
-
-                        User.matches = (ArrayList<Match>) GeneralFunctions.readObjectFromFile("Matches.ser", getApplicationContext());
                     }
 
                     if (User.participants.isEmpty()) {
@@ -111,9 +123,13 @@ public class SplashActivity extends AppCompatActivity {
 
 //                    setUsersNames(dataSnapshot);
 
+                    try {
+                        t.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     if (User.matches == null || User.matches.isEmpty()) {
                         setMatches(dataSnapshot);
-                        Log.d(TAG, "onDataChange: Dead");
                     }
 
                     if (name != null && password != null && rank != null) {

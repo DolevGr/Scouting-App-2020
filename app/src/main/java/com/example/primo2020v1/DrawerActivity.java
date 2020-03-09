@@ -81,7 +81,7 @@ public class DrawerActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.navMatches, R.id.navTeamOverview, R.id.navAbilityRating,
-                    R.id.navTeamComparision, R.id.nav_stratScouter, R.id.nav_send)
+                    R.id.navTeamComparision, R.id.nav_stratScouter, R.id.nav_quotes)
                     .setDrawerLayout(drawer)
                     .build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

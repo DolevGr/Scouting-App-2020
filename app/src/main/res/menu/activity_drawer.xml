@@ -6,7 +6,7 @@
         <menu>
             <item
                 android:id="@+id/navMatches"
-                android:icon="@drawable/ic_menu_camera"
+                android:icon="@drawable/ic_matches"
                 android:title="@string/menu_home" />
         </menu>
     </item>
@@ -15,16 +15,16 @@
         <menu>
             <item
                 android:id="@+id/navTeamOverview"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/ic_overview"
                 android:title="@string/menu_gallery" />
             <item
                 android:id="@+id/navAbilityRating"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_ability"
                 android:title="@string/menu_slideshow" />
             <item
                 android:id="@+id/navTeamComparision"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/menu_team_comparision" />
+                android:icon="@drawable/ic_comparsion"
+                android:title="Team Comparison" />
         </menu>
     </item>
 
@@ -32,7 +32,7 @@
         <menu>
             <item
                 android:id="@+id/nav_stratScouter"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_comments"
                 android:title="Comments" />
         </menu>
     </item>
@@ -40,8 +40,8 @@
     <item android:title="Bentzi">
         <menu>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:id="@+id/nav_quotes"
+                android:icon="@drawable/ic_quotes"
                 android:title="Quotes" />
         </menu>
     </item>

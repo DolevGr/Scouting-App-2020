@@ -71,6 +71,6 @@
     <string name="menu_gallery">Team Overview</string>
     <string name="menu_slideshow">Ability Rating</string>
     <string name="menu_tools">Team Comparision</string>
-    <string name="menu_team_comparision">Team Comparision</string>
+    <string name="menu_team_comparison">Team Comparision</string>
     <string name="menu_send">Send</string>
 </resources>

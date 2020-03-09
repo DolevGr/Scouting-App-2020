@@ -1,7 +1,6 @@
-package com.example.primo2020v1.ui.TeamComparision;
+package com.example.primo2020v1.ui.TeamComparison;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,15 @@ import com.example.primo2020v1.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
-public class TeamComparisionAdapter extends ArrayAdapter {
+public class TeamComparisonAdapter extends ArrayAdapter {
     private int res;
     private Context context;
     private ArrayList<Double> values;
     private ArrayList<TextView> tvs;
     private String comments;
 
-    public TeamComparisionAdapter(@NonNull Context context, int resource, ArrayList<Double> values,
-                                  String comments, ArrayList<Integer> single) {
+    public TeamComparisonAdapter(@NonNull Context context, int resource, ArrayList<Double> values,
+                                 String comments, ArrayList<Integer> single) {
         super(context, resource, single);
         this.values = values;
         this.res = resource;

@@ -25,6 +25,7 @@ public class CancelFormAlertDialog extends AppCompatDialogFragment {
                         GeneralFunctions.resetForm();
                         Intent in = new Intent(getActivity().getApplicationContext(), DrawerActivity.class);
                         startActivity(in);
+                        getActivity().finish();
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
